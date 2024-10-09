@@ -1,1 +1,3 @@
 PlayerMove,11,1,0.5,
+DecreaseSize,4,1,0.5,
+IncreaseSize,2,1,0.5,

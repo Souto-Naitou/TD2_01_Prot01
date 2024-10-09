@@ -16,17 +16,21 @@ public:
     void Update();
     void Draw();
 
-    inline void const SetCircle(std::vector<Vector2>* _circle) { pCircle_ = _circle; }
-
 private:
-
-    Vector2 position_ = {};
-    std::vector<Vector2>* pCircle_ = {};
-    uint32_t index_ = 0u;
     char keys[256] = {};
     char preKeys[256] = {};
 
+    std::vector<Vector2> circle_ = {};
+
+    float radius_default = 100.0f;
+    float radius_min = 20.0f;
+    float radius_ = 0.0f;
+
+    size_t resolution_ = 4u;
+    Vector2 originPosition_ = {};
+
     std::chrono::system_clock::time_point startTime_;
-    std::unique_ptr<Easing> pEasingPlayerMove_;
+    std::unique_ptr<Easing> pEasingDecreaseSize_;
+    std::unique_ptr<Easing> pEasingIncreaseSize_;
 
 };
