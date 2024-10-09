@@ -6,8 +6,7 @@
 void Player::Initialize()
 {
     startTime_ = std::chrono::system_clock::now();
-    pEasingDecreaseSize_ = std::make_unique<Easing>("DecreaseSize", Easing::EaseType::EaseOutCubic, 0.5);
-    pEasingIncreaseSize_ = std::make_unique<Easing>("IncreaseSize", Easing::EaseType::EaseOutCubic, 0.5);
+    pEasingBoxResize_ = std::make_unique<Easing>("DecreaseSize", Easing::EaseType::EaseOutCubic, 0.5);
 
     originPosition_.x = 640.0f;
     originPosition_.y = 360.0f;
@@ -35,16 +34,16 @@ void Player::Update()
     {
         if (radius_ >= radius_min)
         {
-            pEasingIncreaseSize_->Reset();
-            pEasingDecreaseSize_->Start();
-            radius_ = (1.0f - pEasingDecreaseSize_->Update()) * radius_default + pEasingDecreaseSize_->Update() * radius_min;
+            pEasingBoxResize_->Reset();
+            pEasingBoxResize_->Start();
+            radius_ = (1.0f - pEasingBoxResize_->Update()) * radius_default + pEasingBoxResize_->Update() * radius_min;
         }
     }
     else
     {
-        pEasingDecreaseSize_->Reset();
-        pEasingIncreaseSize_->Start();
-        radius_ = (1.0f - pEasingIncreaseSize_->Update()) * radius_min + pEasingIncreaseSize_->Update() * radius_default;
+        pEasingBoxResize_->Reset();
+        pEasingBoxResize_->Start();
+        radius_ = pEasingBoxResize_->Update() * radius_default + (1.0f - pEasingBoxResize_->Update()) * radius_min;
     }
 
     std::chrono::system_clock::time_point nowTime = std::chrono::system_clock::now();

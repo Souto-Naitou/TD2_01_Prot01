@@ -30,7 +30,6 @@ private:
     Vector2 originPosition_ = {};
 
     std::chrono::system_clock::time_point startTime_;
-    std::unique_ptr<Easing> pEasingDecreaseSize_;
-    std::unique_ptr<Easing> pEasingIncreaseSize_;
+    std::unique_ptr<Easing> pEasingBoxResize_;
 
 };
