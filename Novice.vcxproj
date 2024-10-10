@@ -115,6 +115,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="External\easing\EaseInterpolation.cpp" />
     <ClCompile Include="External\easing\Easing.cpp" />
     <ClCompile Include="External\easing\EasingManager\EasingManager.cpp" />
+    <ClCompile Include="External\ImGuiDebugManager\DebugManager.cpp" />
     <ClCompile Include="External\math\impl\Matrix4calc.cpp" />
     <ClCompile Include="External\math\impl\Matrix4x4.cpp" />
     <ClCompile Include="External\math\impl\Vector2.cpp" />
@@ -158,6 +159,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="External\easing\csvStructure\CSVData.h" />
     <ClInclude Include="External\easing\Easing.h" />
     <ClInclude Include="External\easing\EasingManager\EasingManager.h" />
+    <ClInclude Include="External\ImGuiDebugManager\DebugManager.h" />
     <ClInclude Include="External\math\MathExtension\mathExtension.h" />
     <ClInclude Include="External\math\matrix4calc.h" />
     <ClInclude Include="External\math\Matrix4x4.h" />
@@ -165,6 +167,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="External\math\Vector3.h" />
     <ClInclude Include="External\math\Vector4.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="ImGuiTemplates.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

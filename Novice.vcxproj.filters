@@ -32,6 +32,9 @@
     <Filter Include="External\CSVLoader">
       <UniqueIdentifier>{11fe71fa-b68d-4362-a2e3-eb35f08c7181}</UniqueIdentifier>
     </Filter>
+    <Filter Include="External\ImGuiDebugManager">
+      <UniqueIdentifier>{01d1e650-bcda-43c4-9eae-9bd07f80240b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -76,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="External\math\MathExtension\mathExtension.cpp">
       <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="External\ImGuiDebugManager\DebugManager.cpp">
+      <Filter>External\ImGuiDebugManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -195,6 +201,12 @@
     </ClInclude>
     <ClInclude Include="External\math\matrix4calc.h">
       <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="External\ImGuiDebugManager\DebugManager.h">
+      <Filter>External\ImGuiDebugManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiTemplates.h">
+      <Filter>External\ImGuiDebugManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

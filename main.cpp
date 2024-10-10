@@ -2,6 +2,7 @@
 
 #include <easing/EasingManager/EasingManager.h>
 #include "GameScene.h"
+#include "ImGuiDebugManager/DebugManager.h"
 
 const char kWindowTitle[] = "学籍番号";
 
@@ -14,6 +15,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
 	char preKeys[256] = {0};
+
+	DebugManager* pDebugManager = DebugManager::GetInstance();
+	pDebugManager->ChangeFont();
 
 	GameScene* pGameScene_ = new GameScene;
 	pGameScene_->Initialize();
@@ -32,6 +36,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓更新処理ここから
 		///
+		
+		pDebugManager->DrawUI();
 
 		pEasingManager->DrawUI();
 
