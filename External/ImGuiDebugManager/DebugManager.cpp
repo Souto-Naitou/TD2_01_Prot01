@@ -8,6 +8,10 @@
 DebugManager::DebugManager()
 {
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 6.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_TabRounding, 0.0f);
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.0f, 0.0f, 0.0f, 0.75f));
+	ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(0.8f, 0.1f, 0.1f, 0.75f));
+	ImGui::PushStyleColor(ImGuiCol_TitleBg, ImVec4(0.0f, 0.0f, 0.0f, 0.90f));
 }
 
 DebugManager::~DebugManager()
@@ -33,9 +37,7 @@ void DebugManager::DrawUI()
 	ImGui::PushID("DEBUG_MANAGER");
 
 	// デバッグウィンドウ描画
-	ImGui::Begin("DebugManager");
-	
-	ImGui::Text("日本語");
+	ImGui::Begin("デバッグ");
 
 	ImGui::BeginTabBar("## TABBAR");
 	for (auto& component : componentList_)

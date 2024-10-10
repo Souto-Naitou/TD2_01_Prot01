@@ -94,14 +94,14 @@ void Player::DebugWindow()
 {
 #ifdef _DEBUG
 
-    ImGui::DragFloat2("Position", &originPosition_.x, 1.0f);    
-    ImGui::InputInt("Resolution", reinterpret_cast<int*>(&resolution_));
+    ImGui::DragFloat2("座標", &originPosition_.x, 1.0f);    
+    ImGui::InputInt("頂点数", reinterpret_cast<int*>(&resolution_));
     if (!resolution_) { resolution_ = 1; }
 
     if (ImGui::BeginTable("Variables", 2, ImGuiTableFlags_Hideable | ImGuiTableFlags_Resizable | ImGuiTableFlags_Borders))
     {
-        ImGui::TableSetupColumn("変数名", ImGuiTableColumnFlags_WidthFixed);
-        ImGui::TableSetupColumn("値", ImGuiTableColumnFlags_WidthStretch);
+        ImGui::TableSetupColumn("変数名");
+        ImGui::TableSetupColumn("値");
         ImGui::TableHeadersRow();
 
         ImGuiTemplate::VariableTableRow("circle_", circle_);
