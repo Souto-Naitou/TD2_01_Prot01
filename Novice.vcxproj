@@ -118,6 +118,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="External\ImGuiDebugManager\DebugManager.cpp" />
     <ClCompile Include="External\math\impl\Matrix4calc.cpp" />
     <ClCompile Include="External\math\impl\Matrix4x4.cpp" />
+    <ClCompile Include="External\math\impl\Rect2.cpp" />
     <ClCompile Include="External\math\impl\Vector2.cpp" />
     <ClCompile Include="External\math\impl\Vector3.cpp" />
     <ClCompile Include="External\math\impl\vector3calc.cpp" />
@@ -127,6 +128,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="ImGuiTemplates.cpp" />
     <ClCompile Include="InputCenter.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Object\Core\Core.cpp" />
     <ClCompile Include="Object\Enemy\Enemy.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
@@ -167,12 +169,14 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="External\math\MathExtension\mathExtension.h" />
     <ClInclude Include="External\math\matrix4calc.h" />
     <ClInclude Include="External\math\Matrix4x4.h" />
+    <ClInclude Include="External\math\Rect2.h" />
     <ClInclude Include="External\math\Vector2.h" />
     <ClInclude Include="External\math\Vector3.h" />
     <ClInclude Include="External\math\Vector4.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="ImGuiTemplates.h" />
     <ClInclude Include="InputCenter.h" />
+    <ClInclude Include="Object\Core\Core.h" />
     <ClInclude Include="Object\Enemy\Enemy.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>

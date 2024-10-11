@@ -8,6 +8,8 @@
 class GameScene
 {
 public:
+    ~GameScene();
+
     void Initialize();
     void Update();
     void Draw();
@@ -15,4 +17,5 @@ public:
 private:
     BaseObject* pPlayer_    = nullptr;
     BaseObject* pEnemy_     = nullptr;
+    BaseObject* pCore_      = nullptr;
 };
