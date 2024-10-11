@@ -3,6 +3,7 @@
 #include <string>
 #include <type_traits>
 
+#include <functional>
 #include <Vector2.h>
 
 #ifdef _DEBUG
@@ -12,6 +13,8 @@
 
 namespace ImGuiTemplate
 {
+    void VariableTable(const std::string& _stringID, std::function<void()> _function);
+
     template <typename T>
     void VariableTableRow(const std::string& _varName, const T _var)
     {

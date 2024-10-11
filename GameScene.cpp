@@ -1,6 +1,8 @@
 #include "GameScene.h"
 
 #include <Novice.h>
+#include "Player.h"
+#include "Object/Enemy/Enemy.h"
 
 #include <cmath>
 #include <numbers>
@@ -17,14 +19,21 @@ void GameScene::Initialize()
 
     pPlayer_ = new Player();
     pPlayer_->Initialize();
+
+    pEnemy_ = new Enemy();
+    pEnemy_->Initialize();
+
+    static_cast<Enemy*>(pEnemy_)->SetTargetPosition(pPlayer_->GetWorldPosition());
 }
 
 void GameScene::Update()
 {
     pPlayer_->Update();
+    pEnemy_->Update();
 }
 
 void GameScene::Draw()
 {
     pPlayer_->Draw();
+    pEnemy_->Draw();
 }

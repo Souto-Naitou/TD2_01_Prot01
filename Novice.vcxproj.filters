@@ -35,6 +35,15 @@
     <Filter Include="External\ImGuiDebugManager">
       <UniqueIdentifier>{01d1e650-bcda-43c4-9eae-9bd07f80240b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{cdb64e88-3611-4319-b50e-2b592669e240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BaseObject">
+      <UniqueIdentifier>{5a3ffb4d-2d96-491e-b444-abd8978583bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InputCenter">
+      <UniqueIdentifier>{9282346b-7e84-4e8d-862e-345d67e3cdef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -82,6 +91,15 @@
     </ClCompile>
     <ClCompile Include="External\ImGuiDebugManager\DebugManager.cpp">
       <Filter>External\ImGuiDebugManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Enemy\Enemy.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiTemplates.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="InputCenter.cpp">
+      <Filter>KamataEngine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -207,6 +225,15 @@
     </ClInclude>
     <ClInclude Include="ImGuiTemplates.h">
       <Filter>External\ImGuiDebugManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Enemy\Enemy.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseObject.h">
+      <Filter>BaseObject</Filter>
+    </ClInclude>
+    <ClInclude Include="InputCenter.h">
+      <Filter>InputCenter</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

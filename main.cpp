@@ -3,6 +3,7 @@
 #include <easing/EasingManager/EasingManager.h>
 #include "GameScene.h"
 #include "ImGuiDebugManager/DebugManager.h"
+#include "InputCenter.h"
 
 const char kWindowTitle[] = "学籍番号";
 
@@ -12,12 +13,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// ライブラリの初期化
 	Novice::Initialize(kWindowTitle, 1280, 720);
 
-	// キー入力結果を受け取る箱
-	char keys[256] = {0};
-	char preKeys[256] = {0};
+	char* pKeys, *pPreKeys;
+	pKeys = pPreKeys = nullptr;
 
 	DebugManager* pDebugManager = DebugManager::GetInstance();
 	pDebugManager->ChangeFont();
+
+	InputCenter* pInput = InputCenter::GetInstance();
+	pKeys = pInput->GetKeyPtr();
+	pPreKeys = pInput->GetPreKeyPtr();
 
 	GameScene* pGameScene_ = new GameScene;
 	pGameScene_->Initialize();
@@ -29,14 +33,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		// フレームの開始
 		Novice::BeginFrame();
 
-		// キー入力を受け取る
-		memcpy(preKeys, keys, 256);
-		Novice::GetHitKeyStateAll(keys);
-
 		///
 		/// ↓更新処理ここから
 		///
 		
+		pInput->UpdateState();
+
 		pDebugManager->DrawUI();
 
 		pEasingManager->DrawUI();
@@ -61,7 +63,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		Novice::EndFrame();
 
 		// ESCキーが押されたらループを抜ける
-		if (preKeys[DIK_ESCAPE] == 0 && keys[DIK_ESCAPE] != 0) {
+		if (pKeys[DIK_ESCAPE] == 0 && pPreKeys[DIK_ESCAPE] != 0) {
 			break;
 		}
 	}

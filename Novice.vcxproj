@@ -124,11 +124,15 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="External\math\impl\Vector4.cpp" />
     <ClCompile Include="External\math\MathExtension\mathExtension.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="ImGuiTemplates.cpp" />
+    <ClCompile Include="InputCenter.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Object\Enemy\Enemy.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\DirectXGame\3d\Camera.h" />
+    <ClInclude Include="BaseObject.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\base\StringUtility.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\math\Matrix4x4.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\math\Vector2.h" />
@@ -168,6 +172,8 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="External\math\Vector4.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="ImGuiTemplates.h" />
+    <ClInclude Include="InputCenter.h" />
+    <ClInclude Include="Object\Enemy\Enemy.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
