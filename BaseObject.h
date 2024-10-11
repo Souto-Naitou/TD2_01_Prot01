@@ -4,6 +4,10 @@
 class BaseObject
 {
 public:
+    virtual void Initialize() {};
+    virtual void Update() {};
+    virtual void Draw() {};
+
     Vector2 GetWorldPosition() const { return position_; };
 
 protected:

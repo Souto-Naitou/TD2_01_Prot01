@@ -54,7 +54,7 @@ void Enemy::Draw()
         static_cast<int>(vertices[0].x), static_cast<int>(vertices[0].y),
         static_cast<int>(vertices[1].x), static_cast<int>(vertices[1].y),
         static_cast<int>(vertices[2].x), static_cast<int>(vertices[2].y),
-        WHITE,
+        RED,
         kFillModeSolid
     );
 

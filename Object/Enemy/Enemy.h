@@ -3,7 +3,7 @@
 #include "BaseObject.h"
 #include <Vector2.h>
 
-class Enemy : BaseObject
+class Enemy : public BaseObject
 {
 public:
 
