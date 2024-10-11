@@ -25,8 +25,8 @@ void Player::Initialize()
     pEasingBoxResize_ = std::make_unique<Easing>("DecreaseSize", Easing::EaseType::EaseOutCubic, 0.5);
     pEasingBoxTemp_ = std::make_unique<Easing>("IncreaseSize", Easing::EaseType::EaseOutCubic, 0.5);
 
-    originPosition_.x = 640.0f;
-    originPosition_.y = 360.0f;
+    position_.x = 640.0f;
+    position_.y = 360.0f;
     radius_current_ = radius_default_;
 }
 
@@ -67,8 +67,8 @@ void Player::Update()
     {
         Vector2 result = {};
         theta += 2.0f / resolution_ * 3.141592f;
-        result.x = originPosition_.x + std::cosf(theta) * radius_current_ - std::sinf(theta) * radius_current_;
-        result.y = std::sinf(theta) * radius_current_ + originPosition_.y + std::cosf(theta) * radius_current_;
+        result.x = position_.x + std::cosf(theta) * radius_current_ - std::sinf(theta) * radius_current_;
+        result.y = std::sinf(theta) * radius_current_ + position_.y + std::cosf(theta) * radius_current_;
         circle_[i] = result;
     }
 }
@@ -94,24 +94,20 @@ void Player::DebugWindow()
 {
 #ifdef _DEBUG
 
-    ImGui::DragFloat2("座標", &originPosition_.x, 1.0f);    
+    ImGui::DragFloat2("座標", &position_.x, 1.0f);
     ImGui::InputInt("頂点数", reinterpret_cast<int*>(&resolution_));
     if (!resolution_) { resolution_ = 1; }
 
-    if (ImGui::BeginTable("Variables", 2, ImGuiTableFlags_Hideable | ImGuiTableFlags_Resizable | ImGuiTableFlags_Borders))
+    auto pFunc = [&]()
     {
-        ImGui::TableSetupColumn("変数名");
-        ImGui::TableSetupColumn("値");
-        ImGui::TableHeadersRow();
-
         ImGuiTemplate::VariableTableRow("circle_", circle_);
         ImGuiTemplate::VariableTableRow("radius_current_", radius_current_);
         ImGuiTemplate::VariableTableRow("radius_timeRelease_", radius_timeRelease_);
         ImGuiTemplate::VariableTableRow("radius_default_", radius_default_);
         ImGuiTemplate::VariableTableRow("radius_min_", radius_min_);
+    };
 
-        ImGui::EndTable();
-    }
+    ImGuiTemplate::VariableTable("Player", pFunc);
 
 #endif // _DEBUG
 }

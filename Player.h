@@ -3,12 +3,13 @@
 
 #include <easing/Easing.h>
 #include <Vector2.h>
+#include "BaseObject.h"
 
 #include <vector>
 #include <chrono>
 #include <memory>
 
-class Player
+class Player : public BaseObject
 {
 public:
     Player();
@@ -30,7 +31,6 @@ private:
     float radius_timeRelease_ = 0.0f;
 
     size_t resolution_ = 4u;
-    Vector2 originPosition_ = {};
 
     std::chrono::system_clock::time_point startTime_;
     std::unique_ptr<Easing> pEasingBoxResize_;
