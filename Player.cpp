@@ -28,6 +28,7 @@ void Player::Initialize()
     position_.x = 640.0f;
     position_.y = 360.0f;
     radius_current_ = radius_default_;
+    collider_.SetColliderID("Player");
 }
 
 void Player::Update()
@@ -57,9 +58,9 @@ void Player::Update()
 
     std::chrono::system_clock::time_point nowTime = std::chrono::system_clock::now();
 
-    if (circle_.size() != resolution_)
+    if (vertices_.size() != resolution_)
     {
-        circle_.resize(resolution_);
+        vertices_.resize(resolution_);
     }
 
     float theta = 0;
@@ -69,8 +70,10 @@ void Player::Update()
         theta += 2.0f / resolution_ * 3.141592f;
         result.x = position_.x + std::cosf(theta) * radius_current_ - std::sinf(theta) * radius_current_;
         result.y = std::sinf(theta) * radius_current_ + position_.y + std::cosf(theta) * radius_current_;
-        circle_[i] = result;
+        vertices_[i] = result;
     }
+
+    collider_.SetVertices(&vertices_);
 }
 
 void Player::Draw()
@@ -78,14 +81,14 @@ void Player::Draw()
     for (int i = 0; i < resolution_ - 1; i++)
     {
         Novice::DrawLine(
-            static_cast<int>(circle_[i].x), static_cast<int>(circle_[i].y),
-            static_cast<int>(circle_[i + 1].x), static_cast<int>(circle_[i + 1].y),
+            static_cast<int>(vertices_[i].x), static_cast<int>(vertices_[i].y),
+            static_cast<int>(vertices_[i + 1].x), static_cast<int>(vertices_[i + 1].y),
             WHITE
         );
     }
     Novice::DrawLine(
-        static_cast<int>(circle_[resolution_ - 1].x), static_cast<int>(circle_[resolution_ - 1].y),
-        static_cast<int>(circle_[0].x), static_cast<int>(circle_[0].y),
+        static_cast<int>(vertices_[resolution_ - 1].x), static_cast<int>(vertices_[resolution_ - 1].y),
+        static_cast<int>(vertices_[0].x), static_cast<int>(vertices_[0].y),
         WHITE
     );
 }
@@ -100,7 +103,7 @@ void Player::DebugWindow()
 
     auto pFunc = [&]()
     {
-        ImGuiTemplate::VariableTableRow("circle_", circle_);
+        ImGuiTemplate::VariableTableRow("circle_", vertices_);
         ImGuiTemplate::VariableTableRow("radius_current_", radius_current_);
         ImGuiTemplate::VariableTableRow("radius_timeRelease_", radius_timeRelease_);
         ImGuiTemplate::VariableTableRow("radius_default_", radius_default_);

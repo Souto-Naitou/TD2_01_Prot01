@@ -16,6 +16,7 @@ void Enemy::Initialize()
     position_ = { 640, 360 };
     radius_ = 20.0f;
     ellipseAB_ = { 20.0f ,10.0f };
+    collider_.SetColliderID("Enemy");
 }
 
 void Enemy::Update()
@@ -42,8 +43,10 @@ void Enemy::Update()
         theta += 2.0f / 3 * 3.141592f;
         result.x = ellipseAB_.x * std::cosf(theta);
         result.y = ellipseAB_.y * std::sinf(theta);
-        vertices[i] = result.Rotated(rotation_) + position_;
+        vertices_[i] = result.Rotated(rotation_) + position_;
     }
+
+    collider_.SetVertices(vertices_, 3);
 
     return;
 }
@@ -51,9 +54,9 @@ void Enemy::Update()
 void Enemy::Draw()
 {
     Novice::DrawTriangle(
-        static_cast<int>(vertices[0].x), static_cast<int>(vertices[0].y),
-        static_cast<int>(vertices[1].x), static_cast<int>(vertices[1].y),
-        static_cast<int>(vertices[2].x), static_cast<int>(vertices[2].y),
+        static_cast<int>(vertices_[0].x), static_cast<int>(vertices_[0].y),
+        static_cast<int>(vertices_[1].x), static_cast<int>(vertices_[1].y),
+        static_cast<int>(vertices_[2].x), static_cast<int>(vertices_[2].y),
         RED,
         kFillModeSolid
     );

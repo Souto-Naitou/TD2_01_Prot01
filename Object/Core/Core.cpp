@@ -5,6 +5,8 @@ void Core::Initialize()
 {
     position_ = { 640, 360 };
     boxCore_.MakeSquare(30);
+    collider_.SetColliderID("Core");
+    collider_.SetVertices(boxCore_.GetVertices());
 }
 
 void Core::Update()

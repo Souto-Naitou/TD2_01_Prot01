@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BaseObject.h"
+#include "Collision/Collider.h"
 #include <Vector2.h>
 
 class Enemy : public BaseObject
@@ -14,10 +15,13 @@ public:
     void Update();
     void Draw();
 
+    Collider* GetCollider() { return &collider_; }
+
     void SetTargetPosition(const Vector2& _target) { positionTarget_ = _target; }
 
 private:
-    Vector2 vertices[3] = {};
+    Collider collider_ = {};
+    Vector2 vertices_[3] = {};
 
     Vector2 positionTarget_ = {};
     Vector2 distanceToTarget = {};

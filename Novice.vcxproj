@@ -111,6 +111,8 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="C:\KamataEngine\Adapter\Novice.cpp" />
+    <ClCompile Include="Collision\Collider.cpp" />
+    <ClCompile Include="Collision\CollisionManager.cpp" />
     <ClCompile Include="External\easing\CSVLoader.cpp" />
     <ClCompile Include="External\easing\EaseInterpolation.cpp" />
     <ClCompile Include="External\easing\Easing.cpp" />
@@ -161,6 +163,8 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="C:\KamataEngine\DirectXGame\input\Input.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\scene\GameScene.h" />
     <ClInclude Include="C:\KamataEngine\Adapter\Novice.h" />
+    <ClInclude Include="Collision\Collider.h" />
+    <ClInclude Include="Collision\CollisionManager.h" />
     <ClInclude Include="External\easing\CSVLoader.h" />
     <ClInclude Include="External\easing\csvStructure\CSVData.h" />
     <ClInclude Include="External\easing\Easing.h" />
@@ -179,6 +183,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="Object\Core\Core.h" />
     <ClInclude Include="Object\Enemy\Enemy.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Shape.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
