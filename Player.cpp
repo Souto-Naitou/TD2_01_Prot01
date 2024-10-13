@@ -73,6 +73,7 @@ void Player::Update()
         vertices_[i] = result;
     }
 
+    pRotateBoard_->SetVertices(vertices_);
     collider_.SetVertices(&vertices_);
 }
 
