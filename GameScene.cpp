@@ -20,6 +20,7 @@ GameScene::~GameScene()
     delete pEnemy_; pEnemy_ = nullptr;
     delete pCore_; pCore_ = nullptr;
     delete pCollisionManager_; pCollisionManager_ = nullptr;
+    delete pNestWallLeft_; pNestWallLeft_ = nullptr;
 }
 
 void GameScene::Initialize()
@@ -47,6 +48,10 @@ void GameScene::Initialize()
     pCollisionManager_->RegisterCollider(pCore_->GetCollider());
     pCore_->GetCollider()->SetAttribute(pCollisionManager_->GetNewAttribute("Core"));
 
+    pNestWallLeft_ = new NestWall("NestWallLeft");
+    pNestWallLeft_->SetRect(40, 720, { 0, 0 });
+    pNestWallLeft_->Initialize();
+
     static_cast<Enemy*>(pEnemy_)->SetTargetPosition(pPlayer_->GetWorldPosition());
 }
 
@@ -55,12 +60,14 @@ void GameScene::Update()
     pPlayer_->Update();
     pEnemy_->Update();
     pCore_->Update();
+    pNestWallLeft_->Update();
 
     pCollisionManager_->CheckAllCollision();
 }
 
 void GameScene::Draw()
 {
+    pNestWallLeft_->Draw();
     pPlayer_->Draw();
     pEnemy_->Draw();
     pCore_->Draw();
