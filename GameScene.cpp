@@ -51,6 +51,8 @@ void GameScene::Initialize()
     pNestWallLeft_ = new NestWall("NestWallLeft");
     pNestWallLeft_->SetRect(40, 720, { 0, 0 });
     pNestWallLeft_->Initialize();
+    pCollisionManager_->RegisterCollider(pNestWallLeft_->GetCollider());
+    pNestWallLeft_->GetCollider()->SetAttribute(pCollisionManager_->GetNewAttribute("NestWallLeft"));
 
     static_cast<Enemy*>(pEnemy_)->SetTargetPosition(pPlayer_->GetWorldPosition());
 }
