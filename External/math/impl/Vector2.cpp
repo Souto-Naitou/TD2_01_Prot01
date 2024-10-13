@@ -14,6 +14,11 @@ float Vector2::Dot(const Vector2& _v) const
     return x * _v.x + y * _v.y;
 }
 
+float Vector2::Cross(const Vector2& _v) const
+{
+    return x * _v.y - y * _v.x;
+}
+
 float Vector2::Length() const
 {
     return std::sqrtf(x * x + y * y);
@@ -24,13 +29,25 @@ float Vector2::LengthWithoutRoot() const
     return x * x + y * y;
 }
 
+Vector2 Vector2::Perpendicular() const
+{
+    return Vector2(-y, x);
+}
+
 Vector2 Vector2::Normalize() const
 {
     float length = this->Length();
+    if (length == 0) return {};
     return Vector2(
         x / length,
         y / length
     );
+}
+
+float Vector2::Projection(const Vector2& _a) const
+{
+    Vector2 axis = _a.Normalize();
+    return (*this).Dot(axis);
 }
 
 void Vector2::Lerp(const Vector2& _begin, const Vector2& _end, float _t)

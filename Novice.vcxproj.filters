@@ -47,6 +47,15 @@
     <Filter Include="Core">
       <UniqueIdentifier>{25fd103b-76c9-4b20-9383-a909da27cce7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CollisionManager">
+      <UniqueIdentifier>{93416e01-5a43-448c-b1d9-ebdfa6b27efb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collider">
+      <UniqueIdentifier>{92f0fb15-b00b-4ba7-bde9-576a38393de3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shape">
+      <UniqueIdentifier>{8d84f5fd-cf3e-4558-8ea2-19675103a9c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -109,6 +118,12 @@
     </ClCompile>
     <ClCompile Include="External\math\impl\Rect2.cpp">
       <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision\CollisionManager.cpp">
+      <Filter>CollisionManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision\Collider.cpp">
+      <Filter>KamataEngine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -249,6 +264,15 @@
     </ClInclude>
     <ClInclude Include="External\math\Rect2.h">
       <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision\CollisionManager.h">
+      <Filter>CollisionManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision\Collider.h">
+      <Filter>Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Shape.h">
+      <Filter>Shape</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,6 +1,9 @@
 #pragma once
 
-#include "BaseObject.h"
+#include "Player.h"
+#include "Object/Enemy/Enemy.h"
+#include "Object/Core/Core.h"
+#include "Collision/CollisionManager.h"
 
 #include <Vector2.h>
 #include <vector>
@@ -15,7 +18,8 @@ public:
     void Draw();
 
 private:
-    BaseObject* pPlayer_    = nullptr;
-    BaseObject* pEnemy_     = nullptr;
-    BaseObject* pCore_      = nullptr;
+    CollisionManager*   pCollisionManager_  = nullptr;
+    Player*         pPlayer_            = nullptr;
+    Enemy*         pEnemy_             = nullptr;
+    Core*         pCore_              = nullptr;
 };

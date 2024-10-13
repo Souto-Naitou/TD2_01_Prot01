@@ -4,6 +4,7 @@
 #include <easing/Easing.h>
 #include <Vector2.h>
 #include "BaseObject.h"
+#include "Collision/Collider.h"
 
 #include <vector>
 #include <chrono>
@@ -19,11 +20,15 @@ public:
     void Update();
     void Draw();
 
+    Collider* GetCollider() { return &collider_; }
+
 private:
     char keys[256] = {};
     char preKeys[256] = {};
 
-    std::vector<Vector2> circle_ = {};
+    Collider collider_ = {};
+
+    std::vector<Vector2> vertices_ = {};
 
     float radius_default_ = 100.0f;
     float radius_min_ = 20.0f;
@@ -35,7 +40,6 @@ private:
     std::chrono::system_clock::time_point startTime_;
     std::unique_ptr<Easing> pEasingBoxResize_;
     std::unique_ptr<Easing> pEasingBoxTemp_;
-
 
 private:
     void DebugWindow();
