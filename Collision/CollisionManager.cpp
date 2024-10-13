@@ -54,8 +54,6 @@ void CollisionManager::DebugWindow()
         ImGui::TableSetupColumn("ColliderB");
         ImGui::TableHeadersRow();
 
-        ImGui::TableNextRow();
-        ImGui::TableNextColumn();
         for (auto& cpair : collisionNames_)
         {
             ImGui::TableNextRow();
