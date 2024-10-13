@@ -22,6 +22,7 @@ public:
     void                                SetVertices(const std::vector<Vector2>* _vertices);
     void                                SetVertices(Vector2* _vertices, size_t _size);
     void                                SetAttribute(uint32_t _attribute);
+    void                                SetMask(uint32_t _mask);
 
     virtual void                        OnCollision([[maybe_unused]] const Collider* _other) {}
 
