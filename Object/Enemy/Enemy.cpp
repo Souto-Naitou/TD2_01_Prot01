@@ -22,12 +22,13 @@ void Enemy::Initialize()
 void Enemy::Update()
 {
     distanceToTarget = positionTarget_ - position_;
-    if (distanceToTarget.x != 0)
+    if (distanceToTarget.x != 0 || distanceToTarget.y != 0)
         rotation_ = std::atan2(distanceToTarget.y , distanceToTarget.x);
 
     InputCenter::GetInstance()->WASDMove(position_, 3.0f);
 
     float theta = 0;
+
     //for (int i = 0; i < 3; i++)
     //{
     //    Vector2 result = {};
