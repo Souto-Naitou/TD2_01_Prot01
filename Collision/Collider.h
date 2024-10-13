@@ -28,7 +28,8 @@ public:
 
     inline  void                        OnCollision(const Collider* _other)
     {
-        onCollisionFunction_(_other);
+        if (onCollisionFunction_)
+            onCollisionFunction_(_other);
         return;
     }
 
