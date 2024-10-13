@@ -4,6 +4,7 @@
 #include "Vector2.h"
 #include <vector>
 #include <string>
+#include <functional>
 
 class CollisionManager;
 
@@ -23,10 +24,17 @@ public:
     void                                SetVertices(Vector2* _vertices, size_t _size);
     void                                SetAttribute(uint32_t _attribute);
     void                                SetMask(uint32_t _mask);
+    void                                SetOnCollision(std::function<void(const Collider*)> _func) { onCollisionFunction_ = _func; }
 
-    virtual void                        OnCollision([[maybe_unused]] const Collider* _other) {}
+    inline  void                        OnCollision(const Collider* _other)
+    {
+        onCollisionFunction_(_other);
+        return;
+    }
 
 private:
+
+    std::function<void(const Collider*)> onCollisionFunction_;
 
     Shape                   shape_              = Shape::Polygon;
     std::string             colliderID_         = {};
