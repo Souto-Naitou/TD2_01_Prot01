@@ -100,6 +100,24 @@ void CollisionManager::CheckCollisionPair(Collider* _colA, Collider* _colB)
                 break;
             }
         }
+        if (isCollide)
+        {
+            for (size_t i = 0; i < pVerticesB->size(); i++)
+            {
+                Vector2 edge = (*pVerticesB)[i] - (*pVerticesB)[(i + 1) % pVerticesB->size()];
+                Vector2 axis = edge.Perpendicular().Normalize();
+                // col1とcol2の投影をして、最小値・最大値を求める
+                float minA, maxA, minB, maxB;
+                ProjectShapeOnAxis(pVerticesA, axis, minA, maxA);
+                ProjectShapeOnAxis(pVerticesB, axis, minB, maxB);
+
+                if (maxA < minB || maxB < minA)
+                {
+                    isCollide = false;
+                    break;
+                }
+            }
+        }
     }
 
     if (isCollide)
