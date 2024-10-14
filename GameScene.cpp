@@ -20,6 +20,7 @@ GameScene::~GameScene()
     delete pEnemy_; pEnemy_ = nullptr;
     delete pCore_; pCore_ = nullptr;
     delete pCollisionManager_; pCollisionManager_ = nullptr;
+    delete pNestWallLeft_; pNestWallLeft_ = nullptr;
 }
 
 void GameScene::Initialize()
@@ -47,6 +48,11 @@ void GameScene::Initialize()
     pCollisionManager_->RegisterCollider(pCore_->GetCollider());
     pCore_->GetCollider()->SetAttribute(pCollisionManager_->GetNewAttribute("Core"));
 
+    MakeWall(&pNestWallLeft_, "NestWallLeft", 40, 720, { 0,0 });
+    MakeWall(&pNestWallTop_, "NestWallTop", 1280, 40, { 0,0 });
+    MakeWall(&pNestWallRight_, "NestWallRight", 40, 720, { 1240,0 });
+    MakeWall(&pNestWallBottom_, "NestWallBottom", 1280, 40, { 0,680 });
+
     static_cast<Enemy*>(pEnemy_)->SetTargetPosition(pPlayer_->GetWorldPosition());
 }
 
@@ -55,13 +61,31 @@ void GameScene::Update()
     pPlayer_->Update();
     pEnemy_->Update();
     pCore_->Update();
+    pNestWallLeft_->Update();
+    pNestWallTop_->Update();
+    pNestWallRight_->Update();
+    pNestWallBottom_->Update();
 
     pCollisionManager_->CheckAllCollision();
 }
 
 void GameScene::Draw()
 {
+    pNestWallLeft_->Draw();
     pPlayer_->Draw();
     pEnemy_->Draw();
     pCore_->Draw();
+    pNestWallLeft_->Draw();
+    pNestWallTop_->Draw();
+    pNestWallRight_->Draw();
+    pNestWallBottom_->Draw();
+}
+
+void GameScene::MakeWall(NestWall** _nestWall, std::string _id, int _width, int _height, Vector2 _origin)
+{
+    *_nestWall = new NestWall(_id);
+    (*_nestWall)->SetRect(_width, _height, _origin);
+    (*_nestWall)->Initialize();
+    pCollisionManager_->RegisterCollider((*_nestWall)->GetCollider());
+    (*_nestWall)->GetCollider()->SetAttribute(pCollisionManager_->GetNewAttribute("NestWall"));
 }

@@ -6,7 +6,12 @@ void Core::Initialize()
     position_ = { 640, 360 };
     boxCore_.MakeSquare(30);
     collider_.SetColliderID("Core");
-    collider_.SetVertices(boxCore_.GetVertices());
+    std::vector<Vector2> temp = boxCore_.GetVertices();
+    for (auto& v : temp)
+    {
+        v += position_;
+    }
+    collider_.SetVertices(std::move(temp));
 }
 
 void Core::Update()
