@@ -12,6 +12,7 @@ public:
     ~Core();
 
     void Initialize();
+    void RunSetMask();
     void Update();
     void Draw();
 
@@ -22,4 +23,5 @@ public:
 private:
     Rect2 boxCore_;
     Collider collider_;
+    CollisionManager* pCollisionManager; // シングルトンインスタンス
 };

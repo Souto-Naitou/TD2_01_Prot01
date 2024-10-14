@@ -13,6 +13,7 @@
 
 Player::Player()
 {
+    pCollisionManager_ = CollisionManager::GetInstance();
     DebugManager::GetInstance()->SetComponent("Player", std::bind(&Player::DebugWindow, this));
 }
 
@@ -23,7 +24,6 @@ Player::~Player()
 
 void Player::Initialize()
 {
-    pCollisionManager_ = CollisionManager::GetInstance();
     startTime_ = std::chrono::system_clock::now();
     pEasingBoxResize_ = std::make_unique<Easing>("DecreaseSize", Easing::EaseType::EaseOutCubic, 0.5);
     pEasingBoxTemp_ = std::make_unique<Easing>("IncreaseSize", Easing::EaseType::EaseOutCubic, 0.5);

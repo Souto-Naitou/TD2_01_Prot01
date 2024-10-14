@@ -16,19 +16,24 @@ Core::~Core()
 
 void Core::Initialize()
 {
-    CollisionManager* pCollisionManager = CollisionManager::GetInstance();
+    pCollisionManager = CollisionManager::GetInstance();
     position_ = { 640, 360 };
     boxCore_.MakeSquare(30);
     collider_.SetColliderID("Core");
     pCollisionManager->RegisterCollider(&collider_);
     collider_.SetAttribute(pCollisionManager->GetNewAttribute("Core"));
-  
+
     std::vector<Vector2> temp = boxCore_.GetVertices();
     for (auto& v : temp)
     {
         v += position_;
     }
     collider_.SetVertices(std::move(temp));
+}
+
+void Core::RunSetMask()
+{
+    collider_.SetMask(pCollisionManager->GetNewMask(collider_.GetColliderID(), "Player", "NestWall"));
 }
 
 void Core::Update()

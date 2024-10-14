@@ -33,16 +33,12 @@ void GameScene::Initialize()
 
     pPlayer_ = new Player();
     pPlayer_->Initialize();
-    pCollisionManager_->RegisterCollider(pPlayer_->GetCollider());
-    pPlayer_->GetCollider()->SetAttribute(pCollisionManager_->GetNewAttribute("Player"));
 
     pEnemy_ = new Enemy();
     pEnemy_->Initialize();
 
     pCore_ = new Core();
     pCore_->Initialize();
-    pCollisionManager_->RegisterCollider(pCore_->GetCollider());
-    pCore_->GetCollider()->SetAttribute(pCollisionManager_->GetNewAttribute("Core"));
 
     MakeWall(&pNestWallLeft_, "NestWallLeft", 40, 720, { 0,0 });
     MakeWall(&pNestWallTop_, "NestWallTop", 1280, 40, { 0,0 });
@@ -53,6 +49,8 @@ void GameScene::Initialize()
 
     /// マスクの生成にアトリビュートを使用するためInitialize後に行う
     pPlayer_->RunSetMask();
+
+    pCore_->RunSetMask();
 }
 
 void GameScene::Update()
