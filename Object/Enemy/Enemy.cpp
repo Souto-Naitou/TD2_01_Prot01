@@ -94,6 +94,6 @@ void Enemy::OnCollision(const Collider* _other) {
     if (_other->GetColliderID() == "Player")
     {
         // Playerとの衝突処理
-  
+
     }
 }

@@ -42,7 +42,7 @@ void GameScene::Initialize()
     pCore_ = new Core();
     pCore_->Initialize();
     pCollisionManager_->RegisterCollider(pCore_->GetCollider());
-　    pCore_->GetCollider()->SetAttribute(pCollisionManager_->GetNewAttribute("Core"));
+    pCore_->GetCollider()->SetAttribute(pCollisionManager_->GetNewAttribute("Core"));
 
     MakeWall(&pNestWallLeft_, "NestWallLeft", 40, 720, { 0,0 });
     MakeWall(&pNestWallTop_, "NestWallTop", 1280, 40, { 0,0 });

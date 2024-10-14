@@ -16,7 +16,7 @@ public:
     inline  Shape                       GetShape()                  const       { return shape_; }
     inline  unsigned int                GetRadius()                 const       { return radiusCollider_; }
     inline  std::vector<Vector2>*       GetVertices()                           { return &verticesCollider_; }
-    inline  std::string&                GetColliderID()                         { return colliderID_; }
+    inline  const std::string&          GetColliderID()             const       { return colliderID_; }
 
     inline  void                        SetColliderID(const std::string& _id)   { colliderID_ = _id; }
     void                                SetVertices(const std::vector<Vector2>&& _vertices);

@@ -1,7 +1,7 @@
 #include "Player.h"
 
 #include "ImGuiDebugManager/DebugManager.h"
-#include "Enemy.h"
+#include "Object/Enemy/Enemy.h"
 #include <Novice.h>
 #include <type_traits>
 #include "Collision/CollisionManager.h"
