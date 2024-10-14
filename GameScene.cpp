@@ -49,6 +49,8 @@ void GameScene::Initialize()
 
     /// マスクの生成にアトリビュートを使用するためInitialize後に行う
     pPlayer_->RunSetMask();
+
+    pCore_->RunSetMask();
 }
 
 void GameScene::Update()

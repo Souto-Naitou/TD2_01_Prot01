@@ -4,6 +4,7 @@
 #include "imgui.h"
 #include "ImGuiDebugManager/DebugManager.h"
 #include "InputCenter.h"
+#include "Player.h"
 #include <Novice.h>
 #include "Collision/CollisionManager.h"
 
@@ -22,6 +23,8 @@ void Enemy::Initialize()
 
     pCollisionManager->RegisterCollider(&collider_);
     collider_.SetAttribute(pCollisionManager->GetNewAttribute("Enemy"));
+    //Colliderにポインタを渡す
+    collider_.SetOnCollision(std::bind(&Enemy::OnCollision, this, std::placeholders::_1));
 }
 
 void Enemy::Update()
@@ -84,4 +87,13 @@ void Enemy::DebugWindow()
     ImGuiTemplate::VariableTable("Enemy", pFunc);
 
     return;
+}
+
+void Enemy::OnCollision(const Collider* _other) {
+    //_otherがPlayerかどうか確認
+    if (_other->GetColliderID() == "Player")
+    {
+        // Playerとの衝突処理
+
+    }
 }

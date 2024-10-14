@@ -1,6 +1,7 @@
 #include "Player.h"
 
 #include "ImGuiDebugManager/DebugManager.h"
+#include "Object/Enemy/Enemy.h"
 #include <Novice.h>
 #include <type_traits>
 #include "Collision/CollisionManager.h"
@@ -12,6 +13,7 @@
 
 Player::Player()
 {
+    pCollisionManager_ = CollisionManager::GetInstance();
     DebugManager::GetInstance()->SetComponent("Player", std::bind(&Player::DebugWindow, this));
 }
 
@@ -22,7 +24,6 @@ Player::~Player()
 
 void Player::Initialize()
 {
-    pCollisionManager_ = CollisionManager::GetInstance();
     startTime_ = std::chrono::system_clock::now();
     pEasingBoxResize_ = std::make_unique<Easing>("DecreaseSize", Easing::EaseType::EaseOutCubic, 0.5);
     pEasingBoxTemp_ = std::make_unique<Easing>("IncreaseSize", Easing::EaseType::EaseOutCubic, 0.5);
@@ -34,6 +35,8 @@ void Player::Initialize()
 
     pCollisionManager_->RegisterCollider(&collider_);
     collider_.SetAttribute(pCollisionManager_->GetNewAttribute("Player"));
+    //colliderにポインタを渡す
+    collider_.SetOnCollision(std::bind(&Player::OnCollision, this, std::placeholders::_1));
 }
 
 void Player::RunSetMask()
@@ -125,4 +128,12 @@ void Player::DebugWindow()
     ImGuiTemplate::VariableTable("Player", pFunc);
 
 #endif // _DEBUG
+}
+
+void Player::OnCollision(const Collider* _other) {
+    //_otherがEnemyかどうかを確認
+    if (_other->GetColliderID() == "Enemy") {
+        //Enemyとの衝突処理
+
+    }
 }
