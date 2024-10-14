@@ -24,4 +24,9 @@ private:
     Enemy*              pEnemy_             = nullptr;
     Core*               pCore_              = nullptr;
     NestWall*           pNestWallLeft_      = nullptr;
+    NestWall*           pNestWallTop_       = nullptr;
+    NestWall*           pNestWallRight_     = nullptr;
+    NestWall*           pNestWallBottom_    = nullptr;
+
+    void MakeWall(NestWall** _nestWall, std::string _id, int _width, int _height, Vector2 _origin);
 };

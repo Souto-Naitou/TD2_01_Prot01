@@ -7,6 +7,7 @@ NestWall::NestWall(std::string _ID)
 {
     id_ = _ID;
     DebugManager::GetInstance()->SetComponent(_ID.c_str(), std::bind(&NestWall::DebugWindow, this));
+    collider_.SetColliderID(id_);
 }
 
 NestWall::~NestWall()
@@ -16,7 +17,7 @@ NestWall::~NestWall()
 
 void NestWall::Initialize()
 {
-    collider_.SetColliderID("NestWall");
+
 }
 
 void NestWall::Update()
@@ -25,14 +26,15 @@ void NestWall::Update()
 
 void NestWall::Draw()
 {
-    Novice::DrawBox(rect_.x1, rect_.y1, rect_.x2, rect_.y2, 0.0f, BLUE, kFillModeWireFrame);
+    Rect2 newRect = rect_ + position_;
+    Novice::DrawBox(newRect.x1, newRect.y1, newRect.x2, newRect.y2, 0.0f, BLUE, kFillModeWireFrame);
 }
 
-void NestWall::SetRect(int _width, int _height, Vector2 _origin)
+void NestWall::SetRect(int _width, int _height, Vector2 _leftTop)
 {
     rect_.MakeRectangle(_width, _height, false);
-    collider_.SetVertices(rect_.GetVertices());
-    position_ = _origin;
+    collider_.SetVertices((rect_ + _leftTop).GetVertices());
+    position_ = _leftTop;
     return;
 }
 

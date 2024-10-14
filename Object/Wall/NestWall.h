@@ -17,7 +17,7 @@ public:
     void Draw();
 
     Collider* GetCollider() { return &collider_; }
-    void SetRect(int _width, int _height, Vector2 _origin);
+    void SetRect(int _width, int _height, Vector2 _leftTop);
 
 private:
     std::string id_;
