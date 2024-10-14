@@ -34,7 +34,11 @@ void GameScene::Initialize()
     pPlayer_ = new Player();
     pPlayer_->Initialize();
     pCollisionManager_->RegisterCollider(pPlayer_->GetCollider());
-    pPlayer_->GetCollider()->SetAttribute(pCollisionManager_->GetNewAttribute("Player"));
+    //Playerの属性とマスクの設定
+    uint32_t playerAttribute = pCollisionManager_->GetNewAttribute("Player");
+    pPlayer_->GetCollider()->SetAttribute(playerAttribute);
+    pPlayer_->GetCollider()->SetMask(~playerAttribute); 
+   // pPlayer_->GetCollider()->SetAttribute(pCollisionManager_->GetNewAttribute("Player"));
 
 
     pEnemy_ = new Enemy();
@@ -45,7 +49,11 @@ void GameScene::Initialize()
     pCore_ = new Core();
     pCore_->Initialize();
     pCollisionManager_->RegisterCollider(pCore_->GetCollider());
-    pCore_->GetCollider()->SetAttribute(pCollisionManager_->GetNewAttribute("Core"));
+    // Core の属性とマスクの設定
+    uint32_t coreAttribute = pCollisionManager_->GetNewAttribute("Core");
+    pCore_->GetCollider()->SetAttribute(coreAttribute);
+    pCore_->GetCollider()->SetMask(~coreAttribute);
+   // pCore_->GetCollider()->SetAttribute(pCollisionManager_->GetNewAttribute("Core"));
 
     static_cast<Enemy*>(pEnemy_)->SetTargetPosition(pPlayer_->GetWorldPosition());
 }

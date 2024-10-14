@@ -19,7 +19,7 @@ public:
     void Initialize();
     void Update();
     void Draw();
-
+    void OnCollision(const Collider* _other);
     Collider* GetCollider() { return &collider_; }
 
 private:

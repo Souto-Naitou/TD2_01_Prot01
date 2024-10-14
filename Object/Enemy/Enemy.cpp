@@ -4,6 +4,7 @@
 #include "imgui.h"
 #include "ImGuiDebugManager/DebugManager.h"
 #include "InputCenter.h"
+#include "Player.h"
 #include <Novice.h>
 
 
@@ -76,4 +77,13 @@ void Enemy::DebugWindow()
     ImGuiTemplate::VariableTable("Enemy", pFunc);
 
     return;
+}
+
+void Enemy::OnCollision(const Collider* _other) {
+    //_otherがPlayerかどうか確認
+    if (_other->GetColliderID() == "Player")
+    {
+        // Playerとの衝突処理
+  
+    }
 }
