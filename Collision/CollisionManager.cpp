@@ -32,16 +32,24 @@ void CollisionManager::ClearColliderList()
     colliders_.clear();
 }
 
-int32_t CollisionManager::GetNewAttribute(std::string _id)
+uint32_t CollisionManager::GetNewAttribute(std::string _id)
 {
+    if (attributeList_.size() == 0)
+    {
+        attributeList_.push_back({ _id, 1 });
+        return 1;
+    }
     for (auto& attributePair : attributeList_)
     {
-        if (attributePair.first.compare(_id))
+        if (attributePair.first.compare(_id) == 0)
         {
             return attributePair.second;
         }
     }
-    attributeList_.push_back({ _id, static_cast<uint32_t>(attributeList_.size()) + 1 });
+
+    uint32_t result = static_cast<uint32_t>(attributeList_.back().second << 1);
+
+    attributeList_.push_back({ _id, result});
 
     return attributeList_.back().second;
 }
@@ -54,8 +62,6 @@ void CollisionManager::DebugWindow()
         ImGui::TableSetupColumn("ColliderB");
         ImGui::TableHeadersRow();
 
-        ImGui::TableNextRow();
-        ImGui::TableNextColumn();
         for (auto& cpair : collisionNames_)
         {
             ImGui::TableNextRow();
@@ -100,6 +106,24 @@ void CollisionManager::CheckCollisionPair(Collider* _colA, Collider* _colB)
             {
                 isCollide = false;
                 break;
+            }
+        }
+        if (isCollide)
+        {
+            for (size_t i = 0; i < pVerticesB->size(); i++)
+            {
+                Vector2 edge = (*pVerticesB)[i] - (*pVerticesB)[(i + 1) % pVerticesB->size()];
+                Vector2 axis = edge.Perpendicular().Normalize();
+                // col1とcol2の投影をして、最小値・最大値を求める
+                float minA, maxA, minB, maxB;
+                ProjectShapeOnAxis(pVerticesA, axis, minA, maxA);
+                ProjectShapeOnAxis(pVerticesB, axis, minB, maxB);
+
+                if (maxA < minB || maxB < minA)
+                {
+                    isCollide = false;
+                    break;
+                }
             }
         }
     }

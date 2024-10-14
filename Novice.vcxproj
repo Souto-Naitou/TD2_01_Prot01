@@ -132,6 +132,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object\Core\Core.cpp" />
     <ClCompile Include="Object\Enemy\Enemy.cpp" />
+    <ClCompile Include="Object\Wall\NestWall.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -182,6 +183,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="InputCenter.h" />
     <ClInclude Include="Object\Core\Core.h" />
     <ClInclude Include="Object\Enemy\Enemy.h" />
+    <ClInclude Include="Object\Wall\NestWall.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Shape.h" />
   </ItemGroup>
