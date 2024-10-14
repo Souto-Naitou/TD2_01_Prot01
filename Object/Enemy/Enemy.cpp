@@ -5,10 +5,12 @@
 #include "ImGuiDebugManager/DebugManager.h"
 #include "InputCenter.h"
 #include <Novice.h>
+#include "Collision/CollisionManager.h"
 
 
 void Enemy::Initialize()
 {
+    CollisionManager* pCollisionManager = CollisionManager::GetInstance();
     DebugManager::GetInstance()->SetComponent("Enemy", std::bind(&Enemy::DebugWindow, this));
     keys_ = InputCenter::GetInstance()->GetKeyPtr();
     preKeys_ = InputCenter::GetInstance()->GetKeyPtr();
@@ -17,6 +19,9 @@ void Enemy::Initialize()
     radius_ = 20.0f;
     ellipseAB_ = { 20.0f ,10.0f };
     collider_.SetColliderID("Enemy");
+
+    pCollisionManager->RegisterCollider(&collider_);
+    collider_.SetAttribute(pCollisionManager->GetNewAttribute("Enemy"));
 }
 
 void Enemy::Update()
@@ -72,6 +77,8 @@ void Enemy::DebugWindow()
         ImGuiTemplate::VariableTableRow("Position", position_);
         ImGuiTemplate::VariableTableRow("DistanceToTarget", distanceToTarget);
         ImGuiTemplate::VariableTableRow("rotation_", rotation_);
+        ImGuiTemplate::VariableTableRow("Attribute", collider_.GetCollisionAttribute());
+        ImGuiTemplate::VariableTableRow("Mask", collider_.GetCollisionMask());
     };
 
     ImGuiTemplate::VariableTable("Enemy", pFunc);

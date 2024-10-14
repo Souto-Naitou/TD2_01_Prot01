@@ -25,7 +25,11 @@ namespace ImGuiTemplate
         ImGui::Text(_varName.c_str());
         ImGui::TableNextColumn();
 
-        if constexpr (std::is_integral<T>::value)
+        if constexpr (std::is_same<T, uint32_t>::value)
+        {
+            ImGui::Text("%u", _var);
+        }
+        else if constexpr (std::is_integral<T>::value)
         {
             ImGui::Text("%d", _var);
         }

@@ -3,6 +3,7 @@
 #include "ImGuiDebugManager/DebugManager.h"
 #include <Novice.h>
 #include <type_traits>
+#include "Collision/CollisionManager.h"
 
 #ifdef _DEBUG
 #include <imgui.h>
@@ -21,6 +22,7 @@ Player::~Player()
 
 void Player::Initialize()
 {
+    pCollisionManager_ = CollisionManager::GetInstance();
     startTime_ = std::chrono::system_clock::now();
     pEasingBoxResize_ = std::make_unique<Easing>("DecreaseSize", Easing::EaseType::EaseOutCubic, 0.5);
     pEasingBoxTemp_ = std::make_unique<Easing>("IncreaseSize", Easing::EaseType::EaseOutCubic, 0.5);
@@ -29,6 +31,14 @@ void Player::Initialize()
     position_.y = 360.0f;
     radius_current_ = radius_default_;
     collider_.SetColliderID("Player");
+
+    pCollisionManager_->RegisterCollider(&collider_);
+    collider_.SetAttribute(pCollisionManager_->GetNewAttribute("Player"));
+}
+
+void Player::RunSetMask()
+{
+    collider_.SetMask(pCollisionManager_->GetNewMask(collider_.GetColliderID(), "Core"));
 }
 
 void Player::Update()
@@ -108,6 +118,8 @@ void Player::DebugWindow()
         ImGuiTemplate::VariableTableRow("radius_timeRelease_", radius_timeRelease_);
         ImGuiTemplate::VariableTableRow("radius_default_", radius_default_);
         ImGuiTemplate::VariableTableRow("radius_min_", radius_min_);
+        ImGuiTemplate::VariableTableRow("Attribute", collider_.GetCollisionAttribute());
+        ImGuiTemplate::VariableTableRow("Mask", collider_.GetCollisionMask());
     };
 
     ImGuiTemplate::VariableTable("Player", pFunc);

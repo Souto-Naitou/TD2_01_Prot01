@@ -32,16 +32,24 @@ void CollisionManager::ClearColliderList()
     colliders_.clear();
 }
 
-int32_t CollisionManager::GetNewAttribute(std::string _id)
+uint32_t CollisionManager::GetNewAttribute(std::string _id)
 {
+    if (attributeList_.size() == 0)
+    {
+        attributeList_.push_back({ _id, 1 });
+        return 1;
+    }
     for (auto& attributePair : attributeList_)
     {
-        if (attributePair.first.compare(_id))
+        if (attributePair.first.compare(_id) == 0)
         {
             return attributePair.second;
         }
     }
-    attributeList_.push_back({ _id, static_cast<uint32_t>(attributeList_.size()) + 1 });
+
+    uint32_t result = static_cast<uint32_t>(attributeList_.back().second << 1);
+
+    attributeList_.push_back({ _id, result});
 
     return attributeList_.back().second;
 }

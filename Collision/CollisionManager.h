@@ -19,9 +19,9 @@ public:
     void CheckAllCollision();
     void RegisterCollider(Collider* _collider);
     void ClearColliderList();
-    int32_t GetNewAttribute(std::string _id);
+    uint32_t GetNewAttribute(std::string _id);
     template<typename... Args>
-    int32_t GetNewMask(std::string _id, Args... _ignoreNames)
+    uint32_t GetNewMask(std::string _id, Args... _ignoreNames)
     {
         uint32_t result = 0;
         for (auto& attributePair : attributeList_)
@@ -31,7 +31,7 @@ public:
                 result = ~attributePair.second;
             }
         }
-        for (std::string name : std::initializer_list<std::string>(_ignoreNames))
+        for (std::string name : std::initializer_list<std::string>{ _ignoreNames... })
         {
             for (auto& attributePair : attributeList_)
             {
