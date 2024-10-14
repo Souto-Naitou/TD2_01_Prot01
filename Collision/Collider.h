@@ -24,7 +24,7 @@ public:
     void                                SetVertices(Vector2* _vertices, size_t _size);
     void                                SetAttribute(uint32_t _attribute);
     void                                SetMask(uint32_t* _mask);
-    void                                SetOnCollision(std::function<void(const Collider*)> _func) { onCollisionFunction_ = _func; }
+    void                                SetOnCollision(const std::function<void(const Collider*)>& _func) { onCollisionFunction_ = _func; }
 
     inline  void                        OnCollision(const Collider* _other)
     {
