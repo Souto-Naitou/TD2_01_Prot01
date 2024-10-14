@@ -23,6 +23,8 @@ void Enemy::Initialize()
 
     pCollisionManager->RegisterCollider(&collider_);
     collider_.SetAttribute(pCollisionManager->GetNewAttribute("Enemy"));
+    //Colliderにポインタを渡す
+    collider_.SetOnCollision(std::bind(&Enemy::OnCollision, this, std::placeholders::_1));
 }
 
 void Enemy::Update()

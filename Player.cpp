@@ -35,6 +35,8 @@ void Player::Initialize()
 
     pCollisionManager_->RegisterCollider(&collider_);
     collider_.SetAttribute(pCollisionManager_->GetNewAttribute("Player"));
+    //colliderにポインタを渡す
+    collider_.SetOnCollision(std::bind(&Player::OnCollision, this, std::placeholders::_1));
 }
 
 void Player::RunSetMask()
