@@ -8,12 +8,14 @@ class Core : public BaseObject
 {
 public:
 
-    Core() = default;
-    ~Core() = default;
+    Core();
+    ~Core();
 
     void Initialize();
     void Update();
     void Draw();
+
+    void DebugWindow();
 
     Collider* GetCollider() { return &collider_; }
 

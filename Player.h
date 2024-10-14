@@ -17,6 +17,7 @@ public:
     ~Player();
 
     void Initialize();
+    void RunSetMask();
     void Update();
     void Draw();
 
@@ -42,5 +43,6 @@ private:
     std::unique_ptr<Easing> pEasingBoxTemp_;
 
 private:
+    CollisionManager* pCollisionManager_;
     void DebugWindow();
 };

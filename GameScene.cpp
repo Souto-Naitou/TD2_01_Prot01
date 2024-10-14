@@ -19,7 +19,6 @@ GameScene::~GameScene()
     delete pPlayer_; pPlayer_ = nullptr;
     delete pEnemy_; pEnemy_ = nullptr;
     delete pCore_; pCore_ = nullptr;
-    delete pCollisionManager_; pCollisionManager_ = nullptr;
 }
 
 void GameScene::Initialize()
@@ -28,26 +27,22 @@ void GameScene::Initialize()
     ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 #endif // _DEBUG
 
-    pCollisionManager_ = new CollisionManager();
+    pCollisionManager_ = CollisionManager::GetInstance();
     pCollisionManager_->Initialize();
 
     pPlayer_ = new Player();
     pPlayer_->Initialize();
-    pCollisionManager_->RegisterCollider(pPlayer_->GetCollider());
-    pPlayer_->GetCollider()->SetAttribute(pCollisionManager_->GetNewAttribute("Player"));
-
 
     pEnemy_ = new Enemy();
     pEnemy_->Initialize();
-    pCollisionManager_->RegisterCollider(pEnemy_->GetCollider());
-    pEnemy_->GetCollider()->SetAttribute(pCollisionManager_->GetNewAttribute("Enemy"));
 
     pCore_ = new Core();
     pCore_->Initialize();
-    pCollisionManager_->RegisterCollider(pCore_->GetCollider());
-    pCore_->GetCollider()->SetAttribute(pCollisionManager_->GetNewAttribute("Core"));
 
     static_cast<Enemy*>(pEnemy_)->SetTargetPosition(pPlayer_->GetWorldPosition());
+
+    /// マスクの生成にアトリビュートを使用するためInitialize後に行う
+    pPlayer_->RunSetMask();
 }
 
 void GameScene::Update()
