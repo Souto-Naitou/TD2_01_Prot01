@@ -7,7 +7,7 @@ NestWall::NestWall(std::string _ID)
 {
     id_ = _ID;
     DebugManager::GetInstance()->SetComponent(_ID.c_str(), std::bind(&NestWall::DebugWindow, this));
-    collider_.SetColliderID(id_);
+    pCollisionManager_ = CollisionManager::GetInstance();
 }
 
 NestWall::~NestWall()
@@ -17,7 +17,14 @@ NestWall::~NestWall()
 
 void NestWall::Initialize()
 {
+    collider_.SetColliderID("NestWall");
+    collider_.SetAttribute(pCollisionManager_->GetNewAttribute("NestWall"));
+    pCollisionManager_->RegisterCollider(&collider_);
+}
 
+void NestWall::RunSetMask()
+{
+    collider_.SetMask(pCollisionManager_->GetNewMask(collider_.GetColliderID(), "Player", "Core"));
 }
 
 void NestWall::Update()
@@ -42,7 +49,7 @@ void NestWall::DebugWindow()
 {
     auto pFunc = [&]()
     {
-        ImGuiTemplate::VariableTableRow("id_", id_.c_str());
+        ImGuiTemplate::VariableTableRow("id_", id_);
         ImGuiTemplate::VariableTableRow("rect_.LeftTop", rect_.LeftTop());
         ImGuiTemplate::VariableTableRow("rect_.RightBottom", rect_.RightBottom());
         ImGuiTemplate::VariableTableRow("collider_.GetCollisionAttribute", collider_.GetCollisionAttribute());
