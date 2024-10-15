@@ -8,17 +8,25 @@ class RotateBoard
 {
 public:
 
-    RotateBoard() = default;
-    ~RotateBoard() = default;
+    RotateBoard();
+    ~RotateBoard();
 
     void Initialize();
+    void RunSetMask();
     void Update();
     void Draw();
 
-    void SetVertices(const std::vector<Vector2>& _vertices) { parentVertices_ = _vertices; }
+    void SetVertices(const std::vector<Vector2>* _vertices);
+
+    void DebugWindow();
 
 private:
     Rect2 rect_;
-    std::vector<Vector2> parentVertices_;
+    const std::vector<Vector2>* parentVertices_;
     std::vector<Vector2> course_;
+    int32_t padding_ = 0;
+
+
+private:
+    void UpdateCourse();
 };
