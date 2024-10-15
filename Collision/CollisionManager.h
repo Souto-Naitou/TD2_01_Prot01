@@ -29,6 +29,7 @@ public:
             if (_id.compare(attributePair.first) == 0)
             {
                 result = ~attributePair.second;
+                break;
             }
         }
         for (std::string name : std::initializer_list<std::string>{ _ignoreNames... })
@@ -70,7 +71,7 @@ private:
     std::vector<Collider*> colliders_;
     std::vector<std::pair<std::string, std::string>> collisionNames_;
     std::vector<std::pair<std::string, uint32_t>> attributeList_;
-    std::vector<std::pair<std::string, uint32_t>> maskList_;
+    std::list<std::pair<std::string, uint32_t>> maskList_;
 
     void DebugWindow();
     void CheckCollisionPair(Collider* _colA, Collider* _colB);

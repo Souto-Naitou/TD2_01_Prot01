@@ -51,6 +51,10 @@ void GameScene::Initialize()
     pPlayer_->RunSetMask();
 
     pCore_->RunSetMask();
+    pNestWallLeft_->RunSetMask();
+    pNestWallTop_->RunSetMask();
+    pNestWallRight_->RunSetMask();
+    pNestWallBottom_->RunSetMask();
 }
 
 void GameScene::Update()
@@ -83,6 +87,4 @@ void GameScene::MakeWall(NestWall** _nestWall, std::string _id, int _width, int 
     *_nestWall = new NestWall(_id);
     (*_nestWall)->SetRect(_width, _height, _origin);
     (*_nestWall)->Initialize();
-    pCollisionManager_->RegisterCollider((*_nestWall)->GetCollider());
-    (*_nestWall)->GetCollider()->SetAttribute(pCollisionManager_->GetNewAttribute("NestWall"));
 }

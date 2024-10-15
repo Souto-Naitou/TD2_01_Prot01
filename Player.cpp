@@ -41,7 +41,7 @@ void Player::Initialize()
 
 void Player::RunSetMask()
 {
-    collider_.SetMask(pCollisionManager_->GetNewMask(collider_.GetColliderID(), "Core"));
+    collider_.SetMask(pCollisionManager_->GetNewMask(collider_.GetColliderID(), "Core", "NestWall"));
 }
 
 void Player::Update()

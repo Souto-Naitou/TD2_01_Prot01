@@ -4,6 +4,7 @@
 #include "BaseObject.h"
 #include "Collision/Collider.h"
 #include <string>
+#include "Collision/CollisionManager.h"
 
 class NestWall : public BaseObject
 {
@@ -13,6 +14,7 @@ public:
     ~NestWall();
 
     void Initialize();
+    void RunSetMask();
     void Update();
     void Draw();
 
@@ -23,6 +25,7 @@ private:
     std::string id_;
     Rect2 rect_;
     Collider collider_;
+    CollisionManager* pCollisionManager_;
 
     void DebugWindow();
 };

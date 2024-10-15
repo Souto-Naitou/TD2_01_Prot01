@@ -16,7 +16,7 @@ DebugManager::DebugManager()
 
 DebugManager::~DebugManager()
 {
-	
+
 }
 
 void DebugManager::DeleteComponent(const char* _strID)
@@ -55,7 +55,7 @@ void DebugManager::DrawUI()
 
 
 	ImGui::End();
-	
+
 
 	ImGui::PopID();
 #endif // _DEBUG
@@ -70,6 +70,7 @@ void DebugManager::ChangeFont()
 	fontcfg.OversampleH = 1;
 	fontcfg.PixelSnapH = 1;
 	fontcfg.GlyphOffset = ImVec2(0.0f, 0.0f);
+
 
 	ImFont* resultFont = io.Fonts->AddFontFromFileTTF(
 		"Resources/Font/NotoSansCJKjp-Light.ttf",
