@@ -4,6 +4,7 @@
 #include <easing/Easing.h>
 #include <Vector2.h>
 #include "BaseObject.h"
+#include "Object/RotateBoard/RotateBoard.h"
 #include "Collision/Collider.h"
 
 #include <vector>
@@ -24,19 +25,20 @@ public:
     Collider* GetCollider() { return &collider_; }
 
 private:
-    char keys[256] = {};
-    char preKeys[256] = {};
+    char keys[256]                  = {};
+    char preKeys[256]               = {};
 
-    Collider collider_ = {};
+    Collider collider_              = {};
+    RotateBoard* pRotateBoard_      = nullptr;
 
-    std::vector<Vector2> vertices_ = {};
+    std::vector<Vector2> vertices_  = {};
 
-    float radius_default_ = 100.0f;
-    float radius_min_ = 20.0f;
-    float radius_current_ = 0.0f;
-    float radius_timeRelease_ = 0.0f;
+    float radius_default_           = 100.0f;
+    float radius_min_               = 20.0f;
+    float radius_current_           = 0.0f;
+    float radius_timeRelease_       = 0.0f;
 
-    size_t resolution_ = 4u;
+    size_t resolution_              = 4u;
 
     std::chrono::system_clock::time_point startTime_;
     std::unique_ptr<Easing> pEasingBoxResize_;

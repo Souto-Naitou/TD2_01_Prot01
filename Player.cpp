@@ -37,6 +37,11 @@ void Player::Initialize()
     collider_.SetAttribute(pCollisionManager_->GetNewAttribute("Player"));
     //colliderにポインタを渡す
     collider_.SetOnCollision(std::bind(&Player::OnCollision, this, std::placeholders::_1));
+
+    /// 回転板の初期化
+    pRotateBoard_ = new RotateBoard();
+    pRotateBoard_->Initialize();
+    pRotateBoard_->SetVertices(&vertices_);
 }
 
 void Player::RunSetMask()
@@ -87,6 +92,7 @@ void Player::Update()
     }
 
     collider_.SetVertices(&vertices_);
+    pRotateBoard_->Update();
 }
 
 void Player::Draw()
@@ -104,6 +110,8 @@ void Player::Draw()
         static_cast<int>(vertices_[0].x), static_cast<int>(vertices_[0].y),
         WHITE
     );
+
+    pRotateBoard_->Draw();
 }
 
 void Player::DebugWindow()

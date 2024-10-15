@@ -4,6 +4,7 @@
 #include "Object/Enemy/Enemy.h"
 #include "Object/Core/Core.h"
 #include "Object/Wall/NestWall.h"
+#include "Object/RotateBoard/RotateBoard.h"
 #include "Collision/CollisionManager.h"
 
 #include <Vector2.h>
