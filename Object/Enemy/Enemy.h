@@ -18,7 +18,7 @@ public:
     Collider* GetCollider() { return &collider_; }
 
     void SetTargetPosition(const Vector2& _target) { positionTarget_ = _target; }
-
+    void OnCollision(const Collider* _other);
 private:
     Collider collider_ = {};
     Vector2 vertices_[3] = {};

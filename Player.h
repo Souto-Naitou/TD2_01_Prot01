@@ -18,9 +18,10 @@ public:
     ~Player();
 
     void Initialize();
+    void RunSetMask();
     void Update();
     void Draw();
-
+    void OnCollision(const Collider* _other);
     Collider* GetCollider() { return &collider_; }
 
 private:
@@ -44,5 +45,6 @@ private:
     std::unique_ptr<Easing> pEasingBoxTemp_;
 
 private:
+    CollisionManager* pCollisionManager_;
     void DebugWindow();
 };

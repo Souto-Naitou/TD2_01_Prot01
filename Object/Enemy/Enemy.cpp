@@ -4,11 +4,14 @@
 #include "imgui.h"
 #include "ImGuiDebugManager/DebugManager.h"
 #include "InputCenter.h"
+#include "Player.h"
 #include <Novice.h>
+#include "Collision/CollisionManager.h"
 
 
 void Enemy::Initialize()
 {
+    CollisionManager* pCollisionManager = CollisionManager::GetInstance();
     DebugManager::GetInstance()->SetComponent("Enemy", std::bind(&Enemy::DebugWindow, this));
     keys_ = InputCenter::GetInstance()->GetKeyPtr();
     preKeys_ = InputCenter::GetInstance()->GetKeyPtr();
@@ -17,6 +20,11 @@ void Enemy::Initialize()
     radius_ = 20.0f;
     ellipseAB_ = { 20.0f ,10.0f };
     collider_.SetColliderID("Enemy");
+
+    pCollisionManager->RegisterCollider(&collider_);
+    collider_.SetAttribute(pCollisionManager->GetNewAttribute("Enemy"));
+    //Colliderにポインタを渡す
+    collider_.SetOnCollision(std::bind(&Enemy::OnCollision, this, std::placeholders::_1));
 }
 
 void Enemy::Update()
@@ -72,9 +80,20 @@ void Enemy::DebugWindow()
         ImGuiTemplate::VariableTableRow("Position", position_);
         ImGuiTemplate::VariableTableRow("DistanceToTarget", distanceToTarget);
         ImGuiTemplate::VariableTableRow("rotation_", rotation_);
+        ImGuiTemplate::VariableTableRow("Attribute", collider_.GetCollisionAttribute());
+        ImGuiTemplate::VariableTableRow("Mask", collider_.GetCollisionMask());
     };
 
     ImGuiTemplate::VariableTable("Enemy", pFunc);
 
     return;
+}
+
+void Enemy::OnCollision(const Collider* _other) {
+    //_otherがPlayerかどうか確認
+    if (_other->GetColliderID() == "Player")
+    {
+        // Playerとの衝突処理
+
+    }
 }
