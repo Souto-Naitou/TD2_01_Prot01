@@ -28,6 +28,7 @@ private:
     Vector2 ellipseAB_ = {};
     float   rotation_       = 0.0f;
     float radius_ = 0.0f;
+    float moveSpeed_ = 0.0f;
 
     char* keys_ = nullptr;
     char* preKeys_ = nullptr;
