@@ -140,7 +140,7 @@ void DebugManager::DrawUI()
 			if (parentID.compare("null-name") == 0) tabName = childID;
 			else tabName = parentID + childID;
 
-			if (enableTab && ImGui::BeginTabItem(tabName.c_str()))
+			if (enableTab && ImGui::BeginTabItem(tabName.c_str(), &enableTab))
 			{
 				std::string id_str = tabName + "TABITEM";
 				ImGui::PushID(id_str.c_str());
