@@ -8,7 +8,7 @@ void BaseObject::DebugWindow()
     /// DebugWindowがオーバーライドされていないときの
     /// デフォルトの動作を記述
 
-    DebugManager::GetInstance()->SetComponent(objectID_.c_str(), std::bind(&BaseObject::DebugWindow, this));
+    DebugManager::GetInstance()->SetComponent(objectID_, std::bind(&BaseObject::DebugWindow, this));
 
     auto pFunc = [&]()
     {

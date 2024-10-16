@@ -6,7 +6,7 @@
 NestWall::NestWall(std::string _ID)
 {
     objectID_ = _ID;
-    DebugManager::GetInstance()->SetComponent(_ID.c_str(), std::bind(&NestWall::DebugWindow, this));
+    DebugManager::GetInstance()->SetComponent("NestWall", _ID.c_str(), std::bind(&NestWall::DebugWindow, this));
     pCollisionManager_ = CollisionManager::GetInstance();
 }
 
