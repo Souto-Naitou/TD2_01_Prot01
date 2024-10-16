@@ -1,8 +1,10 @@
 #include "Player.h"
 
 #include "ImGuiDebugManager/DebugManager.h"
+#include "Object/Enemy/Enemy.h"
 #include <Novice.h>
 #include <type_traits>
+#include "Collision/CollisionManager.h"
 
 #ifdef _DEBUG
 #include <imgui.h>
@@ -11,6 +13,7 @@
 
 Player::Player()
 {
+    pCollisionManager_ = CollisionManager::GetInstance();
     DebugManager::GetInstance()->SetComponent("Player", std::bind(&Player::DebugWindow, this));
 }
 
@@ -29,6 +32,21 @@ void Player::Initialize()
     position_.y = 360.0f;
     radius_current_ = radius_default_;
     collider_.SetColliderID("Player");
+
+    pCollisionManager_->RegisterCollider(&collider_);
+    collider_.SetAttribute(pCollisionManager_->GetNewAttribute("Player"));
+    //colliderにポインタを渡す
+    collider_.SetOnCollision(std::bind(&Player::OnCollision, this, std::placeholders::_1));
+
+    /// 回転板の初期化
+    pRotateBoard_ = new RotateBoard();
+    pRotateBoard_->Initialize();
+    pRotateBoard_->SetVertices(&vertices_);
+}
+
+void Player::RunSetMask()
+{
+    collider_.SetMask(pCollisionManager_->GetNewMask(collider_.GetColliderID(), "Core", "NestWall"));
 }
 
 void Player::Update()
@@ -74,6 +92,7 @@ void Player::Update()
     }
 
     collider_.SetVertices(&vertices_);
+    pRotateBoard_->Update();
 }
 
 void Player::Draw()
@@ -91,6 +110,8 @@ void Player::Draw()
         static_cast<int>(vertices_[0].x), static_cast<int>(vertices_[0].y),
         WHITE
     );
+
+    pRotateBoard_->Draw();
 }
 
 void Player::DebugWindow()
@@ -108,9 +129,19 @@ void Player::DebugWindow()
         ImGuiTemplate::VariableTableRow("radius_timeRelease_", radius_timeRelease_);
         ImGuiTemplate::VariableTableRow("radius_default_", radius_default_);
         ImGuiTemplate::VariableTableRow("radius_min_", radius_min_);
+        ImGuiTemplate::VariableTableRow("Attribute", collider_.GetCollisionAttribute());
+        ImGuiTemplate::VariableTableRow("Mask", collider_.GetCollisionMask());
     };
 
     ImGuiTemplate::VariableTable("Player", pFunc);
 
 #endif // _DEBUG
+}
+
+void Player::OnCollision(const Collider* _other) {
+    //_otherがEnemyかどうかを確認
+    if (_other->GetColliderID() == "Enemy") {
+        //Enemyとの衝突処理
+
+    }
 }

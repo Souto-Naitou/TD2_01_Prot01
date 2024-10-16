@@ -8,16 +8,20 @@ class Core : public BaseObject
 {
 public:
 
-    Core() = default;
-    ~Core() = default;
+    Core();
+    ~Core();
 
     void Initialize();
+    void RunSetMask();
     void Update();
     void Draw();
+
+    void DebugWindow();
 
     Collider* GetCollider() { return &collider_; }
 
 private:
     Rect2 boxCore_;
     Collider collider_;
+    CollisionManager* pCollisionManager; // シングルトンインスタンス
 };

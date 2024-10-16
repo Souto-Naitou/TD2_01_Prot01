@@ -7,7 +7,7 @@ NestWall::NestWall(std::string _ID)
 {
     objectID_ = _ID;
     DebugManager::GetInstance()->SetComponent(_ID.c_str(), std::bind(&NestWall::DebugWindow, this));
-    collider_.SetColliderID(objectID_);
+    pCollisionManager_ = CollisionManager::GetInstance();
 }
 
 NestWall::~NestWall()
@@ -19,6 +19,14 @@ void NestWall::Initialize()
 {
     // 仮HP
     hp_ = 100u;
+    collider_.SetColliderID("NestWall");
+    collider_.SetAttribute(pCollisionManager_->GetNewAttribute("NestWall"));
+    pCollisionManager_->RegisterCollider(&collider_);
+}
+
+void NestWall::RunSetMask()
+{
+    collider_.SetMask(pCollisionManager_->GetNewMask(collider_.GetColliderID(), "Player", "Core"));
 }
 
 void NestWall::Update()
