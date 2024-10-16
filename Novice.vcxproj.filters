@@ -56,6 +56,12 @@
     <Filter Include="Shape">
       <UniqueIdentifier>{8d84f5fd-cf3e-4558-8ea2-19675103a9c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RotateBoard">
+      <UniqueIdentifier>{a04dafe1-3d02-4334-8dc5-3e66a15dfea4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NestWall">
+      <UniqueIdentifier>{911dae33-b9f2-4fd2-bfe8-b24d8410d69e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -124,6 +130,12 @@
     </ClCompile>
     <ClCompile Include="Collision\Collider.cpp">
       <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RotateBoard\RotateBoard.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Wall\NestWall.cpp">
+      <Filter>NestWall</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +285,12 @@
     </ClInclude>
     <ClInclude Include="Shape.h">
       <Filter>Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RotateBoard\RotateBoard.h">
+      <Filter>RotateBoard</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Wall\NestWall.h">
+      <Filter>NestWall</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
