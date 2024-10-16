@@ -5,14 +5,14 @@
 
 NestWall::NestWall(std::string _ID)
 {
-    id_ = _ID;
+    objectID_ = _ID;
     DebugManager::GetInstance()->SetComponent(_ID.c_str(), std::bind(&NestWall::DebugWindow, this));
-    collider_.SetColliderID(id_);
+    collider_.SetColliderID(objectID_);
 }
 
 NestWall::~NestWall()
 {
-    DebugManager::GetInstance()->DeleteComponent(id_.c_str());
+    DebugManager::GetInstance()->DeleteComponent(objectID_.c_str());
 }
 
 void NestWall::Initialize()
@@ -43,12 +43,13 @@ void NestWall::DebugWindow()
 {
     auto pFunc = [&]()
     {
-        ImGuiTemplate::VariableTableRow("id_", id_.c_str());
+        ImGuiTemplate::VariableTableRow("id_", objectID_);
+        ImGuiTemplate::VariableTableRow("hp_", hp_);
         ImGuiTemplate::VariableTableRow("rect_.LeftTop", rect_.LeftTop());
         ImGuiTemplate::VariableTableRow("rect_.RightBottom", rect_.RightBottom());
         ImGuiTemplate::VariableTableRow("collider_.GetCollisionAttribute", collider_.GetCollisionAttribute());
         ImGuiTemplate::VariableTableRow("collider_.GetCollisionMask", collider_.GetCollisionMask());
     };
 
-    ImGuiTemplate::VariableTable(id_.c_str(), pFunc);
+    ImGuiTemplate::VariableTable(objectID_.c_str(), pFunc);
 }

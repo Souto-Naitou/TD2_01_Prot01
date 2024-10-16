@@ -20,7 +20,6 @@ public:
     void SetRect(int _width, int _height, Vector2 _leftTop);
 
 private:
-    std::string id_;
     Rect2 rect_;
     Collider collider_;
 
