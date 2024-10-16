@@ -1,8 +1,11 @@
 #pragma once
 
-#include <vector>
+#include "easing/Easing.h"
 #include <Vector2.h>
 #include <Rect2.h>
+#include <vector>
+#include <array>
+#include <memory>
 
 class RotateBoard
 {
@@ -25,7 +28,8 @@ private:
     const std::vector<Vector2>* parentVertices_;
     std::vector<Vector2> course_;
     int32_t padding_ = 0;
-
+    std::array<std::pair<uint32_t, Vector2>, 2> points_;
+    std::unique_ptr<Easing> pEasingEdgeMove = nullptr;
 
 private:
     void UpdateCourse();

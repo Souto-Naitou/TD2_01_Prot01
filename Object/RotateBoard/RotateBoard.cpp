@@ -7,6 +7,7 @@ RotateBoard::RotateBoard()
 {
     parentVertices_ = nullptr;
     DebugManager::GetInstance()->SetComponent("RotateBoard", std::bind(&RotateBoard::DebugWindow, this));
+    pEasingEdgeMove = std::make_unique<Easing>("RotateBoard_EdgeMove");
 }
 
 RotateBoard::~RotateBoard()
@@ -26,6 +27,24 @@ void RotateBoard::RunSetMask()
 void RotateBoard::Update()
 {
     UpdateCourse();
+
+    for (auto& pointPair : points_)
+    {
+        // pointPair
+        // first    : 現在動いている辺 (頂点番号0 -> 1 の場合は0)
+        // second   : 座標
+
+        uint32_t& numEdge = pointPair.first;
+        size_t courseSize = course_.size();
+        if (pEasingEdgeMove->GetIsEnd())
+        {
+            pEasingEdgeMove->Reset();
+            pEasingEdgeMove->Start();
+            numEdge = (numEdge + 1) % courseSize;
+        }
+        pointPair.second.Lerp(course_[numEdge], course_[(numEdge + 1u) % courseSize], pEasingEdgeMove->Update());
+    }
+
 }
 
 void RotateBoard::Draw()
@@ -41,6 +60,15 @@ void RotateBoard::Draw()
             GREEN
         );
     }
+
+    Novice::DrawEllipse(
+        static_cast<int>(points_[0].second.x),
+        static_cast<int>(points_[0].second.y),
+        10, 10,
+        0.0f,
+        GREEN,
+        kFillModeSolid
+    );
 
 }
 
