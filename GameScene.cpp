@@ -36,14 +36,14 @@ void GameScene::Initialize()
 
     pEnemy_ = new Enemy();
     pEnemy_->Initialize();
+    MakeWall(&pNestWallLeft_, "Left", 40, 720, { 0,0 });
 
     pCore_ = new Core();
     pCore_->Initialize();
 
-    MakeWall(&pNestWallLeft_, "NestWallLeft", 40, 720, { 0,0 });
-    MakeWall(&pNestWallTop_, "NestWallTop", 1280, 40, { 0,0 });
-    MakeWall(&pNestWallRight_, "NestWallRight", 40, 720, { 1240,0 });
-    MakeWall(&pNestWallBottom_, "NestWallBottom", 1280, 40, { 0,680 });
+    MakeWall(&pNestWallTop_, "Top", 1280, 40, { 0,0 });
+    MakeWall(&pNestWallRight_, "Right", 40, 720, { 1240,0 });
+    MakeWall(&pNestWallBottom_, "Bottom", 1280, 40, { 0,680 });
 
     static_cast<Enemy*>(pEnemy_)->SetTargetPosition(pPlayer_->GetWorldPosition());
 
