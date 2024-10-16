@@ -17,7 +17,8 @@ NestWall::~NestWall()
 
 void NestWall::Initialize()
 {
-
+    // 仮HP
+    hp_ = 100u;
 }
 
 void NestWall::Update()
