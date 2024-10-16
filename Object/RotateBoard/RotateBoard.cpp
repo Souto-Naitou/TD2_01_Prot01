@@ -17,7 +17,7 @@ RotateBoard::~RotateBoard()
 
 void RotateBoard::Initialize()
 {
-    padding_ = 3;
+    padding_ = 24;
 }
 
 void RotateBoard::RunSetMask()
@@ -64,7 +64,7 @@ void RotateBoard::Draw()
     Novice::DrawEllipse(
         static_cast<int>(points_[0].second.x),
         static_cast<int>(points_[0].second.y),
-        10, 10,
+        5, 5,
         0.0f,
         GREEN,
         kFillModeSolid
