@@ -38,6 +38,10 @@ void Enemy::Initialize(size_t idx)
 
 void Enemy::Update()
 {
+    //デスフラグがオンになったらdelete
+    if (isDead_) {
+        
+    }
     // 衝突後の動き
     if (isBouncing_) {
         // 反発する方向に移動
@@ -64,7 +68,7 @@ void Enemy::Update()
         result.y = ellipseAB_.y * std::sinf(theta);
         vertices_[i] = result.Rotated(rotation_) + position_;
     }
-
+    
     collider_.SetVertices(vertices_, 3);
 
     return;
@@ -112,10 +116,13 @@ void Enemy::OnCollision(const Collider* _other) {
             //ぶっ飛びフラグオン
             isBouncing_ = true;
             //衝突フラグオン
-            hasCollided_ = true;
-
+            hasCollided_ = true;                  
         }
-        // それ以降の衝突は無視
+        // 二回目以降の衝突は無視
     }
-   // else if()
+    //コアとの当たり判定
+    else if (_other->GetColliderID()== "Core") {
+        //エネミーのデスフラグをオンに
+        isDead_ = true;
+    }
 }
