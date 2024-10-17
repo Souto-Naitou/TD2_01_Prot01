@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <easing/Easing.h>
 #include <Vector2.h>
 #include "BaseObject.h"

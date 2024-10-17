@@ -8,7 +8,6 @@
 #include <Novice.h>
 #include "Collision/CollisionManager.h"
 
-
 void Enemy::Initialize()
 {
     CollisionManager* pCollisionManager = CollisionManager::GetInstance();
@@ -90,10 +89,12 @@ void Enemy::DebugWindow()
 }
 
 void Enemy::OnCollision(const Collider* _other) {
-    //_otherがPlayerかどうか確認
-    if (_other->GetColliderID() == "Player")
-    {
-        // Playerとの衝突処理
-
+    // _otherがPlayerかどうか確認
+    if (_other->GetColliderID() == "Player") {
+        // プレイヤーに当たった際に敵の進行方向を反転させる
+  
+        distanceToTarget = -distanceToTarget;
+        positionTarget_ = position_ + distanceToTarget; 
     }
 }
+
