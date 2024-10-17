@@ -91,10 +91,23 @@ void Enemy::DebugWindow()
 }
 
 void Enemy::OnCollision(const Collider* _other) {
-    //_otherがPlayerかどうか確認
-    if (_other->GetColliderID() == "Player")
-    {
+    // _otherがPlayerかどうか確認
+    if (_other->GetColliderID() == "Player") {
         // Playerとの衝突処理
 
+        // プレイヤーの位置を取得するために dynamic_cast で型チェック
+        const Player* player = dynamic_cast<const Player*>(_other);
+        if (player) {
+            // プレイヤーの現在位置と敵の現在位置の差分を計算
+            Vector2 direction = position_ - player->GetPosition();
+
+            // 差分ベクトルを正規化して逆方向に移動するように設定
+            direction = direction.Normalize();
+
+            // 敵の位置を逆方向に少し移動
+            float knockBackDistance = 5.0f; // 反動距離の調整
+            position_ += direction * knockBackDistance;
+        }
     }
 }
+

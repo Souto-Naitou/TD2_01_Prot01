@@ -17,4 +17,5 @@ protected:
     std::string objectID_;
     Vector2 position_;
     uint32_t hp_;
+    bool isDead_;
 };
