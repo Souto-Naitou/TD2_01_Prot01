@@ -23,12 +23,17 @@ void Core::Initialize()
     pCollisionManager->RegisterCollider(&collider_);
     collider_.SetAttribute(pCollisionManager->GetNewAttribute("Core"));
 
+    hp_ = 3;
+
     std::vector<Vector2> temp = boxCore_.GetVertices();
     for (auto& v : temp)
     {
         v += position_;
     }
     collider_.SetVertices(std::move(temp));
+
+    // OnCollision関数を登録
+    collider_.SetOnCollision(std::bind(&Core::OnCollision, this, std::placeholders::_1));
 }
 
 void Core::RunSetMask()
@@ -52,12 +57,23 @@ void Core::Draw()
     );
 }
 
+void Core::OnCollision(const Collider* _other)
+{
+    if (_other->GetColliderID() == "Enemy")
+    {
+        hp_--;
+    }
+
+    if (hp_ < 0) hp_ = 0;
+}
+
 void Core::DebugWindow()
 {
     auto pFunc = [&]()
     {
         ImGuiTemplate::VariableTableRow("Attribute", collider_.GetCollisionAttribute());
         ImGuiTemplate::VariableTableRow("Mask", collider_.GetCollisionMask());
+        ImGuiTemplate::VariableTableRow("hp_", hp_);
     };
 
     ImGuiTemplate::VariableTable("Player", pFunc);
