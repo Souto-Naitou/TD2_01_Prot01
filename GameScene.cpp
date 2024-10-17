@@ -67,7 +67,7 @@ void GameScene::Update()
         timer_.Start();
     }
 
-    if (timer_.GetNow() > 1200)
+    if (timer_.GetNow() > 120)
     {
         timer_.Reset();
         for (Enemy* ptr : enemyList_)
@@ -85,7 +85,7 @@ void GameScene::Update()
     pNestWallBottom_->Update();
 
     pCollisionManager_->CheckAllCollision();
-    Enemy* ptrEnemy = pEnemyPopSystem_->Update(0.5, { 0,0 }, { 1280,720 });
+    Enemy* ptrEnemy = pEnemyPopSystem_->Update(10, { 0,0 }, { 1280,720 });
     if (ptrEnemy)
     {
         ptrEnemy->Initialize(enemyList_.size());
