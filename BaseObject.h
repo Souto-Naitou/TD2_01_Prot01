@@ -12,7 +12,7 @@ public:
 
     Vector2 GetWorldPosition() const { return position_; };
     uint32_t GetHP() const { return hp_; }
-
+    
 protected:
     std::string objectID_;
     Vector2 position_;

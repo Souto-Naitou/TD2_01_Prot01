@@ -10,7 +10,7 @@ public:
 
     Core();
     ~Core();
-
+    
     void Initialize();
     void RunSetMask();
     void Update();
