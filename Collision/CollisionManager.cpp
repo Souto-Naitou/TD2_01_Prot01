@@ -32,6 +32,17 @@ void CollisionManager::ClearColliderList()
     colliders_.clear();
 }
 
+void CollisionManager::DeleteCollider(Collider* _collider)
+{
+    for (int i = 0; i < colliders_.size(); i++)
+    {
+        if (colliders_[i] == _collider)
+        {
+            colliders_.erase(colliders_.begin() + i);
+        }
+    }
+}
+
 uint32_t CollisionManager::GetNewAttribute(std::string _id)
 {
     if (attributeList_.size() == 0)

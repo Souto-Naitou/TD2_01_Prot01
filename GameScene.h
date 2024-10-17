@@ -7,6 +7,9 @@
 #include "Object/RotateBoard/RotateBoard.h"
 #include "Collision/CollisionManager.h"
 
+#include "EnemyPopSytem.h"
+#include "Timer/Timer.h"
+
 #include <Vector2.h>
 #include <vector>
 
@@ -22,12 +25,14 @@ public:
 private:
     CollisionManager*   pCollisionManager_  = nullptr;
     Player*             pPlayer_            = nullptr;
-    Enemy*              pEnemy_             = nullptr;
     Core*               pCore_              = nullptr;
     NestWall*           pNestWallLeft_      = nullptr;
     NestWall*           pNestWallTop_       = nullptr;
     NestWall*           pNestWallRight_     = nullptr;
     NestWall*           pNestWallBottom_    = nullptr;
+    EnemyPopSystem*     pEnemyPopSystem_    = nullptr;
+    std::list<Enemy*>   enemyList_          = {};
+    Timer               timer_              = {};
 
     void MakeWall(NestWall** _nestWall, std::string _id, int _width, int _height, Vector2 _origin);
 };

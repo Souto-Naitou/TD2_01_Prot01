@@ -9,18 +9,25 @@
 #include "Collision/CollisionManager.h"
 
 
-void Enemy::Initialize()
+Enemy::~Enemy()
+{
+    CollisionManager::GetInstance()->DeleteCollider(&collider_);
+    DebugManager::GetInstance()->DeleteComponent("Enemy", idx_.c_str());
+}
+
+void Enemy::Initialize(size_t idx)
 {
     CollisionManager* pCollisionManager = CollisionManager::GetInstance();
-    DebugManager::GetInstance()->SetComponent("Enemy", std::bind(&Enemy::DebugWindow, this));
+    idx_ = std::to_string(idx);
+    objectID_ = "Enemy" + idx_;
+    DebugManager::GetInstance()->SetComponent("Enemy", std::to_string(idx), std::bind(&Enemy::DebugWindow, this));
     keys_ = InputCenter::GetInstance()->GetKeyPtr();
     preKeys_ = InputCenter::GetInstance()->GetKeyPtr();
 
-    position_ = { 940, 140 };
     radius_ = 20.0f;
     ellipseAB_ = { 20.0f ,10.0f };
     collider_.SetColliderID("Enemy");
-    moveSpeed_ = 0.05f;
+    moveSpeed_ = 1.0f;
 
     pCollisionManager->RegisterCollider(&collider_);
     collider_.SetOwner(this);
@@ -100,12 +107,12 @@ void Enemy::OnCollision(const Collider* _other) {
         if (!hasCollided_) {
             // 初回の衝突時
               // 向き反転
-            distanceToTarget = -distanceToTarget; 
-            rotation_ += 3.141592f;          
+            distanceToTarget = -distanceToTarget;
+            rotation_ += 3.141592f;
             //ぶっ飛びフラグオン
             isBouncing_ = true;
             //衝突フラグオン
-            hasCollided_ = true;                  
+            hasCollided_ = true;
 
         }
         // それ以降の衝突は無視
