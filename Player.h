@@ -24,7 +24,6 @@ public:
     void Draw();
     void OnCollision(const Collider* _other);
     Collider* GetCollider() { return &collider_; }
-    Vector2 GetPosition()const { return position_; }
 
 private:
     char keys[256]                  = {};

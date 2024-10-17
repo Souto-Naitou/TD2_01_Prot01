@@ -16,7 +16,7 @@ void Enemy::Initialize()
     keys_ = InputCenter::GetInstance()->GetKeyPtr();
     preKeys_ = InputCenter::GetInstance()->GetKeyPtr();
 
-    position_ = { 640, 360 };
+    position_ = { 940, 360 };
     radius_ = 20.0f;
     ellipseAB_ = { 20.0f ,10.0f };
     collider_.SetColliderID("Enemy");
@@ -30,18 +30,17 @@ void Enemy::Initialize()
 
 void Enemy::Update()
 {
-    /// 距離の更新と方向の調整
+    // 距離の更新
     distanceToTarget = positionTarget_ - position_;
+
+    if (distanceToTarget.Length() > 0) {
+        // 進行方向に向かって移動
+        position_ += distanceToTarget.Normalize() * moveSpeed_;
+    }
+
+    // 位置と回転更新
     if (distanceToTarget.x != 0 || distanceToTarget.y != 0)
-        rotation_ = std::atan2(distanceToTarget.y , distanceToTarget.x);
-
-    /// WASD移動の簡易実装
-    InputCenter::GetInstance()->WASDMove(position_, 3.0f);
-
-    /// 自動移動
-    position_ += distanceToTarget.Normalize() * moveSpeed_;
-
-
+        rotation_ = std::atan2(distanceToTarget.y, distanceToTarget.x);
 
     /// ここより下ではPositionを更新しない
     float theta = 0;
@@ -93,21 +92,13 @@ void Enemy::DebugWindow()
 void Enemy::OnCollision(const Collider* _other) {
     // _otherがPlayerかどうか確認
     if (_other->GetColliderID() == "Player") {
-        // Playerとの衝突処理
+        // 衝突時に進行方向を逆にする
+        // 進行方向を反転
+        distanceToTarget = -distanceToTarget;
 
-        // プレイヤーの位置を取得するために dynamic_cast で型チェック
-        const Player* player = dynamic_cast<const Player*>(_other);
-        if (player) {
-            // プレイヤーの現在位置と敵の現在位置の差分を計算
-            Vector2 direction = position_ - player->GetPosition();
-
-            // 差分ベクトルを正規化して逆方向に移動するように設定
-            direction = direction.Normalize();
-
-            // 敵の位置を逆方向に少し移動
-            float knockBackDistance = 5.0f; // 反動距離の調整
-            position_ += direction * knockBackDistance;
-        }
+        positionTarget_ = position_ + distanceToTarget * moveSpeed_;
     }
 }
+
+
 
