@@ -110,5 +110,8 @@ void Enemy::OnCollision(const Collider* _other) {
         }
         // それ以降の衝突は無視
     }
-   // else if()
+    //コアとの当たり判定
+    else if (_other->GetColliderID()== "Core") {
+
+    }
 }
