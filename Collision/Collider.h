@@ -12,7 +12,7 @@ class CollisionManager;
 class Collider
 {
 public:
-    inline  BaseObject*                 GetOwner()                  const       { return owner_; }
+    inline  const BaseObject*           GetOwner()                  const       { return owner_; }
     inline  uint32_t                    GetCollisionAttribute()     const       { return collisionAttribute_; }
     inline  uint32_t                    GetCollisionMask()          const       { return *pCollisionMask_;}
     inline  Shape                       GetShape()                  const       { return shape_; }
