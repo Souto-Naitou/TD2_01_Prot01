@@ -67,7 +67,7 @@ void GameScene::Update()
         timer_.Start();
     }
 
-    if (timer_.GetNow() > 60.0)
+    if (timer_.GetNow() > 1200)
     {
         timer_.Reset();
         for (Enemy* ptr : enemyList_)
