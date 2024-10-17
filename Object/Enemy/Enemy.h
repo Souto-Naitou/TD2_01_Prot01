@@ -36,6 +36,11 @@ private:
     char* keys_ = nullptr;
     char* preKeys_ = nullptr;
 
+    // 衝突時のぶっとび速度
+    float bounceSpeed_ = 5.0f; 
+    bool isBouncing_ = false;
+    //衝突フラグ
+    bool hasCollided_ = false;
 
     void DebugWindow();
 };
