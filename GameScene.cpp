@@ -72,6 +72,8 @@ void GameScene::Update()
 
 void GameScene::Draw()
 {
+    Novice::DrawBox(0, 0, 1280, 720, 0.0f, 0x242424ff, kFillModeSolid);
+
     pNestWallLeft_->Draw();
     pPlayer_->Draw();
     pEnemy_->Draw();
