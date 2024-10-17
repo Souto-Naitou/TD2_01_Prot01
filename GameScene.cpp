@@ -16,10 +16,14 @@ GameScene::~GameScene()
 {
     pCollisionManager_->ClearColliderList();
 
-    delete pPlayer_; pPlayer_ = nullptr;
-    delete pEnemy_; pEnemy_ = nullptr;
     delete pCore_; pCore_ = nullptr;
     delete pNestWallLeft_; pNestWallLeft_ = nullptr;
+
+    for (Enemy* ptr : enemyList_)
+    {
+        delete ptr;
+        ptr = nullptr;
+    }
 }
 
 void GameScene::Initialize()
@@ -31,21 +35,18 @@ void GameScene::Initialize()
     pCollisionManager_ = CollisionManager::GetInstance();
     pCollisionManager_->Initialize();
 
+    pEnemyPopSystem_ = new EnemyPopSystem();
+
     pPlayer_ = new Player();
     pPlayer_->Initialize();
-
-    pEnemy_ = new Enemy();
-    pEnemy_->Initialize();
-    MakeWall(&pNestWallLeft_, "Left", 40, 720, { 0,0 });
 
     pCore_ = new Core();
     pCore_->Initialize();
 
+    MakeWall(&pNestWallLeft_, "Left", 40, 720, { 0,0 });
     MakeWall(&pNestWallTop_, "Top", 1280, 40, { 0,0 });
     MakeWall(&pNestWallRight_, "Right", 40, 720, { 1240,0 });
     MakeWall(&pNestWallBottom_, "Bottom", 1280, 40, { 0,680 });
-
-    static_cast<Enemy*>(pEnemy_)->SetTargetPosition(pPlayer_->GetWorldPosition());
 
     /// マスクの生成にアトリビュートを使用するためInitialize後に行う
     pPlayer_->RunSetMask();
@@ -55,12 +56,28 @@ void GameScene::Initialize()
     pNestWallTop_->RunSetMask();
     pNestWallRight_->RunSetMask();
     pNestWallBottom_->RunSetMask();
+
+    timer_.Start();
 }
 
 void GameScene::Update()
 {
+    if (!timer_.GetIsStart())
+    {
+        timer_.Start();
+    }
+
+    if (timer_.GetNow() > 60.0)
+    {
+        timer_.Reset();
+        for (Enemy* ptr : enemyList_)
+        {
+            delete ptr;
+        }
+        enemyList_.clear();
+    }
+
     pPlayer_->Update();
-    pEnemy_->Update();
     pCore_->Update();
     pNestWallLeft_->Update();
     pNestWallTop_->Update();
@@ -68,6 +85,14 @@ void GameScene::Update()
     pNestWallBottom_->Update();
 
     pCollisionManager_->CheckAllCollision();
+    Enemy* ptrEnemy = pEnemyPopSystem_->Update(0.5, { 0,0 }, { 1280,720 });
+    if (ptrEnemy)
+    {
+        ptrEnemy->Initialize(enemyList_.size());
+        ptrEnemy->SetTargetPosition(pPlayer_->GetWorldPosition());
+        enemyList_.push_back(ptrEnemy);
+    }
+    for (Enemy* ptr : enemyList_) ptr->Update();
 }
 
 void GameScene::Draw()
@@ -76,12 +101,13 @@ void GameScene::Draw()
 
     pNestWallLeft_->Draw();
     pPlayer_->Draw();
-    pEnemy_->Draw();
     pCore_->Draw();
     pNestWallLeft_->Draw();
     pNestWallTop_->Draw();
     pNestWallRight_->Draw();
     pNestWallBottom_->Draw();
+    for (Enemy* ptr : enemyList_) ptr->Draw();
+
 }
 
 void GameScene::MakeWall(NestWall** _nestWall, std::string _id, int _width, int _height, Vector2 _origin)

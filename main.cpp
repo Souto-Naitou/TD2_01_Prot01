@@ -4,6 +4,8 @@
 #include "GameScene.h"
 #include "ImGuiDebugManager/DebugManager.h"
 #include "InputCenter.h"
+#include <stdlib.h>
+#include <time.h>
 
 const char kWindowTitle[] = "学籍番号";
 
@@ -12,6 +14,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// ライブラリの初期化
 	Novice::Initialize(kWindowTitle, 1280, 720);
+
+	srand(static_cast<uint32_t>(time(nullptr)));
 
 	char* pKeys, *pPreKeys;
 	pKeys = pPreKeys = nullptr;
@@ -36,7 +40,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓更新処理ここから
 		///
-		
+
 		pInput->UpdateState();
 
 		pDebugManager->DrawUI();

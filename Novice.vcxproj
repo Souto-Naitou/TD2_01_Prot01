@@ -114,6 +114,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="C:\KamataEngine\Adapter\Novice.cpp" />
     <ClCompile Include="Collision\Collider.cpp" />
     <ClCompile Include="Collision\CollisionManager.cpp" />
+    <ClCompile Include="EnemyPopSytem.cpp" />
     <ClCompile Include="External\easing\CSVLoader.cpp" />
     <ClCompile Include="External\easing\EaseInterpolation.cpp" />
     <ClCompile Include="External\easing\Easing.cpp" />
@@ -127,6 +128,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="External\math\impl\vector3calc.cpp" />
     <ClCompile Include="External\math\impl\Vector4.cpp" />
     <ClCompile Include="External\math\MathExtension\mathExtension.cpp" />
+    <ClCompile Include="External\Timer\Timer.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="ImGuiTemplates.cpp" />
     <ClCompile Include="InputCenter.cpp" />
@@ -140,6 +142,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
   <ItemGroup>
     <ClInclude Include="..\DirectXGame\3d\Camera.h" />
     <ClInclude Include="BaseObject.h" />
+    <ClInclude Include="BasePopSytem.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\base\StringUtility.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\math\Matrix4x4.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\math\Vector2.h" />
@@ -168,6 +171,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="C:\KamataEngine\Adapter\Novice.h" />
     <ClInclude Include="Collision\Collider.h" />
     <ClInclude Include="Collision\CollisionManager.h" />
+    <ClInclude Include="EnemyPopSytem.h" />
     <ClInclude Include="External\easing\CSVLoader.h" />
     <ClInclude Include="External\easing\csvStructure\CSVData.h" />
     <ClInclude Include="External\easing\Easing.h" />
@@ -180,6 +184,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="External\math\Vector2.h" />
     <ClInclude Include="External\math\Vector3.h" />
     <ClInclude Include="External\math\Vector4.h" />
+    <ClInclude Include="External\Timer\Timer.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="ImGuiTemplates.h" />
     <ClInclude Include="InputCenter.h" />

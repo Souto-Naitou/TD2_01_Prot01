@@ -42,13 +42,13 @@ void DebugManager::Window_ObjectList()
 						ImGui::Selectable(std::get<1>(*itr).c_str(), &std::get<3>(*itr));
 						itr++;
 						if (itr == componentList_.end()) break;
-					} while (std::get<0>(*itr) != "null-name");
+					} while (std::get<0>(*itr) == parentName);
 
 					ImGui::TreePop();
 				}
 				else
 				{
-					while (std::get<0>(*itr) != "null-name")
+					while (std::get<0>(*itr) == parentName)
 					{
 						itr++;
 						if (itr == componentList_.end()) break;
