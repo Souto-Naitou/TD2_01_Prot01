@@ -11,6 +11,7 @@ public:
     virtual void DebugWindow();
 
     Vector2 GetWorldPosition() const { return position_; };
+    void SetWorldPosition(const Vector2& _position) { position_ = _position; }
     uint32_t GetHP() const { return hp_; }
 
 protected:

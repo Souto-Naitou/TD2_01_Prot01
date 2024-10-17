@@ -19,6 +19,7 @@ public:
     void CheckAllCollision();
     void RegisterCollider(Collider* _collider);
     void ClearColliderList();
+    void DeleteCollider(Collider* _collider);
     uint32_t GetNewAttribute(std::string _id);
     template <typename... Args>
     uint32_t* GetNewMask(std::string _id, Args... _ignoreNames)

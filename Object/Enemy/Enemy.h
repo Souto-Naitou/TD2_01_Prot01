@@ -9,9 +9,9 @@ class Enemy : public BaseObject
 public:
 
     Enemy() = default;
-    ~Enemy() = default;
+    ~Enemy();
 
-    void Initialize();
+    void Initialize(size_t idx);
     void Update();
     void Draw();
 
@@ -23,6 +23,8 @@ public:
 private:
     Collider collider_ = {};
     Vector2 vertices_[3] = {};
+
+    std::string idx_;
 
     Vector2 positionTarget_ = {};
     Vector2 distanceToTarget = {};
@@ -37,7 +39,7 @@ private:
     char* preKeys_ = nullptr;
 
     // 衝突時のぶっとび速度
-    float bounceSpeed_ = 5.0f; 
+    float bounceSpeed_ = 5.0f;
     bool isBouncing_ = false;
     //衝突フラグ
     bool hasCollided_ = false;
