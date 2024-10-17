@@ -1,5 +1,6 @@
 #include <ImGuiDebugManager/DebugManager.h>
 
+
 #ifdef _DEBUG
 #include <imgui.h>
 #include <imgui_impl_dx12.h>
@@ -17,6 +18,32 @@ DebugManager::DebugManager()
 DebugManager::~DebugManager()
 {
 
+}
+
+void DebugManager::DebugWindowOverall()
+{
+	ImGui::Text("%.2lfFPS", fps_);
+	float dummy = static_cast<float>(fps_);
+	ImGui::SameLine();
+	ImGui::SliderFloat("##FPS", &dummy, 0.0f, 60.0f, "");
+}
+
+void DebugManager::MeasureFPS()
+{
+	if (!timer_.GetIsStart())
+	{
+		this->SetComponent("Overall", std::bind(&DebugManager::DebugWindowOverall, this));
+		timer_.Start();
+	}
+	/// フレームレート計算
+	if (timer_.GetNow() - elapsedFrameCount_ >= 2.0)
+	{
+		fps_ = frameCount_ * 1.0 / (timer_.GetNow() - elapsedFrameCount_);
+
+		frameCount_ = 0;
+		elapsedFrameCount_ = timer_.GetNow();
+	}
+	frameCount_++;
 }
 
 void DebugManager::Window_ObjectList()
@@ -113,6 +140,9 @@ void DebugManager::DeleteComponent(const char* _parentID, const char* _childID)
 void DebugManager::DrawUI()
 {
 #ifdef _DEBUG
+
+	MeasureFPS();
+
 	// 登録されていないなら早期リターン
 	if (componentList_.size() == 0) return;
 
