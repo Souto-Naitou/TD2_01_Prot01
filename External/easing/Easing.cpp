@@ -124,7 +124,7 @@ void Easing::Initialize(){
 			isEnd_ = false;
 		}
 	}
-	
+
 }
 
 float Easing::Update(){
@@ -150,6 +150,7 @@ float Easing::Update(){
 		elapsedTime_ = static_cast<double>(mNow.QuadPart - mStart_.QuadPart) / static_cast<double>(mFreq_.QuadPart);
 
 		currentLinearT_ = static_cast<float>(elapsedTime_ / secTarget_);
+		if (currentLinearT_ > 1.0f) currentLinearT_ = 1.0f;
 		EasingExecution();
 	}
 	/// フレームモード
