@@ -18,11 +18,12 @@ public:
     void Update();
     void Draw();
 
+    void OnCollision(const Collider* _collider);
+
     Collider* GetCollider() { return &collider_; }
     void SetRect(int _width, int _height, Vector2 _leftTop);
 
 private:
-    std::string id_;
     Rect2 rect_;
     Collider collider_;
     CollisionManager* pCollisionManager_;

@@ -20,8 +20,10 @@ void Enemy::Initialize()
     radius_ = 20.0f;
     ellipseAB_ = { 20.0f ,10.0f };
     collider_.SetColliderID("Enemy");
+    moveSpeed_ = 0.05f;
 
     pCollisionManager->RegisterCollider(&collider_);
+    collider_.SetOwner(this);
     collider_.SetAttribute(pCollisionManager->GetNewAttribute("Enemy"));
     //Colliderにポインタを渡す
     collider_.SetOnCollision(std::bind(&Enemy::OnCollision, this, std::placeholders::_1));
@@ -29,23 +31,21 @@ void Enemy::Initialize()
 
 void Enemy::Update()
 {
+    /// 距離の更新と方向の調整
     distanceToTarget = positionTarget_ - position_;
     if (distanceToTarget.x != 0 || distanceToTarget.y != 0)
         rotation_ = std::atan2(distanceToTarget.y , distanceToTarget.x);
 
+    /// WASD移動の簡易実装
     InputCenter::GetInstance()->WASDMove(position_, 3.0f);
 
+    /// 自動移動
+    position_ += distanceToTarget.Normalize() * moveSpeed_;
+
+
+
+    /// ここより下ではPositionを更新しない
     float theta = 0;
-
-    //for (int i = 0; i < 3; i++)
-    //{
-    //    Vector2 result = {};
-    //    theta += 2.0f / 3 * 3.141592f;
-    //    result.x = position_.x + std::cosf(theta + rotation_) * radius_;
-    //    result.y = position_.y + std::sinf(theta + rotation_) * radius_;
-    //    vertices[i] = result;
-    //}
-
     Vector2 result = {};
     for (int i = 0; i < 3; i += 1)
     {
@@ -83,6 +83,8 @@ void Enemy::DebugWindow()
         ImGuiTemplate::VariableTableRow("Attribute", collider_.GetCollisionAttribute());
         ImGuiTemplate::VariableTableRow("Mask", collider_.GetCollisionMask());
     };
+
+    ImGui::DragFloat("移動速度", &moveSpeed_, 0.01f, 0.0f);
 
     ImGuiTemplate::VariableTable("Enemy", pFunc);
 

@@ -5,12 +5,14 @@
 #include <vector>
 #include <string>
 #include <functional>
+#include "BaseObject.h"
 
 class CollisionManager;
 
 class Collider
 {
 public:
+    inline  const BaseObject*           GetOwner()                  const       { return owner_; }
     inline  uint32_t                    GetCollisionAttribute()     const       { return collisionAttribute_; }
     inline  uint32_t                    GetCollisionMask()          const       { return *pCollisionMask_;}
     inline  Shape                       GetShape()                  const       { return shape_; }
@@ -18,6 +20,7 @@ public:
     inline  std::vector<Vector2>*       GetVertices()                           { return &verticesCollider_; }
     inline  const std::string&          GetColliderID()             const       { return colliderID_; }
 
+    inline  void                        SetOwner(BaseObject* _owner)            { owner_ = _owner; }
     inline  void                        SetColliderID(const std::string& _id)   { colliderID_ = _id; }
     void                                SetVertices(const std::vector<Vector2>&& _vertices);
     void                                SetVertices(const std::vector<Vector2>* _vertices);
@@ -36,6 +39,8 @@ public:
 private:
 
     std::function<void(const Collider*)> onCollisionFunction_;
+
+    BaseObject*             owner_              = nullptr;
 
     Shape                   shape_              = Shape::Polygon;
     std::string             colliderID_         = {};
