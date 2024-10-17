@@ -16,7 +16,7 @@ void Enemy::Initialize()
     keys_ = InputCenter::GetInstance()->GetKeyPtr();
     preKeys_ = InputCenter::GetInstance()->GetKeyPtr();
 
-    position_ = { 640, 360 };
+    position_ = { 940, 140 };
     radius_ = 20.0f;
     ellipseAB_ = { 20.0f ,10.0f };
     collider_.SetColliderID("Enemy");
@@ -31,19 +31,22 @@ void Enemy::Initialize()
 
 void Enemy::Update()
 {
-    /// 距離の更新と方向の調整
-    distanceToTarget = positionTarget_ - position_;
-    if (distanceToTarget.x != 0 || distanceToTarget.y != 0)
-        rotation_ = std::atan2(distanceToTarget.y , distanceToTarget.x);
+    // 衝突後の動き
+    if (isBouncing_) {
+        // 反発する方向に移動
+        position_ += distanceToTarget.Normalize() * bounceSpeed_;
+    }
+    else {
+        // 通常の移動処理
+        distanceToTarget = positionTarget_ - position_;
+        if (distanceToTarget.Length() > 0) {
+            position_ += distanceToTarget.Normalize() * moveSpeed_;
+        }
 
-    /// WASD移動の簡易実装
-    InputCenter::GetInstance()->WASDMove(position_, 3.0f);
-
-    /// 自動移動
-    position_ += distanceToTarget.Normalize() * moveSpeed_;
-
-
-
+        if (distanceToTarget.x != 0 || distanceToTarget.y != 0) {
+            rotation_ = std::atan2(distanceToTarget.y, distanceToTarget.x);
+        }
+    }
     /// ここより下ではPositionを更新しない
     float theta = 0;
     Vector2 result = {};
@@ -92,10 +95,20 @@ void Enemy::DebugWindow()
 }
 
 void Enemy::OnCollision(const Collider* _other) {
-    //_otherがPlayerかどうか確認
-    if (_other->GetColliderID() == "Player")
-    {
-        // Playerとの衝突処理
+    // _otherがPlayerかどうか確認
+    if (_other->GetColliderID() == "Player") {
+        if (!hasCollided_) {
+            // 初回の衝突時
+              // 向き反転
+            distanceToTarget = -distanceToTarget; 
+            rotation_ += 3.141592f;          
+            //ぶっ飛びフラグオン
+            isBouncing_ = true;
+            //衝突フラグオン
+            hasCollided_ = true;                  
 
+        }
+        // それ以降の衝突は無視
     }
+   // else if()
 }

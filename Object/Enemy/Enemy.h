@@ -30,9 +30,17 @@ private:
     float   rotation_       = 0.0f;
     float radius_ = 0.0f;
     float moveSpeed_ = 0.0f;
+    float collisionCooldown_ = 0.0f;
+    const float collisionCooldownDuration_ = 0.5f;
 
     char* keys_ = nullptr;
     char* preKeys_ = nullptr;
+
+    // 衝突時のぶっとび速度
+    float bounceSpeed_ = 5.0f; 
+    bool isBouncing_ = false;
+    //衝突フラグ
+    bool hasCollided_ = false;
 
     void DebugWindow();
 };

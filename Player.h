@@ -14,6 +14,7 @@
 class Player : public BaseObject
 {
 public:
+
     Player();
     ~Player();
 
