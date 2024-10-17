@@ -19,9 +19,6 @@ void Core::Initialize()
     pCollisionManager = CollisionManager::GetInstance();
     position_ = { 640, 360 };
     boxCore_.MakeSquare(30);
-    collider_.SetColliderID("Core");
-    pCollisionManager->RegisterCollider(&collider_);
-    collider_.SetAttribute(pCollisionManager->GetNewAttribute("Core"));
 
     hp_ = 3;
 
@@ -32,8 +29,21 @@ void Core::Initialize()
     }
     collider_.SetVertices(std::move(temp));
 
+    /// コライダー関連
+    // 所有者を登録
+    collider_.SetOwner(this);
+
+    // コライダー識別子を登録
+    collider_.SetColliderID("Core");
+
+    // アトリビュートの生成・登録
+    collider_.SetAttribute(pCollisionManager->GetNewAttribute("Core"));
+
     // OnCollision関数を登録
     collider_.SetOnCollision(std::bind(&Core::OnCollision, this, std::placeholders::_1));
+
+    // Colliderの登録
+    pCollisionManager->RegisterCollider(&collider_);
 }
 
 void Core::RunSetMask()
