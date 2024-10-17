@@ -31,12 +31,23 @@ void Player::Initialize()
     position_.x = 640.0f;
     position_.y = 360.0f;
     radius_current_ = radius_default_;
+
+    /// コライダー関連
+    // 所有者を登録
+    collider_.SetOwner(this);
+
+    // コライダー識別子を登録
     collider_.SetColliderID("Player");
 
-    pCollisionManager_->RegisterCollider(&collider_);
+    // アトリビュートの生成・登録
     collider_.SetAttribute(pCollisionManager_->GetNewAttribute("Player"));
-    //colliderにポインタを渡す
+
+    // colliderにポインタを渡す
     collider_.SetOnCollision(std::bind(&Player::OnCollision, this, std::placeholders::_1));
+
+    // colliderの登録
+    pCollisionManager_->RegisterCollider(&collider_);
+
 
     /// 回転板の初期化
     pRotateBoard_ = new RotateBoard();
