@@ -16,6 +16,9 @@ public:
     void Update();
     void Draw();
 
+    // コールバック関数
+    void OnCollision(const Collider* _other);
+
     void DebugWindow();
 
     Collider* GetCollider() { return &collider_; }
