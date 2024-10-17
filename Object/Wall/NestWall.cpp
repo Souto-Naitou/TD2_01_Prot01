@@ -25,6 +25,7 @@ void NestWall::Initialize()
 
     // コライダーにOnCollisionの関数ポインタを渡す
     collider_.SetOnCollision(std::bind(&NestWall::OnCollision, this, std::placeholders::_1));
+    collider_.SetOwner(this);
 }
 
 void NestWall::RunSetMask()

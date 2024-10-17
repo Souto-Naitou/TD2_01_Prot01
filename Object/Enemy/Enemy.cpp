@@ -23,6 +23,7 @@ void Enemy::Initialize()
     moveSpeed_ = 0.05f;
 
     pCollisionManager->RegisterCollider(&collider_);
+    collider_.SetOwner(this);
     collider_.SetAttribute(pCollisionManager->GetNewAttribute("Enemy"));
     //Colliderにポインタを渡す
     collider_.SetOnCollision(std::bind(&Enemy::OnCollision, this, std::placeholders::_1));
