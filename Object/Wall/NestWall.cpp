@@ -22,6 +22,9 @@ void NestWall::Initialize()
     collider_.SetColliderID("NestWall");
     collider_.SetAttribute(pCollisionManager_->GetNewAttribute("NestWall"));
     pCollisionManager_->RegisterCollider(&collider_);
+
+    // コライダーにOnCollisionの関数ポインタを渡す
+    collider_.SetOnCollision(std::bind(&NestWall::OnCollision, this, std::placeholders::_1));
 }
 
 void NestWall::RunSetMask()
@@ -37,6 +40,16 @@ void NestWall::Draw()
 {
     Rect2 newRect = rect_ + position_;
     Novice::DrawBox(newRect.x1, newRect.y1, newRect.x2, newRect.y2, 0.0f, BLUE, kFillModeWireFrame);
+}
+
+void NestWall::OnCollision(const Collider* _collider)
+{
+    if (_collider->GetColliderID() == "Enemy")
+    {
+        hp_--;
+    }
+
+    if (hp_ < 0) hp_ = 0;
 }
 
 void NestWall::SetRect(int _width, int _height, Vector2 _leftTop)
