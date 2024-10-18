@@ -66,6 +66,11 @@ public:
     /// <param name="_flag">フラグ</param>
     void                            SetEnableLighter(bool _flag);
 
+    // 位置を取得
+    inline Vector2 GetPosition() const { return position_; }
+
+    // 位置を設定
+    inline void SetPosition(const Vector2& newPosition) { position_ = newPosition; }
 private: /// 非公開データ
     Collider                        collider_                   = {};           // コライダー
     Vector2                         vertices_[3]                = {};           // 三角形の頂点

@@ -39,7 +39,7 @@ void Enemy::Initialize(size_t idx)
     ellipseAB_ = { 20.0f ,10.0f };          // ax^2 + by^2 = 1
 
 
-    collider_.SetColliderID("Enemy");       // コライダーのID
+    collider_.SetColliderID("Enemy");     // コライダーのID
     moveSpeed_ = 1.0f;                      // 移動スピード
 
 
@@ -180,7 +180,27 @@ void Enemy::OnCollision(const Collider* _other)
     }
     //敵同士の当たり判定
     else if (_other->GetColliderID() == "Enemy") {
-    
+        // 敵同士の位置を取得
+        const Enemy* otherEnemy = static_cast<const Enemy*>(_other->GetOwner());
+        Vector2 otherPosition = otherEnemy->GetPosition();
+
+        // 現在の位置を取得
+        Vector2 myPosition = GetPosition();
+
+        // 短い距離を計算
+        Vector2 direction = otherPosition - myPosition;
+
+        // 反発ベクトルを計算
+        if (direction.Length() > 0)
+        {
+            direction.Normalize();
+            // 反発速度を加える
+            myPosition -= direction * bounceSpeed_; 
+            otherPosition += direction * bounceSpeed_; 
+
+            SetPosition(myPosition);
+            const_cast<Enemy*>(otherEnemy)->SetPosition(otherPosition); 
+        }
     }
 }
 
