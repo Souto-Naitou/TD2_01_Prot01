@@ -180,8 +180,9 @@ void Enemy::OnCollision(const Collider* _other)
     }
     //敵同士の当たり判定
     else if (_other->GetColliderID() == "Enemy") {
-
-    }}
+    
+    }
+}
 
 void Enemy::SetEnableLighter(bool _flag)
 {
