@@ -38,6 +38,7 @@ private:
     Timer               timer_              = {};
     bool                isEnableLighter_    = false;
     bool                isPop_              = false;
+    float               e2eBouncePower_     = 2.0f;
 
     void MakeWall(NestWall** _nestWall, std::string _id, int _width, int _height, Vector2 _origin);
 };

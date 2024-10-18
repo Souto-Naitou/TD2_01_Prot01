@@ -66,6 +66,7 @@ protected:
 
     std::string     objectID_   = {};       // オブジェクト識別子
     Vector2         position_   = {};       // ワールド座標
+    Vector2         velocity_   = {};
     bool            isDead_     = false;    // 死亡フラグ
     int32_t         hp_         = 0u;       // HP
 };
