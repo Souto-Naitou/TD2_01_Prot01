@@ -44,6 +44,8 @@ public:
             }
         }
 
+        if (!result) result = ~result;
+
         uint32_t* resultPtr = nullptr;
         bool isCompare = false;
         /// 配列の中身を変更
@@ -77,4 +79,8 @@ private:
     void DebugWindow();
     void CheckCollisionPair(Collider* _colA, Collider* _colB);
     void ProjectShapeOnAxis(std::vector<Vector2>* _v, const Vector2& _axis, float& _min, float& _max);
+
+    uint32_t countCheckCollision_ = 0ui32;
+    uint32_t countWithoutFilter_ = 0ui32;
+    uint32_t countWithoutLighter = 0ui32;
 };
