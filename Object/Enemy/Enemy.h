@@ -40,6 +40,9 @@ public:
     }
 
 
+    void                            RunSetMask();
+
+
     /// <summary>
     /// ターゲットにする座標を指定
     /// </summary>
@@ -85,9 +88,11 @@ private: /// 非公開データ
     bool                            isBouncing_                 = false;        // 跳ね返りフラグ
 
     bool                            hasCollided_                = false;        // 衝突フラグ
+    int32_t                         outScreenPadding_           = 0ui32;        // スクリーン外判定を行う範囲の余白
+    bool                            isOutOfScreen_              = false;        // スクリーン外かどうか
 
 private: /// シングルトン インスタンスのポインタ
-    CollisionManager* pCollisionManager;
+    CollisionManager* pCollisionManager_;
 
 private: /// 非公開メソッド
     void DebugWindow();

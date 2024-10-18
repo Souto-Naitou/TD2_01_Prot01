@@ -57,7 +57,7 @@ void DebugManager::MeasureFPS()
 		timer_.Start();
 	}
 	/// フレームレート計算
-	if (timer_.GetNow() - elapsedFrameCount_ >= 2.0)
+	if (timer_.GetNow() - elapsedFrameCount_ >= 0.2)
 	{
 		fps_ = frameCount_ * 1.0 / (timer_.GetNow() - elapsedFrameCount_);
 

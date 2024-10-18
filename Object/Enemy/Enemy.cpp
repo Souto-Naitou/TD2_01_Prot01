@@ -7,19 +7,20 @@
 #include "Player.h"
 #include <Novice.h>
 #include "Collision/CollisionManager.h"
+#include "DefaultSettings.h"
 
 
 Enemy::~Enemy()
 {
-    pCollisionManager->DeleteCollider(&collider_);
+    pCollisionManager_->DeleteCollider(&collider_);
     DebugManager::GetInstance()->DeleteComponent("Enemy", idx_.c_str());
 }
 
 void Enemy::Initialize(size_t idx)
 {
     /// コライダーの登録
-    pCollisionManager = CollisionManager::GetInstance();
-    pCollisionManager->RegisterCollider(&collider_);
+    pCollisionManager_ = CollisionManager::GetInstance();
+    pCollisionManager_->RegisterCollider(&collider_);
 
 
     /// デバッグ用ウィンドウの登録
@@ -44,17 +45,29 @@ void Enemy::Initialize(size_t idx)
 
     /// コライダーの設定
     collider_.SetOwner(this);
-    collider_.SetAttribute(pCollisionManager->GetNewAttribute("Enemy"));
+    collider_.SetAttribute(pCollisionManager_->GetNewAttribute("Enemy"));
+    collider_.SetRadius(static_cast<int>(radius_));
+    collider_.SetVertices(vertices_, 3);
     // Colliderにポインタを渡す
     collider_.SetOnCollision(std::bind(&Enemy::OnCollision, this, std::placeholders::_1));
-    collider_.SetRadius(static_cast<int>(radius_));
-    collider_.SetEnableLighter(false); // 軽量化を行う
 }
 
 void Enemy::Update()
 {
     /// 早期リターン
     if (isDead_) return;
+    if (outScreenPadding_)
+    {
+        if (position_.x < -outScreenPadding_ ||
+            position_.x > DefaultSettings::kScreenWidth + outScreenPadding_ ||
+            position_.y < -outScreenPadding_ ||
+            position_.y > DefaultSettings::kScreenHeight + outScreenPadding_)
+        {
+            isOutOfScreen_ = true;
+            isDead_ = true;
+            return;
+        }
+    }
 
 
     /// 衝突後の動き
@@ -106,7 +119,7 @@ void Enemy::Draw()
     /// 早期リターン (Debug時は確認のため無効)
     if (isDead_) return;
 #endif // !_DEBUG
-
+    if (isOutOfScreen_) return;
 
     /// 3頂点の描画 (Enemy本体)
     Novice::DrawTriangle(
@@ -118,6 +131,11 @@ void Enemy::Draw()
     );
 
     return;
+}
+
+void Enemy::RunSetMask()
+{
+    collider_.SetMask(pCollisionManager_->GetNewMask(collider_.GetColliderID()));
 }
 
 void Enemy::DebugWindow()
@@ -141,7 +159,6 @@ void Enemy::DebugWindow()
 
 void Enemy::OnCollision(const Collider* _other)
 {
-
     /// Playerとの当たり判定
     if (_other->GetColliderID() == "Player")
     {
@@ -171,4 +188,8 @@ void Enemy::OnCollision(const Collider* _other)
 void Enemy::SetEnableLighter(bool _flag)
 {
     collider_.SetEnableLighter(_flag);
+    if (_flag)
+    {
+        outScreenPadding_ = -100;
+    }
 }
