@@ -69,11 +69,8 @@ void Enemy::Update()
             return;
         }
     }
-
-
-    /// 衝突後の動き
-    if (isBouncing_)
-    {
+    // 衝突後の動き
+    if (isBouncing_) {
         // 反発する方向に移動
         position_ += distanceToTarget.Normalize() * bounceSpeed_;
     }
@@ -182,10 +179,9 @@ void Enemy::OnCollision(const Collider* _other)
         isDead_ = true;
     }
     //敵同士の当たり判定
-    else if (_other->GetColliderID() == "Enemy") { 
+    else if (_other->GetColliderID() == "Enemy") {
 
-    }
-}
+    }}
 
 void Enemy::SetEnableLighter(bool _flag)
 {
