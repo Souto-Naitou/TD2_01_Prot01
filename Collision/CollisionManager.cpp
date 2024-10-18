@@ -103,6 +103,14 @@ void CollisionManager::CheckCollisionPair(Collider* _colA, Collider* _colB)
         std::vector<Vector2>* pVerticesA = _colA->GetVertices();
         std::vector<Vector2>* pVerticesB = _colB->GetVertices();
 
+        /// ラグ軽減のため、半径で判定とって早期リターン (ただし設定されていたら)
+        if (_colA->GetRadius() && _colB->GetRadius() && _colA->GetIsEnableLighter() && _colB->GetIsEnableLighter())
+        {
+            Vector2 distanceAB = _colB->GetPosition() - _colA->GetPosition();
+            uint32_t radiusAB = _colA->GetRadius() + _colB->GetRadius();
+            if (distanceAB.LengthWithoutRoot() > static_cast<float>(radiusAB * radiusAB)) return;
+        }
+
         // Aのすべての分離軸でチェック
         for (size_t i = 0; i < pVerticesA->size(); i++)
         {

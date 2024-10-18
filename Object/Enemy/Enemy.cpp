@@ -47,10 +47,16 @@ void Enemy::Initialize(size_t idx)
     collider_.SetAttribute(pCollisionManager->GetNewAttribute("Enemy"));
     // Colliderにポインタを渡す
     collider_.SetOnCollision(std::bind(&Enemy::OnCollision, this, std::placeholders::_1));
+    collider_.SetRadius(static_cast<int>(radius_));
+    collider_.SetEnableLighter(false); // 軽量化を行う
 }
 
 void Enemy::Update()
 {
+    /// 早期リターン
+    if (isDead_) return;
+
+
     /// 衝突後の動き
     if (isBouncing_)
     {
@@ -88,12 +94,20 @@ void Enemy::Update()
     }
     collider_.SetVertices(vertices_, 3);
 
+    if (collider_.GetIsEnableLighter()) collider_.SetPosition(position_);
 
     return;
 }
 
 void Enemy::Draw()
 {
+
+#ifndef _DEBUG
+    /// 早期リターン (Debug時は確認のため無効)
+    if (isDead_) return;
+#endif // !_DEBUG
+
+
     /// 3頂点の描画 (Enemy本体)
     Novice::DrawTriangle(
         static_cast<int>(vertices_[0].x), static_cast<int>(vertices_[0].y),
@@ -125,7 +139,8 @@ void Enemy::DebugWindow()
     return;
 }
 
-void Enemy::OnCollision(const Collider* _other) {
+void Enemy::OnCollision(const Collider* _other)
+{
 
     /// Playerとの当たり判定
     if (_other->GetColliderID() == "Player")
@@ -151,4 +166,9 @@ void Enemy::OnCollision(const Collider* _other) {
         // エネミーのデスフラグをオンに
         isDead_ = true;
     }
+}
+
+void Enemy::SetEnableLighter(bool _flag)
+{
+    collider_.SetEnableLighter(_flag);
 }

@@ -16,11 +16,14 @@
 class GameScene
 {
 public:
+    GameScene();
     ~GameScene();
 
     void Initialize();
     void Update();
     void Draw();
+
+    void DebugWindow();
 
 private:
     CollisionManager*   pCollisionManager_  = nullptr;
@@ -33,6 +36,7 @@ private:
     EnemyPopSystem*     pEnemyPopSystem_    = nullptr;
     std::list<Enemy*>   enemyList_          = {};
     Timer               timer_              = {};
+    bool                isEnableLighter_    = false;
 
     void MakeWall(NestWall** _nestWall, std::string _id, int _width, int _height, Vector2 _origin);
 };

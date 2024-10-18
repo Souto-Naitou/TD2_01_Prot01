@@ -57,6 +57,12 @@ public:
     void                            OnCollision(const Collider* _other);
 
 
+    /// <summary>
+    /// ラグ軽減を行うか
+    /// </summary>
+    /// <param name="_flag">フラグ</param>
+    void                            SetEnableLighter(bool _flag);
+
 private: /// 非公開データ
     Collider                        collider_                   = {};           // コライダー
     Vector2                         vertices_[3]                = {};           // 三角形の頂点
