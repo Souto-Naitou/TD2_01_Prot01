@@ -38,10 +38,6 @@ void Enemy::Initialize(size_t idx)
 
 void Enemy::Update()
 {
-    //デスフラグがオンになったらdelete
-    if (isDead_) {
-        
-    }
     // 衝突後の動き
     if (isBouncing_) {
         // 反発する方向に移動
@@ -122,6 +118,11 @@ void Enemy::OnCollision(const Collider* _other) {
     }
     //コアとの当たり判定
     else if (_other->GetColliderID()== "Core") {
+        //エネミーのデスフラグをオンに
+        isDead_ = true;
+    }
+    //敵同士の当たり判定
+    else if (_other->GetColliderID() == "Enemy") {
         //エネミーのデスフラグをオンに
         isDead_ = true;
     }
