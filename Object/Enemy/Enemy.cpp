@@ -172,12 +172,9 @@ void Enemy::OnCollision(const Collider* _other)
             isBouncing_         = true;     //ぶっ飛びフラグオン
             hasCollided_        = true;     //衝突フラグオン
         }
-
         /// 二回目以降の衝突は無視
 
     }
-
-
     /// Coreとの当たり判定
     else if (_other->GetColliderID()== "Core")
     {
@@ -185,9 +182,8 @@ void Enemy::OnCollision(const Collider* _other)
         isDead_ = true;
     }
     //敵同士の当たり判定
-    else if (_other->GetColliderID() == "Enemy") {
-        //エネミーのデスフラグをオンに
-        isDead_ = true;
+    else if (_other->GetColliderID() == "Enemy") { 
+
     }
 }
 
