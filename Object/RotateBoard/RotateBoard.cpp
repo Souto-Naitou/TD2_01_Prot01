@@ -5,6 +5,8 @@
 
 RotateBoard::RotateBoard()
 {
+    pCollisionManager_ = CollisionManager::GetInstance();
+    t1 = t2 = 0;
     parentVertices_ = nullptr;
     DebugManager::GetInstance()->SetComponent("RotateBoard", std::bind(&RotateBoard::DebugWindow, this));
     pEasingEdgeMove = std::make_unique<Easing>("RotateBoard_EdgeMove");
@@ -18,11 +20,18 @@ RotateBoard::~RotateBoard()
 void RotateBoard::Initialize()
 {
     padding_ = 24;
-    offset_ = 0.2f;
+    offset_ = 0.5f;
+
+    pEasingEdgeMove->Start();
+
+    collider_.SetColliderID("RotateBoard");
+    collider_.SetAttribute(pCollisionManager_->GetNewAttribute("RotateBoard"));
+    collider_.SetOwner(this);
 }
 
 void RotateBoard::RunSetMask()
 {
+    collider_.SetMask(pCollisionManager_->GetNewMask(collider_.GetColliderID(), "Player", "Core", "NestWall"));
 }
 
 void RotateBoard::Update()
@@ -60,6 +69,10 @@ void RotateBoard::Update()
     points_[0].second.Lerp(course_[numEdge1], course_[(numEdge1 + 1u) % courseSize], t1);
     points_[1].second.Lerp(course_[numEdge2], course_[(numEdge2 + 1u) % courseSize], t2);
 
+
+    verticesCollider_[0] = points_[0].second;
+    verticesCollider_[1] = points_[1].second;
+    collider_.SetVertices(verticesCollider_, 2);
 }
 
 void RotateBoard::Draw()
