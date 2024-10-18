@@ -1,49 +1,88 @@
 #pragma once
 
-#include "easing/Easing.h"
-#include <Vector2.h>
-#include <Rect2.h>
-#include <vector>
-#include <array>
-#include <memory>
 #include "Collision/Collider.h"
 #include "Collision/CollisionManager.h"
 
-class RotateBoard : BaseObject
+#include "easing/Easing.h"
+#include <Vector2.h>
+#include <Rect2.h>
+
+#include <vector>
+#include <array>
+#include <memory>
+
+
+/// <summary>
+/// 回転板オブジェクト
+/// </summary>
+class RotateBoard : public BaseObject
 {
-public:
+public: /// 公開メソッド
 
     RotateBoard();
     ~RotateBoard();
 
+
+    /// <summary>
+    /// 初期化
+    /// </summary>
     void Initialize();
+
+
+    /// <summary>
+    /// マスク設定をする
+    /// </summary>
     void RunSetMask();
+
+
+    /// <summary>
+    /// 更新
+    /// </summary>
     void Update();
+
+
+    /// <summary>
+    /// 描画
+    /// </summary>
     void Draw();
 
+
+    /// <summary>
+    /// 親の頂点を設定
+    /// </summary>
+    /// <param name="_vertices"></param>
     void SetVertices(const std::vector<Vector2>* _vertices);
 
+
+    /// <summary>
+    /// デバッグ用ウィンドウ
+    /// </summary>
     void DebugWindow();
 
-private:
-    CollisionManager* pCollisionManager_ = nullptr;
-    Collider collider_ = {};
-    Rect2 rect_;
-    const std::vector<Vector2>* parentVertices_;
-    std::vector<Vector2> course_;
-    int32_t padding_ = 0;
-    std::array<std::pair<uint32_t, Vector2>, 2> points_;
-    std::unique_ptr<Easing> pEasingEdgeMove = nullptr;
-    bool isDrawCourse_ = false;
-    bool isDrawPoints_ = false;
-    float offset_ = 0.0f;
-    float t1, t2;
 
-    Vector2 verticesCollider_[2];
+private: /// 非公開データ
 
-private:
-    void UpdateCourse();
-    void DrawPoints();
-    void DrawCourse();
-    void DrawBoardLine();
+    std::vector<Vector2>                        course_         = {};
+    std::array<std::pair<uint32_t, Vector2>, 2> points_         = {};
+    std::unique_ptr<Easing>                     pEasingEdgeMove = nullptr;
+
+    Collider                collider_               = {};       // コライダー
+    Rect2                   rect_                   = {};       // レクト
+    int32_t                 padding_                = 0;        // 隙間
+    bool                    isDrawCourse_           = false;    // コースを描画するかどうか
+    bool                    isDrawPoints_           = false;    // 頂点を描画するかどうか
+    float                   offset_                 = 0.0f;     // オフセット値
+    float                   t1                      = 0.0f;     // time1
+    float                   t2                      = 0.0f;     // time2
+    Vector2                 verticesCollider_[2]    = {};       // コライダーにわたす頂点ベクトル
+
+private: /// 他オブジェクトから借りるデータ
+    CollisionManager*           pCollisionManager_  = nullptr;  // コリジョンマネージャ
+    const std::vector<Vector2>* parentVertices_     = nullptr;  // 親の頂点
+
+private: /// 非公開メソッド
+    void UpdateCourse();    // コースを更新
+    void DrawPoints();      // 頂点を描画
+    void DrawCourse();      // コースを描画
+    void DrawBoardLine();   // 板のラインを描画
 };
