@@ -190,6 +190,6 @@ void Enemy::SetEnableLighter(bool _flag)
     collider_.SetEnableLighter(_flag);
     if (_flag)
     {
-        outScreenPadding_ = -100;
+        outScreenPadding_ = 50;
     }
 }
