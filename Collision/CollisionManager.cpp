@@ -72,7 +72,7 @@ uint32_t CollisionManager::GetNewAttribute(std::string _id)
 void CollisionManager::DebugWindow()
 {
     ImGui::Text("判定回数 : %u回", countCheckCollision_);
-    ImGui::Text("フィルターされた回数 : %u回", countWithoutFilter_ - countCheckCollision_);
+    ImGui::Text("フィルターされた回数 : %u回", countWithoutFilter_ - countWithoutLighter);
     ImGui::Text("軽量化された回数 : %u回", countWithoutLighter - countCheckCollision_);
 
     if (ImGui::BeginTable("Collided list", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_Resizable))

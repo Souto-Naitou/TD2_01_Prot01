@@ -81,6 +81,12 @@ public:
     void                            SetBouncePower(BounceTarget _target, float _power);
 
 
+    /// <summary>
+    /// 死亡フラグを設定
+    /// </summary>
+    /// <param name="_flag">フラグ</param>
+    void                            SetIsDead(bool _flag) { isDead_ = _flag; }
+
 private: /// 非公開データ
     Collider                        collider_                   = {};           // コライダー
     Vector2                         vertices_[3]                = {};           // 三角形の頂点

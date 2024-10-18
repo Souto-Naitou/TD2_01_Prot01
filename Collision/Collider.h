@@ -25,6 +25,7 @@ public:
     inline  Vector2                     GetPosition()               const       { return position_; }
 
 
+
     inline  void                        SetOwner(BaseObject* _owner)            { owner_ = _owner; }
     inline  void                        SetColliderID(const std::string& _id)   { colliderID_ = _id; }
     void                                SetVertices(const std::vector<Vector2>&& _vertices);

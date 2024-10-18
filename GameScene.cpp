@@ -102,6 +102,7 @@ void GameScene::Update()
             ptrEnemy->SetTargetPosition(pPlayer_->GetWorldPosition());
             ptrEnemy->RunSetMask();
             ptrEnemy->SetEnableLighter(isEnableLighter_);
+            ptrEnemy->SetBouncePower(Enemy::BounceTarget::Enemy, e2eBouncePower_);
             enemyList_.push_back(ptrEnemy);
         }
     }
@@ -154,6 +155,14 @@ void GameScene::DebugWindow()
         for (Enemy* enemy : enemyList_)
         {
             enemy->SetBouncePower(Enemy::BounceTarget::Enemy, e2eBouncePower_);
+        }
+    }
+
+    if (ImGui::SmallButton("Delete All Enemies"))
+    {
+        for (Enemy* enemy : enemyList_)
+        {
+            enemy->SetIsDead(true);
         }
     }
 }

@@ -206,10 +206,10 @@ void Enemy::OnCollision(const Collider* _other)
 void Enemy::SetEnableLighter(bool _flag)
 {
     collider_.SetEnableLighter(_flag);
-    if (_flag)
-    {
-        outScreenPadding_ = 50;
-    }
+    //if (_flag)
+    //{
+    //    outScreenPadding_ = 50;
+    //}
 }
 
 void Enemy::SetBouncePower(BounceTarget _target, float _power)
