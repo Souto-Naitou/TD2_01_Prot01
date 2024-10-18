@@ -39,8 +39,8 @@ void Enemy::Initialize(size_t idx)
     ellipseAB_ = { 20.0f ,10.0f };          // ax^2 + by^2 = 1
 
 
-    collider_.SetColliderID("Enemy");     // コライダーのID
-    moveSpeed_ = 1.0f;                      // 移動スピード
+    collider_.SetColliderID("Enemy");       // コライダーのID
+    moveSpeed_ = 1.0f;                          // 移動スピード
 
 
     /// コライダーの設定
@@ -54,7 +54,6 @@ void Enemy::Initialize(size_t idx)
 
 void Enemy::Update()
 {
-
     /// 早期リターン
     if (isDead_) return;
     if (outScreenPadding_)
@@ -69,20 +68,24 @@ void Enemy::Update()
             return;
         }
     }
+
+    Vector2 moveVelocity_ = {};
     // 衝突後の動き
     if (isBouncing_) {
         // 反発する方向に移動
-        position_ += distanceToTarget.Normalize() * bounceSpeed_;
+        velocity_ = distanceToTarget.Normalize() * bounceSpeed_;
     }
     else
     {
-        /// 通常の移動処理
+        /// 速度の更新
         distanceToTarget = positionTarget_ - position_;
         if (distanceToTarget.Length() > 0)
         {
-            position_ += distanceToTarget.Normalize() * moveSpeed_;
+            if (velocity_.Length() < moveSpeed_)
+                moveVelocity_ = distanceToTarget.Normalize() * moveSpeed_;
         }
 
+        /// 方向を変更
         if (distanceToTarget.x != 0 || distanceToTarget.y != 0)
         {
             rotation_ = std::atan2(distanceToTarget.y, distanceToTarget.x);
@@ -90,8 +93,7 @@ void Enemy::Update()
     }
 
 
-    /// ** ここより下ではPositionを更新しない **
-
+    /// ** ここより上ではPositionを更新しない **
 
     /// 頂点の計算
     float theta = 0;
@@ -105,6 +107,10 @@ void Enemy::Update()
     }
     collider_.SetVertices(vertices_, 3);
 
+    position_ += moveVelocity_;
+    position_ += velocity_;
+
+    // コライダーに座標を送る
     if (collider_.GetIsEnableLighter()) collider_.SetPosition(position_);
 
     return;
@@ -133,7 +139,7 @@ void Enemy::Draw()
 
 void Enemy::RunSetMask()
 {
-    collider_.SetMask(pCollisionManager_->GetNewMask(collider_.GetColliderID()));
+    collider_.SetMask(pCollisionManager_->GetNewMask(objectID_));
 }
 
 void Enemy::DebugWindow()
@@ -179,27 +185,20 @@ void Enemy::OnCollision(const Collider* _other)
         isDead_ = true;
     }
     //敵同士の当たり判定
-    else if (_other->GetColliderID() == "Enemy") {
+    else if (_other->GetColliderID() == "Enemy")
+    {
         // 敵同士の位置を取得
         const Enemy* otherEnemy = static_cast<const Enemy*>(_other->GetOwner());
-        Vector2 otherPosition = otherEnemy->GetPosition();
-
-        // 現在の位置を取得
-        Vector2 myPosition = GetPosition();
+        Vector2 otherPosition = otherEnemy->GetWorldPosition();
 
         // 短い距離を計算
-        Vector2 direction = otherPosition - myPosition;
+        Vector2 direction = position_ - otherPosition;
 
         // 反発ベクトルを計算
         if (direction.Length() > 0)
         {
-            direction.Normalize();
             // 反発速度を加える
-            myPosition -= direction * bounceSpeed_; 
-            otherPosition += direction * bounceSpeed_; 
-
-            SetPosition(myPosition);
-            const_cast<Enemy*>(otherEnemy)->SetPosition(otherPosition); 
+            velocity_ = direction.Normalize() * bouncePower_enemy_;
         }
     }
 }
@@ -210,5 +209,19 @@ void Enemy::SetEnableLighter(bool _flag)
     if (_flag)
     {
         outScreenPadding_ = 50;
+    }
+}
+
+void Enemy::SetBouncePower(BounceTarget _target, float _power)
+{
+    switch (_target)
+    {
+    case Enemy::BounceTarget::Enemy:
+        bouncePower_enemy_ = _power;
+        break;
+    case Enemy::BounceTarget::Player:
+        break;
+    default:
+        break;
     }
 }

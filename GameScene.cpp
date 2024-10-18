@@ -147,6 +147,15 @@ void GameScene::DebugWindow()
         }
     }
     ImGui::Checkbox("EnemyPop", &isPop_);
+
+    ImGui::Text("Enemy to Enemy Bounce Power");
+    if (ImGui::DragFloat("Power", &e2eBouncePower_))
+    {
+        for (Enemy* enemy : enemyList_)
+        {
+            enemy->SetBouncePower(Enemy::BounceTarget::Enemy, e2eBouncePower_);
+        }
+    }
 }
 
 void GameScene::MakeWall(NestWall** _nestWall, std::string _id, int _width, int _height, Vector2 _origin)

@@ -8,6 +8,12 @@ class Enemy : public BaseObject
 {
 public:
 
+    enum class BounceTarget
+    {
+        Enemy,
+        Player
+    };
+
     Enemy() = default;
     ~Enemy();
 
@@ -66,11 +72,15 @@ public:
     /// <param name="_flag">フラグ</param>
     void                            SetEnableLighter(bool _flag);
 
-    // 位置を取得
-    inline Vector2 GetPosition() const { return position_; }
 
-    // 位置を設定
-    inline void SetPosition(const Vector2& newPosition) { position_ = newPosition; }
+    /// <summary>
+    /// 反発力を設定
+    /// </summary>
+    /// <param name="_target">誰とあたったときか</param>
+    /// <param name="_power">反発力</param>
+    void                            SetBouncePower(BounceTarget _target, float _power);
+
+
 private: /// 非公開データ
     Collider                        collider_                   = {};           // コライダー
     Vector2                         vertices_[3]                = {};           // 三角形の頂点
@@ -95,6 +105,7 @@ private: /// 非公開データ
     bool                            hasCollided_                = false;        // 衝突フラグ
     int32_t                         outScreenPadding_           = 0ui32;        // スクリーン外判定を行う範囲の余白
     bool                            isOutOfScreen_              = false;        // スクリーン外かどうか
+    float                           bouncePower_enemy_          = 2.0f;         // Enemy同士の反発力
 
 private: /// シングルトン インスタンスのポインタ
     CollisionManager* pCollisionManager_;
