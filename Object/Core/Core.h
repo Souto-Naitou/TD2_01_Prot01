@@ -10,11 +10,13 @@ public:
 
     Core();
     ~Core();
-    
+
     void Initialize();
     void RunSetMask();
     void Update();
     void Draw();
+
+    void SetEnableLighter(bool _flag) { collider_.SetEnableLighter(_flag); }
 
     // コールバック関数
     void OnCollision(const Collider* _other);

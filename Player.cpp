@@ -1,5 +1,6 @@
 #include "Player.h"
 
+#include "DefaultSettings.h"
 #include "ImGuiDebugManager/DebugManager.h"
 #include "Object/Enemy/Enemy.h"
 #include <Novice.h>
@@ -28,8 +29,8 @@ void Player::Initialize()
     pEasingBoxResize_ = std::make_unique<Easing>("DecreaseSize", Easing::EaseType::EaseOutCubic, 0.5);
     pEasingBoxTemp_ = std::make_unique<Easing>("IncreaseSize", Easing::EaseType::EaseOutCubic, 0.5);
 
-    position_.x = 640.0f;
-    position_.y = 360.0f;
+    position_.x = static_cast<float>(DefaultSettings::kScreenWidth / 2ui32);
+    position_.y = static_cast<float>(DefaultSettings::kScreenHeight / 2ui32);
     radius_current_ = radius_default_;
 
     /// コライダー関連
@@ -44,6 +45,12 @@ void Player::Initialize()
 
     // colliderにポインタを渡す
     collider_.SetOnCollision(std::bind(&Player::OnCollision, this, std::placeholders::_1));
+
+    // 衝突用座標 (ラグ軽減用)
+    collider_.SetPosition(position_);
+
+    // ラグ軽減の有無
+    collider_.SetEnableLighter(false);
 
     // colliderの登録
     pCollisionManager_->RegisterCollider(&collider_);
@@ -85,8 +92,6 @@ void Player::Update()
         radius_current_ = (1.0f - pEasingBoxTemp_->Update()) * radius_timeRelease_ + pEasingBoxTemp_->Update() * radius_default_;
     }
 
-    std::chrono::system_clock::time_point nowTime = std::chrono::system_clock::now();
-
     if (vertices_.size() != resolution_)
     {
         vertices_.resize(resolution_);
@@ -102,6 +107,7 @@ void Player::Update()
         vertices_[i] = result;
     }
 
+    collider_.SetRadius(static_cast<int>(radius_current_));
     collider_.SetVertices(&vertices_);
     pRotateBoard_->Update();
 }

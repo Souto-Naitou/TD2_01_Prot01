@@ -22,17 +22,38 @@ DebugManager::~DebugManager()
 
 void DebugManager::DebugWindowOverall()
 {
-	ImGui::Text("%.2lfFPS", fps_);
-	float dummy = static_cast<float>(fps_);
-	ImGui::SameLine();
-	ImGui::SliderFloat("##FPS", &dummy, 0.0f, 60.0f, "");
+	ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav;
+
+	const float PAD = 10.0f;
+	const ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImVec2 work_pos = viewport->WorkPos; // Use work area to avoid menu-bar/task-bar, if any!
+	ImVec2 work_size = viewport->WorkSize;
+	ImVec2 window_pos, window_pos_pivot;
+	window_pos.x = PAD;
+	window_pos.y = PAD;
+	window_pos_pivot.x = 0.0f;
+	window_pos_pivot.y = 0.0f;
+	ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
+	ImGui::SetNextWindowViewport(viewport->ID);
+	window_flags |= ImGuiWindowFlags_NoMove;
+
+	ImGui::SetNextWindowBgAlpha(0.0f);
+
+	if (ImGui::Begin("Overray FPS", nullptr, window_flags))
+	{
+		ImGui::Text("%.2lfFPS", fps_);
+		ImGui::SameLine();
+		ImGui::ProgressBar(static_cast<float>(fps_) / 60.0f, ImVec2(0, 0), "");
+
+		ImGui::EndPopup();
+	}
+	ImGui::End();
 }
 
 void DebugManager::MeasureFPS()
 {
 	if (!timer_.GetIsStart())
 	{
-		this->SetComponent("Overall", std::bind(&DebugManager::DebugWindowOverall, this));
 		timer_.Start();
 	}
 	/// フレームレート計算
@@ -83,9 +104,8 @@ void DebugManager::Window_ObjectList()
 				}
 			}
 		}
-
-		ImGui::End();
 	}
+	ImGui::End();
 	ImGui::PopID();
 }
 
@@ -142,6 +162,8 @@ void DebugManager::DrawUI()
 #ifdef _DEBUG
 
 	MeasureFPS();
+
+	DebugWindowOverall();
 
 	// 登録されていないなら早期リターン
 	if (componentList_.size() == 0) return;

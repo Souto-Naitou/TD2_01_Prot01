@@ -1,4 +1,6 @@
 #include "Core.h"
+
+#include "DefaultSettings.h"
 #include <Novice.h>
 #include "Collision/CollisionManager.h"
 #include "ImGuiTemplates.h"
@@ -6,6 +8,7 @@
 
 Core::Core()
 {
+    pCollisionManager = CollisionManager::GetInstance();
     DebugManager::GetInstance()->SetComponent("Core", std::bind(&Core::DebugWindow, this));
 }
 
@@ -16,8 +19,7 @@ Core::~Core()
 
 void Core::Initialize()
 {
-    pCollisionManager = CollisionManager::GetInstance();
-    position_ = { 640, 360 };
+    position_ = { DefaultSettings::kScreenWidth / 2u, DefaultSettings::kScreenHeight / 2u };
     boxCore_.MakeSquare(30);
 
     hp_ = 3;
@@ -41,6 +43,15 @@ void Core::Initialize()
 
     // OnCollision関数を登録
     collider_.SetOnCollision(std::bind(&Core::OnCollision, this, std::placeholders::_1));
+
+    // 衝突用座標の設定 (ラグ軽減用)
+    collider_.SetPosition(position_);
+
+    // 衝突半径の設定 (ラグ軽減用)
+    collider_.SetRadius(static_cast<int>(30 * 1.414f));
+
+    // ラグ軽減の有無
+    collider_.SetEnableLighter(false);
 
     // Colliderの登録
     pCollisionManager->RegisterCollider(&collider_);
