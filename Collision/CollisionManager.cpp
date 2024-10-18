@@ -11,6 +11,10 @@ void CollisionManager::Initialize()
 void CollisionManager::CheckAllCollision()
 {
     collisionNames_.clear();
+    countCheckCollision_ = 0ui32;
+    countWithoutFilter_ = 0ui32;
+    countWithoutLighter = 0ui32;
+
     auto itrA = colliders_.begin();
     for (; itrA != colliders_.end(); ++itrA)
     {
@@ -67,6 +71,10 @@ uint32_t CollisionManager::GetNewAttribute(std::string _id)
 
 void CollisionManager::DebugWindow()
 {
+    ImGui::Text("判定回数 : %u回", countCheckCollision_);
+    ImGui::Text("フィルターされた回数 : %u回", countWithoutFilter_ - countCheckCollision_);
+    ImGui::Text("軽量化された回数 : %u回", countWithoutLighter - countCheckCollision_);
+
     if (ImGui::BeginTable("Collided list", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_Resizable))
     {
         ImGui::TableSetupColumn("ColliderA");
@@ -91,6 +99,9 @@ void CollisionManager::CheckCollisionPair(Collider* _colA, Collider* _colB)
 {
     // 衝突しているかどうか
     bool isCollide = true;
+
+    countWithoutFilter_++;
+
     // 衝突フィルタリング
     bool fillterFlag =
         !(_colA->GetCollisionAttribute() & _colB->GetCollisionMask()) ||
@@ -103,6 +114,8 @@ void CollisionManager::CheckCollisionPair(Collider* _colA, Collider* _colB)
         std::vector<Vector2>* pVerticesA = _colA->GetVertices();
         std::vector<Vector2>* pVerticesB = _colB->GetVertices();
 
+        countWithoutLighter++;
+
         /// ラグ軽減のため、半径で判定とって早期リターン (ただし設定されていたら)
         if (_colA->GetRadius() && _colB->GetRadius() && _colA->GetIsEnableLighter() && _colB->GetIsEnableLighter())
         {
@@ -110,6 +123,8 @@ void CollisionManager::CheckCollisionPair(Collider* _colA, Collider* _colB)
             uint32_t radiusAB = _colA->GetRadius() + _colB->GetRadius();
             if (distanceAB.LengthWithoutRoot() > static_cast<float>(radiusAB * radiusAB)) return;
         }
+
+        countCheckCollision_++;
 
         // Aのすべての分離軸でチェック
         for (size_t i = 0; i < pVerticesA->size(); i++)

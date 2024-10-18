@@ -107,7 +107,7 @@ void Player::Update()
         vertices_[i] = result;
     }
 
-    collider_.SetRadius(static_cast<int>(radius_current_));
+    collider_.SetRadius(static_cast<int>(radius_current_ * 1.5));
     collider_.SetVertices(&vertices_);
     pRotateBoard_->Update();
 }

@@ -39,7 +39,7 @@ void Enemy::Initialize(size_t idx)
     ellipseAB_ = { 20.0f ,10.0f };          // ax^2 + by^2 = 1
 
 
-    collider_.SetColliderID("Enemy");   // コライダーのID
+    collider_.SetColliderID(objectID_);     // コライダーのID
     moveSpeed_ = 1.0f;                      // 移動スピード
 
 
