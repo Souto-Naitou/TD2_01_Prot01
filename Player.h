@@ -22,6 +22,7 @@ public:
     void RunSetMask();
     void Update();
     void Draw();
+    void SetEnableLighter(bool _flag) { collider_.SetEnableLighter(_flag); }
     void OnCollision(const Collider* _other);
     Collider* GetCollider() { return &collider_; }
 

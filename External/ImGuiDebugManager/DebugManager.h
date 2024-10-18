@@ -5,6 +5,8 @@
 #include <string>
 #include <tuple>
 
+#include "Timer/Timer.h"
+
 #include "ImGuiTemplates.h"
 
 class DebugManager
@@ -55,8 +57,14 @@ private:
     ~DebugManager();
 
     std::list<std::tuple<std::string, std::string, const std::function<void(void)>, bool>> componentList_;
+    Timer timer_;
+    double elapsedFrameCount_ = 0.0;
+    double fps_ = 0.0;
+    unsigned int frameCount_ = 0u;
 
 private:
+    void DebugWindowOverall();
+    void MeasureFPS();
     void Window_ObjectList();
     std::list<std::tuple<std::string,std::string,const std::function<void(void)>,bool>>::iterator
         GetInsertIterator(std::string _parentName);

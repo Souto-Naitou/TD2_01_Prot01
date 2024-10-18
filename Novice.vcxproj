@@ -171,6 +171,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="C:\KamataEngine\Adapter\Novice.h" />
     <ClInclude Include="Collision\Collider.h" />
     <ClInclude Include="Collision\CollisionManager.h" />
+    <ClInclude Include="DefaultSettings.h" />
     <ClInclude Include="EnemyPopSytem.h" />
     <ClInclude Include="External\easing\CSVLoader.h" />
     <ClInclude Include="External\easing\csvStructure\CSVData.h" />

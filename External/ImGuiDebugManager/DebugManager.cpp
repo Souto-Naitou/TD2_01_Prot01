@@ -1,5 +1,6 @@
 #include <ImGuiDebugManager/DebugManager.h>
 
+
 #ifdef _DEBUG
 #include <imgui.h>
 #include <imgui_impl_dx12.h>
@@ -17,6 +18,53 @@ DebugManager::DebugManager()
 DebugManager::~DebugManager()
 {
 
+}
+
+void DebugManager::DebugWindowOverall()
+{
+	ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav;
+
+	const float PAD = 10.0f;
+	const ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImVec2 work_pos = viewport->WorkPos; // Use work area to avoid menu-bar/task-bar, if any!
+	ImVec2 work_size = viewport->WorkSize;
+	ImVec2 window_pos, window_pos_pivot;
+	window_pos.x = PAD;
+	window_pos.y = PAD;
+	window_pos_pivot.x = 0.0f;
+	window_pos_pivot.y = 0.0f;
+	ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
+	ImGui::SetNextWindowViewport(viewport->ID);
+	window_flags |= ImGuiWindowFlags_NoMove;
+
+	ImGui::SetNextWindowBgAlpha(0.0f);
+
+	if (ImGui::Begin("Overray FPS", nullptr, window_flags))
+	{
+		ImGui::Text("%.2lfFPS", fps_);
+		ImGui::SameLine();
+		ImGui::ProgressBar(static_cast<float>(fps_) / 60.0f, ImVec2(0, 0), "");
+
+		ImGui::EndPopup();
+	}
+	ImGui::End();
+}
+
+void DebugManager::MeasureFPS()
+{
+	if (!timer_.GetIsStart())
+	{
+		timer_.Start();
+	}
+	/// フレームレート計算
+	if (timer_.GetNow() - elapsedFrameCount_ >= 0.2)
+	{
+		fps_ = frameCount_ * 1.0 / (timer_.GetNow() - elapsedFrameCount_);
+
+		frameCount_ = 0;
+		elapsedFrameCount_ = timer_.GetNow();
+	}
+	frameCount_++;
 }
 
 void DebugManager::Window_ObjectList()
@@ -56,9 +104,8 @@ void DebugManager::Window_ObjectList()
 				}
 			}
 		}
-
-		ImGui::End();
 	}
+	ImGui::End();
 	ImGui::PopID();
 }
 
@@ -113,6 +160,11 @@ void DebugManager::DeleteComponent(const char* _parentID, const char* _childID)
 void DebugManager::DrawUI()
 {
 #ifdef _DEBUG
+
+	MeasureFPS();
+
+	DebugWindowOverall();
+
 	// 登録されていないなら早期リターン
 	if (componentList_.size() == 0) return;
 

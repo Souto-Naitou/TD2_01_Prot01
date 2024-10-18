@@ -21,6 +21,9 @@ public:
     inline  unsigned int                GetRadius()                 const       { return radiusCollider_; }
     inline  std::vector<Vector2>*       GetVertices()                           { return &verticesCollider_; }
     inline  const std::string&          GetColliderID()             const       { return colliderID_; }
+    inline  bool                        GetIsEnableLighter()        const       { return enableLighter_; }
+    inline  Vector2                     GetPosition()               const       { return position_; }
+
 
     inline  void                        SetOwner(BaseObject* _owner)            { owner_ = _owner; }
     inline  void                        SetColliderID(const std::string& _id)   { colliderID_ = _id; }
@@ -30,6 +33,10 @@ public:
     void                                SetAttribute(uint32_t _attribute);
     void                                SetMask(uint32_t* _mask);
     void                                SetOnCollision(const std::function<void(const Collider*)>& _func) { onCollisionFunction_ = _func; }
+    void                                SetRadius(unsigned int _rad) { radiusCollider_ = _rad; }
+    void                                SetPosition(const Vector2& _v) { position_ = _v; }
+    void                                SetEnableLighter(bool _flag) { enableLighter_ = _flag; }
+
 
     inline  void                        OnCollision(const Collider* _other)
     {
@@ -48,7 +55,11 @@ private:
     std::string             colliderID_         = {};
 
     std::vector<Vector2>    verticesCollider_   = {};
+
+    /// 軽量化用
     unsigned int            radiusCollider_     = 0u;
+    Vector2                 position_ = {};
+    bool                    enableLighter_      = false;
 
     // 衝突属性(自分)
     uint32_t                collisionAttribute_ = 0xffffffff;

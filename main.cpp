@@ -6,6 +6,7 @@
 #include "InputCenter.h"
 #include <stdlib.h>
 #include <time.h>
+#include "DefaultSettings.h"
 
 const char kWindowTitle[] = "学籍番号";
 
@@ -13,7 +14,7 @@ const char kWindowTitle[] = "学籍番号";
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// ライブラリの初期化
-	Novice::Initialize(kWindowTitle, 1280, 720);
+	Novice::Initialize(kWindowTitle, DefaultSettings::kScreenWidth, DefaultSettings::kScreenHeight);
 
 	srand(static_cast<uint32_t>(time(nullptr)));
 
