@@ -42,9 +42,8 @@ void DebugManager::DebugWindowOverall()
 	if (ImGui::Begin("Overray FPS", nullptr, window_flags))
 	{
 		ImGui::Text("%.2lfFPS", fps_);
-		float dummy = static_cast<float>(fps_);
 		ImGui::SameLine();
-		ImGui::SliderFloat("##FPS", &dummy, 0.0f, 60.0f, "");
+		ImGui::ProgressBar(static_cast<float>(fps_) / 60.0f, ImVec2(0, 0), "");
 
 		ImGui::EndPopup();
 	}
