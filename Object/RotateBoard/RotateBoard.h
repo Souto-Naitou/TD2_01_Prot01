@@ -6,8 +6,10 @@
 #include <vector>
 #include <array>
 #include <memory>
+#include "Collision/Collider.h"
+#include "Collision/CollisionManager.h"
 
-class RotateBoard
+class RotateBoard : BaseObject
 {
 public:
 
@@ -24,6 +26,8 @@ public:
     void DebugWindow();
 
 private:
+    CollisionManager* pCollisionManager_ = nullptr;
+    Collider collider_ = {};
     Rect2 rect_;
     const std::vector<Vector2>* parentVertices_;
     std::vector<Vector2> course_;
@@ -34,6 +38,8 @@ private:
     bool isDrawPoints_ = false;
     float offset_ = 0.0f;
     float t1, t2;
+
+    Vector2 verticesCollider_[2];
 
 private:
     void UpdateCourse();

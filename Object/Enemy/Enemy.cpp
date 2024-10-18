@@ -24,7 +24,7 @@ void Enemy::Initialize(size_t idx)
 
 
     /// デバッグ用ウィンドウの登録
-    idx_ = std::to_string(idx);        // 引数から受け取った数を文字に
+    idx_ = std::to_string(idx);             // 引数から受け取った数を文字に
     objectID_ = "Enemy" + idx_;             //"Enemy1", "Enemy2" など
     DebugManager::GetInstance()->SetComponent("Enemy", idx_, std::bind(&Enemy::DebugWindow, this));
 
@@ -39,7 +39,7 @@ void Enemy::Initialize(size_t idx)
     ellipseAB_ = { 20.0f ,10.0f };          // ax^2 + by^2 = 1
 
 
-    collider_.SetColliderID(objectID_);     // コライダーのID
+    collider_.SetColliderID("Enemy");       // コライダーのID
     moveSpeed_ = 1.0f;                      // 移動スピード
 
 
