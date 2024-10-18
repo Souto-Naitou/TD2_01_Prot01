@@ -92,15 +92,19 @@ void GameScene::Update()
 
 
     /// PopSystem
-    Enemy* ptrEnemy = pEnemyPopSystem_->Update(0.01, { 0,0 }, { DefaultSettings::kScreenWidth, DefaultSettings::kScreenHeight });
-    if (ptrEnemy)
+    if (isPop_)
     {
-        /// Enemyの初期化処理
-        ptrEnemy->Initialize(enemyList_.size());
-        ptrEnemy->SetTargetPosition(pPlayer_->GetWorldPosition());
-        enemyList_.push_back(ptrEnemy);
+        Enemy* ptrEnemy = pEnemyPopSystem_->Update(0.01, { 0,0 }, { DefaultSettings::kScreenWidth, DefaultSettings::kScreenHeight });
+        if (ptrEnemy)
+        {
+            /// Enemyの初期化処理
+            ptrEnemy->Initialize(enemyList_.size());
+            ptrEnemy->SetTargetPosition(pPlayer_->GetWorldPosition());
+            ptrEnemy->RunSetMask();
+            ptrEnemy->SetEnableLighter(isEnableLighter_);
+            enemyList_.push_back(ptrEnemy);
+        }
     }
-
 
     /// Delete処理ここから
     for (std::list<Enemy*>::iterator itr = enemyList_.begin(); itr != enemyList_.end();)
@@ -142,6 +146,7 @@ void GameScene::DebugWindow()
             enemy->SetEnableLighter(isEnableLighter_);
         }
     }
+    ImGui::Checkbox("EnemyPop", &isPop_);
 }
 
 void GameScene::MakeWall(NestWall** _nestWall, std::string _id, int _width, int _height, Vector2 _origin)
