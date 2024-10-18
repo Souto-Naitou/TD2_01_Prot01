@@ -65,6 +65,7 @@ void Player::Initialize()
 void Player::RunSetMask()
 {
     collider_.SetMask(pCollisionManager_->GetNewMask(collider_.GetColliderID(), "Core", "NestWall"));
+    pRotateBoard_->RunSetMask();
 }
 
 void Player::Update()
