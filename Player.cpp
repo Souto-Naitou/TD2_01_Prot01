@@ -26,8 +26,8 @@ Player::~Player()
 void Player::Initialize()
 {
     startTime_ = std::chrono::system_clock::now();
-    pEasingBoxResize_ = std::make_unique<Easing>("DecreaseSize", Easing::EaseType::EaseOutCubic, 0.5);
-    pEasingBoxTemp_ = std::make_unique<Easing>("IncreaseSize", Easing::EaseType::EaseOutCubic, 0.5);
+    pEasingBoxResize_ = std::make_unique<Easing>("DecreaseSize");
+    pEasingBoxTemp_ = std::make_unique<Easing>("IncreaseSize");
 
     position_.x = static_cast<float>(DefaultSettings::kScreenWidth / 2ui32);
     position_.y = static_cast<float>(DefaultSettings::kScreenHeight / 2ui32);
@@ -75,6 +75,7 @@ void Player::Update()
 
     if (keys[DIK_SPACE])
     {
+        isAttack_ = false;
         if (radius_current_ > radius_min_)
         {
             pEasingBoxTemp_->Reset();
@@ -84,10 +85,13 @@ void Player::Update()
     }
     else if (!keys[DIK_SPACE] && preKeys[DIK_SPACE])
     {
+        /// スペースを離したら
         radius_timeRelease_ = radius_current_;
+        isAttack_ = true;
     }
     else
     {
+        if (pEasingBoxTemp_->GetIsEnd()) isAttack_ = false;
         pEasingBoxResize_->Reset();
         pEasingBoxTemp_->Start();
         radius_current_ = (1.0f - pEasingBoxTemp_->Update()) * radius_timeRelease_ + pEasingBoxTemp_->Update() * radius_default_;
@@ -143,6 +147,7 @@ void Player::DebugWindow()
     auto pFunc = [&]()
     {
         ImGuiTemplate::VariableTableRow("circle_", vertices_);
+        ImGuiTemplate::VariableTableRow("isAttack_", isAttack_);
         ImGuiTemplate::VariableTableRow("radius_current_", radius_current_);
         ImGuiTemplate::VariableTableRow("radius_timeRelease_", radius_timeRelease_);
         ImGuiTemplate::VariableTableRow("radius_default_", radius_default_);
