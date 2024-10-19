@@ -18,35 +18,38 @@ public:
     Player();
     ~Player();
 
-    void Initialize();
-    void RunSetMask();
-    void Update();
-    void Draw();
-    void SetEnableLighter(bool _flag) { collider_.SetEnableLighter(_flag); }
-    void OnCollision(const Collider* _other);
-    Collider* GetCollider() { return &collider_; }
+    void            Initialize();
+    void            RunSetMask();
+    void            Update();
+    void            Draw();
+    void            SetEnableLighter(bool _flag) { collider_.SetEnableLighter(_flag); }
+    bool            IsAttack() const { return isAttack_; }
+    void            OnCollision(const Collider* _other);
+    Collider*       GetCollider() { return &collider_; }
 
 private:
-    char keys[256]                  = {};
-    char preKeys[256]               = {};
+    char            keys[256]                   = {};
+    char            preKeys[256]                = {};
 
-    Collider collider_              = {};
-    RotateBoard* pRotateBoard_      = nullptr;
+    Collider        collider_                   = {};
+    RotateBoard*    pRotateBoard_               = nullptr;
+
+    float           radius_default_             = 100.0f;
+    float           radius_min_                 = 20.0f;
+    float           radius_current_             = 0.0f;
+    float           radius_timeRelease_         = 0.0f;
+
+    size_t          resolution_                 = 4u;
+    bool            isAttack_                   = false;
 
     std::vector<Vector2> vertices_  = {};
-
-    float radius_default_           = 100.0f;
-    float radius_min_               = 20.0f;
-    float radius_current_           = 0.0f;
-    float radius_timeRelease_       = 0.0f;
-
-    size_t resolution_              = 4u;
-
     std::chrono::system_clock::time_point startTime_;
     std::unique_ptr<Easing> pEasingBoxResize_;
     std::unique_ptr<Easing> pEasingBoxTemp_;
 
-private:
+private: /// 他オブジェクトから借りるデータ
     CollisionManager* pCollisionManager_;
+
+private: /// 非公開メソッド
     void DebugWindow();
 };

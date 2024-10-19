@@ -168,12 +168,15 @@ void Enemy::OnCollision(const Collider* _other)
     {
         if (!hasCollided_)                  // 初回の衝突時
         {
-            /// 向き反転
-            distanceToTarget    = -distanceToTarget;
-            rotation_           += 3.141592f;
+            if (static_cast<const Player*>(_other->GetOwner())->IsAttack())
+            {
+                /// 向き反転
+                distanceToTarget = -distanceToTarget;
+                rotation_ += 3.141592f;
 
-            isBouncing_         = true;     //ぶっ飛びフラグオン
-            hasCollided_        = true;     //衝突フラグオン
+                isBouncing_ = true;     //ぶっ飛びフラグオン
+                hasCollided_ = true;     //衝突フラグオン
+            }
         }
         /// 二回目以降の衝突は無視
 
