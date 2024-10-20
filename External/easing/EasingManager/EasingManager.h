@@ -27,11 +27,14 @@ public:
     void DeleteEasing(Easing* _target);
     Easing* GetEasing(std::string _ID);
 
+    void SetDisplayUI(bool _flag) { isEnableDebug_ = _flag; }
+
     void DrawUI();
 
 private:
     std::list<Easing*> pEasings = {};
     bool isFirstFrame_ = true;
+    bool isEnableDebug_ = true;
 };
 
 

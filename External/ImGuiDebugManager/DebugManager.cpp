@@ -161,6 +161,8 @@ void DebugManager::DrawUI()
 {
 #ifdef _DEBUG
 
+	if (!onDisplay_) return;
+
 	MeasureFPS();
 
 	DebugWindowOverall();

@@ -51,16 +51,18 @@ public:
 
     void DrawUI();
     void ChangeFont();
+    void SetDisplay(bool _isEnable) { onDisplay_ = _isEnable; }
 
 private:
     DebugManager();
     ~DebugManager();
 
     std::list<std::tuple<std::string, std::string, const std::function<void(void)>, bool>> componentList_;
-    Timer timer_;
-    double elapsedFrameCount_ = 0.0;
-    double fps_ = 0.0;
-    unsigned int frameCount_ = 0u;
+    Timer           timer_              = {};
+    double          elapsedFrameCount_  = 0.0;
+    double          fps_                = 0.0;
+    unsigned int    frameCount_         = 0u;
+    bool            onDisplay_          = true;
 
 private:
     void DebugWindowOverall();

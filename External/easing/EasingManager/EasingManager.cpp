@@ -42,6 +42,8 @@ void EasingManager::DrawUI()
 {
 	#ifdef _DEBUG
 
+	if (!isEnableDebug_) return;
+
 	if (isFirstFrame_)
 	{
 		// 最初のフレームのみ呼び出しされる
@@ -70,6 +72,6 @@ void EasingManager::DrawUI()
 	}
 
 	ImGui::End();
-	
+
 	#endif // _DEBUG
 }

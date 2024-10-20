@@ -7,6 +7,8 @@
 #include "Object/Enemy/Enemy.h"
 #include "Object/Core/Core.h"
 #include "ImGuiDebugManager/DebugManager.h"
+#include "easing/EasingManager/EasingManager.h"
+#include "InputCenter.h"
 
 #include <cmath>
 #include <numbers>
@@ -19,6 +21,8 @@ GameScene::GameScene()
 {
     pCollisionManager_ = CollisionManager::GetInstance();
     DebugManager::GetInstance()->SetComponent("GameScene", std::bind(&GameScene::DebugWindow, this));
+    keys_= InputCenter::GetInstance()->GetKeyPtr();
+    preKeys_ = InputCenter::GetInstance()->GetPreKeyPtr();
 }
 
 GameScene::~GameScene()
@@ -78,6 +82,12 @@ void GameScene::Update()
         timer_.Start();
     }
 
+    if (keys_[DIK_F3] && !preKeys_[DIK_F3])
+    {
+        isDebugEnable_ = isDebugEnable_ ? false : true;
+        DebugManager::GetInstance()->SetDisplay(isDebugEnable_);
+        EasingManager::GetInstance()->SetDisplayUI(isDebugEnable_);
+    }
 
     /// 各オブジェクトの更新処理呼出
     pPlayer_->Update();
