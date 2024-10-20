@@ -71,7 +71,7 @@ void Enemy::Update()
 
     Vector2 moveVelocity_ = {};
     // 衝突後の動き
-    if (isBouncing_) {
+    if (isBounce_) {
         // 反発する方向に移動
         velocity_ = distanceToTarget.Normalize() * bounceSpeed_;
     }
@@ -174,7 +174,7 @@ void Enemy::OnCollision(const Collider* _other)
                 distanceToTarget = -distanceToTarget;
                 rotation_ += 3.141592f;
 
-                isBouncing_ = true;     //ぶっ飛びフラグオン
+                isBounce_ = true;     //ぶっ飛びフラグオン
                 hasCollided_ = true;     //衝突フラグオン
             }
         }
@@ -187,7 +187,7 @@ void Enemy::OnCollision(const Collider* _other)
         // エネミーのデスフラグをオンに
         isDead_ = true;
     }
-    //敵同士の当たり判定
+    /// 敵同士の当たり判定
     else if (_other->GetColliderID() == "Enemy")
     {
         // 敵同士の位置を取得
@@ -203,6 +203,11 @@ void Enemy::OnCollision(const Collider* _other)
             // 反発速度を加える
             velocity_ = direction.Normalize() * bouncePower_enemy_;
         }
+    }
+    /// 巣壁との当たり判定
+    else if (_other->GetColliderID() == "NestWall")
+    {
+        isCollidedNest = true;
     }
 }
 

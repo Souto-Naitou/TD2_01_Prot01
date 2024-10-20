@@ -168,7 +168,7 @@ void GameScene::DebugWindow()
         }
     }
 
-    if (ImGui::SmallButton("Delete All Enemies"))
+    if (ImGui::Button("Delete All Enemies"))
     {
         for (Enemy* enemy : enemyList_)
         {

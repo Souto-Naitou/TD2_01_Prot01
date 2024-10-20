@@ -2,6 +2,7 @@
 #include <Novice.h>
 #include "ImGuiDebugManager/DebugManager.h"
 #include "ImGuiTemplates.h"
+#include "Object/Enemy/Enemy.h"
 
 NestWall::NestWall(std::string _ID)
 {
@@ -47,7 +48,11 @@ void NestWall::OnCollision(const Collider* _collider)
 {
     if (_collider->GetColliderID() == "Enemy")
     {
-        hp_--;
+        const Enemy* pEnemy = static_cast<const Enemy*>(_collider->GetOwner());
+        if (pEnemy->GetIsBounce() && !pEnemy->GetIsCollidedNest())
+        {
+            hp_--;
+        }
     }
 
     if (hp_ < 0) hp_ = 0;
