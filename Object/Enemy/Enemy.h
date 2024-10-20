@@ -36,18 +36,38 @@ public:
     void                            Draw();
 
 
+public: // Getter ===============
+
     /// <summary>
     /// コライダーを取得
     /// </summary>
     /// <returns>コライダーのポインタ</returns>
-    inline      const Collider*     GetCollider()
+    inline      const Collider*     GetCollider() const
     {
         return &collider_;
     }
 
 
-    void                            RunSetMask();
+    /// <summary>
+    /// プレイヤーによる攻撃を受けた後かどうか
+    /// </summary>
+    /// <returns>フラグ</returns>
+    inline      const bool          GetIsBounce() const
+    {
+        return isBounce_;
+    }
 
+
+    /// <summary>
+    /// すでに巣壁とぶつかったかどうか
+    /// </summary>
+    /// <returns>フラグ</returns>
+    inline      const bool          GetIsCollidedNest() const
+    {
+        return isCollidedNest;
+    }
+
+public: // Setter ===============
 
     /// <summary>
     /// ターゲットにする座標を指定
@@ -57,13 +77,6 @@ public:
     {
         positionTarget_ = _target;
     }
-
-
-    /// <summary>
-    /// 衝突時コールバック関数
-    /// </summary>
-    /// <param name="_other">衝突した相手のコライダー</param>
-    void                            OnCollision(const Collider* _other);
 
 
     /// <summary>
@@ -87,6 +100,19 @@ public:
     /// <param name="_flag">フラグ</param>
     void                            SetIsDead(bool _flag) { isDead_ = _flag; }
 
+
+public: // Others ===============
+
+    /// <summary>
+    /// 衝突時コールバック関数
+    /// </summary>
+    /// <param name="_other">衝突した相手のコライダー</param>
+    void                            OnCollision(const Collider* _other);
+
+
+    void                            RunSetMask();
+
+
 private: /// 非公開データ
     Collider                        collider_                   = {};           // コライダー
     Vector2                         vertices_[3]                = {};           // 三角形の頂点
@@ -106,7 +132,8 @@ private: /// 非公開データ
     char*                           preKeys_                    = nullptr;      // 前フレームのキー情報
 
     float                           bounceSpeed_                = 5.0f;         // 衝突時のぶっとび速度
-    bool                            isBouncing_                 = false;        // 跳ね返りフラグ
+    bool                            isBounce_                   = false;        // 跳ね返りフラグ
+    bool                            isCollidedNest              = false;        // ネストに攻撃したかどうか
 
     bool                            hasCollided_                = false;        // 衝突フラグ
     int32_t                         outScreenPadding_           = 0ui32;        // スクリーン外判定を行う範囲の余白
