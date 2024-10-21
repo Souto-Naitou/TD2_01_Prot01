@@ -100,6 +100,8 @@ void CollisionManager::CheckCollisionPair(Collider* _colA, Collider* _colB)
     // 衝突しているかどうか
     bool isCollide = true;
 
+    if (!_colA->GetEnable() || !_colB->GetEnable()) return;
+
     countWithoutFilter_++;
 
     // 衝突フィルタリング
@@ -113,6 +115,8 @@ void CollisionManager::CheckCollisionPair(Collider* _colA, Collider* _colB)
     {
         std::vector<Vector2>* pVerticesA = _colA->GetVertices();
         std::vector<Vector2>* pVerticesB = _colB->GetVertices();
+
+        if (!pVerticesA->size() || !pVerticesB->size()) return;
 
         countWithoutLighter++;
 

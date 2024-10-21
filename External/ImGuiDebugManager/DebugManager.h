@@ -37,6 +37,14 @@ public:
     /// <param name="_component">関数ポインタ。std::bindを使用することがほとんど</param>
     void SetComponent(std::string _parentID, std::string _childID, const std::function<void(void)>& _component)
     {
+        for (auto& comp : componentList_)
+        {
+            if (std::get<1>(comp) == _childID)
+            {
+                return;
+            }
+        }
+
         componentList_.emplace(
             GetInsertIterator(_parentID),
             _parentID,

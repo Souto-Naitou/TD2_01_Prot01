@@ -137,6 +137,15 @@
     <ClCompile Include="Object\Wall\NestWall.cpp">
       <Filter>NestWall</Filter>
     </ClCompile>
+    <ClCompile Include="BaseObject.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyPopSytem.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="External\Timer\Timer.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\KamataEngine\DirectXGame\audio\Audio.h">
@@ -292,5 +301,9 @@
     <ClInclude Include="Object\Wall\NestWall.h">
       <Filter>NestWall</Filter>
     </ClInclude>
+    <ClInclude Include="BasePopSytem.h" />
+    <ClInclude Include="DefaultSettings.h" />
+    <ClInclude Include="EnemyPopSytem.h" />
+    <ClInclude Include="External\Timer\Timer.h" />
   </ItemGroup>
 </Project>

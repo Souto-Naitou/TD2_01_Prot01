@@ -23,6 +23,7 @@ public:
     inline  const std::string&          GetColliderID()             const       { return colliderID_; }
     inline  bool                        GetIsEnableLighter()        const       { return enableLighter_; }
     inline  Vector2                     GetPosition()               const       { return position_; }
+    inline  const bool                  GetEnable()                 const       { return isEnableCollision_; }
 
 
 
@@ -37,6 +38,7 @@ public:
     void                                SetRadius(unsigned int _rad) { radiusCollider_ = _rad; }
     void                                SetPosition(const Vector2& _v) { position_ = _v; }
     void                                SetEnableLighter(bool _flag) { enableLighter_ = _flag; }
+    void                                SetEnable(bool _flag) { isEnableCollision_ = _flag; }
 
 
     inline  void                        OnCollision(const Collider* _other)
@@ -51,15 +53,15 @@ private:
     std::function<void(const Collider*)> onCollisionFunction_;
 
     BaseObject*             owner_              = nullptr;
+    bool                    isEnableCollision_  = true;                         // 判定をするかどうか
+    Shape                   shape_              = Shape::Polygon;               // 形状
+    std::string             colliderID_         = {};                           // ID
 
-    Shape                   shape_              = Shape::Polygon;
-    std::string             colliderID_         = {};
-
-    std::vector<Vector2>    verticesCollider_   = {};
+    std::vector<Vector2>    verticesCollider_   = {};                           // 当たり判定で使用する頂点
 
     /// 軽量化用
     unsigned int            radiusCollider_     = 0u;
-    Vector2                 position_ = {};
+    Vector2                 position_           = {};
     bool                    enableLighter_      = false;
 
     // 衝突属性(自分)

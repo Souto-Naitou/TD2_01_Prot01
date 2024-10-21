@@ -39,6 +39,7 @@ private:
     bool                isEnableLighter_    = false;
     bool                isPop_              = false;
     float               e2eBouncePower_     = 2.0f;
+    float               e2rbBouncePower_     = 2.0f;
     char*               preKeys_            = nullptr;
     char*               keys_               = nullptr;
     bool                isDebugEnable_      = true;
