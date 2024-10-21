@@ -54,11 +54,21 @@ public: /// 公開メソッド
     void SetVertices(const std::vector<Vector2>* _vertices);
 
 
-    /// <summary>
-    /// デバッグ用ウィンドウ
-    /// </summary>
-    void DebugWindow();
+    void OnCollision(const Collider* _other);
 
+
+    const Vector2* GetVertices(int _idx) const
+    {
+        if (_idx == 1)
+            return verticesCollider1_;
+        else if (_idx == 2)
+            return verticesCollider2_;
+
+        return nullptr;
+    }
+
+
+    const bool GetIsCorner() const { return isCorner_; }
 
 private: /// 非公開データ
 
@@ -66,15 +76,18 @@ private: /// 非公開データ
     std::array<std::pair<uint32_t, Vector2>, 2> points_         = {};
     std::unique_ptr<Easing>                     pEasingEdgeMove = nullptr;
 
-    Collider                collider_               = {};       // コライダー
+    Collider                collider1_              = {};       // コライダー
+    Collider                collider2_              = {};
     Rect2                   rect_                   = {};       // レクト
     int32_t                 padding_                = 0;        // 隙間
     bool                    isDrawCourse_           = false;    // コースを描画するかどうか
     bool                    isDrawPoints_           = false;    // 頂点を描画するかどうか
+    bool                    isCorner_               = false;
     float                   offset_                 = 0.0f;     // オフセット値
     float                   t1                      = 0.0f;     // time1
     float                   t2                      = 0.0f;     // time2
-    Vector2                 verticesCollider_[2]    = {};       // コライダーにわたす頂点ベクトル
+    Vector2                 verticesCollider2_[2]   = {};       // コライダーにわたす頂点ベクトル
+    Vector2                 verticesCollider1_[2]   = {};       // コライダーにわたす頂点ベクトル
 
 private: /// 他オブジェクトから借りるデータ
     CollisionManager*           pCollisionManager_  = nullptr;  // コリジョンマネージャ
@@ -85,4 +98,9 @@ private: /// 非公開メソッド
     void DrawPoints();      // 頂点を描画
     void DrawCourse();      // コースを描画
     void DrawBoardLine();   // 板のラインを描画
+
+    /// <summary>
+    /// デバッグ用ウィンドウ
+    /// </summary>
+    void DebugWindow();
 };

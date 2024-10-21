@@ -8,7 +8,10 @@
 #include <Novice.h>
 #include "Collision/CollisionManager.h"
 #include "DefaultSettings.h"
+#include "Object/RotateBoard/RotateBoard.h"
 
+float Enemy::bouncePower_enemy_ = 2.0f;
+float Enemy::bouncePower_rotateBoard_ = 2.0f;
 
 Enemy::~Enemy()
 {
@@ -16,7 +19,7 @@ Enemy::~Enemy()
     DebugManager::GetInstance()->DeleteComponent("Enemy", idx_.c_str());
 }
 
-void Enemy::Initialize(size_t idx)
+void Enemy::Initialize(std::string _idx)
 {
     /// コライダーの登録
     pCollisionManager_ = CollisionManager::GetInstance();
@@ -24,7 +27,7 @@ void Enemy::Initialize(size_t idx)
 
 
     /// デバッグ用ウィンドウの登録
-    idx_ = std::to_string(idx);             // 引数から受け取った数を文字に
+    idx_ = _idx;                            // 引数から受け取った数を文字に
     objectID_ = "Enemy" + idx_;             //"Enemy1", "Enemy2" など
     DebugManager::GetInstance()->SetComponent("Enemy", idx_, std::bind(&Enemy::DebugWindow, this));
 
@@ -63,34 +66,38 @@ void Enemy::Update()
             position_.y < -outScreenPadding_ ||
             position_.y > DefaultSettings::kScreenHeight + outScreenPadding_)
         {
-            isOutOfScreen_ = true;
-            isDead_ = true;
-            return;
+            collider_.SetEnable(false);
+            if (isBounce_) isDead_ = true;
+            if (!isOutOfScreen_)
+            {
+                acceleration_ = {};
+                velocity_ = {};
+                isOutOfScreen_ = true;
+                return;
+            }
+        }
+        else
+        {
+            collider_.SetEnable(true);
+            isOutOfScreen_ = false;
         }
     }
 
-    Vector2 moveVelocity_ = {};
-    // 衝突後の動き
-    if (isBounce_) {
-        // 反発する方向に移動
-        velocity_ = distanceToTarget.Normalize() * bounceSpeed_;
-    }
-    else
+    InputCenter::GetInstance()->WASDMove(position_, 2.0f);
+
+    /// 速度の更新
+    distanceToTarget = positionTarget_ - position_;
+    if (distanceToTarget.Length() > 0)
     {
-        /// 速度の更新
-        distanceToTarget = positionTarget_ - position_;
-        if (distanceToTarget.Length() > 0)
-        {
-            if (velocity_.Length() < moveSpeed_)
-                moveVelocity_ = distanceToTarget.Normalize() * moveSpeed_;
-        }
-
-        /// 方向を変更
-        if (distanceToTarget.x != 0 || distanceToTarget.y != 0)
-        {
-            rotation_ = std::atan2(distanceToTarget.y, distanceToTarget.x);
-        }
+        velocity_move = distanceToTarget.Normalize() * moveSpeed_;
     }
+
+    /// 方向を変更
+    if ((distanceToTarget.x != 0 || distanceToTarget.y != 0))
+    {
+        rotation_ = (velocity_ + velocity_move).Normalize().Theta();
+    }
+
 
 
     /// ** ここより上ではPositionを更新しない **
@@ -107,8 +114,15 @@ void Enemy::Update()
     }
     collider_.SetVertices(vertices_, 3);
 
-    position_ += moveVelocity_;
+    velocity_ += acceleration_;
+
+    velocity_.Lerp(velocity_, velocity_move, 0.01f);
+
     position_ += velocity_;
+    //position_ += velocity_move;
+
+    // 計算終わったら初期化
+    acceleration_ = {};
 
     // コライダーに座標を送る
     if (collider_.GetIsEnableLighter()) collider_.SetPosition(position_);
@@ -147,6 +161,8 @@ void Enemy::DebugWindow()
     auto pFunc = [&]()
     {
         ImGuiTemplate::VariableTableRow("Position", position_);
+        ImGuiTemplate::VariableTableRow("Velocity", velocity_);
+        ImGuiTemplate::VariableTableRow("Acceleration", acceleration_);
         ImGuiTemplate::VariableTableRow("DistanceToTarget", distanceToTarget);
         ImGuiTemplate::VariableTableRow("isDead_", isDead_);
         ImGuiTemplate::VariableTableRow("rotation_", rotation_);
@@ -163,32 +179,28 @@ void Enemy::DebugWindow()
 
 void Enemy::OnCollision(const Collider* _other)
 {
-    /// Playerとの当たり判定
-    if (_other->GetColliderID() == "Player")
+    std::string otherID = _other->GetColliderID();
+
+    /// Playerとの衝突後
+    if (otherID == "Player")
     {
-        if (!hasCollided_)                  // 初回の衝突時
+        if (static_cast<const Player*>(_other->GetOwner())->IsAttack())
         {
-            if (static_cast<const Player*>(_other->GetOwner())->IsAttack())
-            {
-                /// 向き反転
-                distanceToTarget = -distanceToTarget;
-                rotation_ += 3.141592f;
+            // 反発を加える
+            velocity_ = {};
+            acceleration_ = -distanceToTarget.Normalize() * bounceSpeed_;
 
-                isBounce_ = true;     //ぶっ飛びフラグオン
-                hasCollided_ = true;     //衝突フラグオン
-            }
+            isBounce_ = true;     //ぶっ飛びフラグオン
         }
-        /// 二回目以降の衝突は無視
-
     }
-    /// Coreとの当たり判定
-    else if (_other->GetColliderID()== "Core")
+    /// Coreとの衝突後
+    else if (otherID == "Core")
     {
         // エネミーのデスフラグをオンに
         isDead_ = true;
     }
-    /// 敵同士の当たり判定
-    else if (_other->GetColliderID() == "Enemy")
+    /// 敵同士の衝突後
+    else if (otherID == "Enemy")
     {
         // 敵同士の位置を取得
         const Enemy* otherEnemy = static_cast<const Enemy*>(_other->GetOwner());
@@ -200,24 +212,59 @@ void Enemy::OnCollision(const Collider* _other)
         // 反発ベクトルを計算
         if (direction.Length() > 0)
         {
-            // 反発速度を加える
-            velocity_ = direction.Normalize() * bouncePower_enemy_;
+            // 反発を加える
+            acceleration_ += direction.Normalize() * bouncePower_enemy_;
         }
     }
-    /// 巣壁との当たり判定
-    else if (_other->GetColliderID() == "NestWall")
+    /// 巣壁との衝突後
+    else if (otherID == "NestWall")
     {
         isCollidedNest = true;
+    }
+    /// 回転板との衝突後
+    else if (otherID == "RotateBoard")
+    {
+        // プレイヤーとあたった後なら処理しない
+        if (isBounce_) return;
+
+        const RotateBoard* pRotateBoard = static_cast<const RotateBoard*>(_other->GetOwner());
+
+        const Vector2* rbVertices1 = pRotateBoard->GetVertices(1);
+        const Vector2* rbVertices2 = pRotateBoard->GetVertices(2);
+
+        if (pRotateBoard->GetIsCorner())
+        {
+            Vector2 rbEdge1 = rbVertices1[0] - rbVertices1[1];
+            Vector2 rbEdge2 = rbVertices2[1] - rbVertices2[0];
+            if (rbEdge1.Cross(position_ - rbVertices1[1]) > 0)
+            {
+                velocity_ = {};
+                acceleration_ = rbEdge1.Perpendicular().Normalize() * bouncePower_rotateBoard_;
+            }
+            if (rbEdge2.Cross(position_ - rbVertices2[1]) > 0)
+            {
+                velocity_ = {};
+                acceleration_ = rbEdge2.Perpendicular().Normalize() * bouncePower_rotateBoard_;
+            }
+        }
+        else
+        {
+            Vector2 rbEdge = rbVertices1[0] - rbVertices1[1];
+
+            if (rbEdge.Cross(position_ - rbVertices1[1]) < 0) return;
+            velocity_ = {};
+            acceleration_ = rbEdge.Perpendicular().Normalize() * bouncePower_rotateBoard_;
+        }
     }
 }
 
 void Enemy::SetEnableLighter(bool _flag)
 {
     collider_.SetEnableLighter(_flag);
-    //if (_flag)
-    //{
-    //    outScreenPadding_ = 50;
-    //}
+    if (_flag)
+    {
+        outScreenPadding_ = -50;
+    }
 }
 
 void Enemy::SetBouncePower(BounceTarget _target, float _power)
@@ -229,7 +276,8 @@ void Enemy::SetBouncePower(BounceTarget _target, float _power)
         break;
     case Enemy::BounceTarget::Player:
         break;
-    default:
+    case Enemy::BounceTarget::RotateBoard:
+        bouncePower_rotateBoard_ = _power;
         break;
     }
 }

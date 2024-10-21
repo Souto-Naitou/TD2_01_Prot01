@@ -10,6 +10,7 @@
 #include "easing/EasingManager/EasingManager.h"
 #include "InputCenter.h"
 
+#include <format>
 #include <cmath>
 #include <numbers>
 
@@ -105,10 +106,15 @@ void GameScene::Update()
     if (isPop_)
     {
         Enemy* ptrEnemy = pEnemyPopSystem_->Update(0.01, { 0,0 }, { DefaultSettings::kScreenWidth, DefaultSettings::kScreenHeight });
+        //Enemy* ptrEnemy = nullptr;
+        //if (keys_[DIK_AT] && !preKeys_[DIK_AT])
+        //    ptrEnemy = pEnemyPopSystem_->Spawn({ 0,0 }, { DefaultSettings::kScreenWidth, DefaultSettings::kScreenHeight });
         if (ptrEnemy)
         {
             /// Enemyの初期化処理
-            ptrEnemy->Initialize(enemyList_.size());
+            std::stringstream ss;
+            ss << "0x" << std::hex << reinterpret_cast<uintptr_t>(ptrEnemy);
+            ptrEnemy->Initialize(ss.str());
             ptrEnemy->SetTargetPosition(pPlayer_->GetWorldPosition());
             ptrEnemy->RunSetMask();
             ptrEnemy->SetEnableLighter(isEnableLighter_);
@@ -160,12 +166,15 @@ void GameScene::DebugWindow()
     ImGui::Checkbox("EnemyPop", &isPop_);
 
     ImGui::Text("Enemy to Enemy Bounce Power");
-    if (ImGui::DragFloat("Power", &e2eBouncePower_))
+    if (ImGui::DragFloat("## PowerE2E", &e2eBouncePower_, 0.01f))
     {
-        for (Enemy* enemy : enemyList_)
-        {
-            enemy->SetBouncePower(Enemy::BounceTarget::Enemy, e2eBouncePower_);
-        }
+        Enemy::SetBouncePower(Enemy::BounceTarget::Enemy, e2eBouncePower_);
+    }
+
+    ImGui::Text("Enemy to RotateBoard Bounce Power");
+    if (ImGui::DragFloat("## PowerE2RB", &e2rbBouncePower_, 0.01f))
+    {
+        Enemy::SetBouncePower(Enemy::BounceTarget::RotateBoard, e2rbBouncePower_);
     }
 
     if (ImGui::Button("Delete All Enemies"))

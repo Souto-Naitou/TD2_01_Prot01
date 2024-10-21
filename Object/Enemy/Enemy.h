@@ -11,7 +11,8 @@ public:
     enum class BounceTarget
     {
         Enemy,
-        Player
+        Player,
+        RotateBoard,
     };
 
     Enemy() = default;
@@ -21,7 +22,7 @@ public:
     /// 初期化
     /// </summary>
     /// <param name="idx">数多のEnemy内で一意の数字 (リストのサイズを渡すと楽)</param>
-    void                            Initialize(size_t idx);
+    void                            Initialize(std::string _idx);
 
 
     /// <summary>
@@ -91,7 +92,7 @@ public: // Setter ===============
     /// </summary>
     /// <param name="_target">誰とあたったときか</param>
     /// <param name="_power">反発力</param>
-    void                            SetBouncePower(BounceTarget _target, float _power);
+    static      void                SetBouncePower(BounceTarget _target, float _power);
 
 
     /// <summary>
@@ -122,6 +123,7 @@ private: /// 非公開データ
     Vector2                         positionTarget_             = {};           // ターゲットのベクトル (原点中心)
     Vector2                         distanceToTarget            = {};           // ターゲットまでのベクトル
     Vector2                         ellipseAB_                  = {};           // 楕円を構成するAとB
+    Vector2                         velocity_move               = {};           // 移動用（苦肉の策）
     float                           rotation_                   = 0.0f;         // 回転角
     float                           radius_                     = 0.0f;         // 半径
     float                           moveSpeed_                  = 0.0f;         // 移動スピード
@@ -138,7 +140,10 @@ private: /// 非公開データ
     bool                            hasCollided_                = false;        // 衝突フラグ
     int32_t                         outScreenPadding_           = 0ui32;        // スクリーン外判定を行う範囲の余白
     bool                            isOutOfScreen_              = false;        // スクリーン外かどうか
-    float                           bouncePower_enemy_          = 2.0f;         // Enemy同士の反発力
+
+    /// すたてぃっくなめんば～
+    static  float                   bouncePower_enemy_;                         // Enemy同士の反発力
+    static  float                   bouncePower_rotateBoard_;                   // RotateBoardとの反発力
 
 private: /// シングルトン インスタンスのポインタ
     CollisionManager* pCollisionManager_;

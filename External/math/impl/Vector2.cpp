@@ -16,6 +16,9 @@ float Vector2::Dot(const Vector2& _v) const
 
 float Vector2::Cross(const Vector2& _v) const
 {
+    // =    0  : 線上
+    // <    0  : 右側
+    // >    0  : 左側
     return x * _v.y - y * _v.x;
 }
 

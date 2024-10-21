@@ -1,6 +1,7 @@
 #include "RotateBoard.h"
 #include "ImGuiDebugManager/DebugManager.h"
 #include "ImGuiTemplates.h"
+#include "Object/Enemy/Enemy.h"
 #include <Novice.h>
 
 RotateBoard::RotateBoard()
@@ -29,15 +30,26 @@ void RotateBoard::Initialize()
 
 
     /// コライダー関連
-    collider_.SetColliderID("RotateBoard");
-    collider_.SetAttribute(pCollisionManager_->GetNewAttribute("RotateBoard"));
-    collider_.SetOwner(this);
+    pCollisionManager_->RegisterCollider(&collider1_);
+    collider1_.SetColliderID("RotateBoard");
+    collider1_.SetAttribute(pCollisionManager_->GetNewAttribute("RotateBoard"));
+    collider1_.SetOwner(this);
+    collider1_.SetOnCollision(std::bind(&RotateBoard::OnCollision, this, std::placeholders::_1));
+    collider1_.SetEnableLighter(false);
+
+    pCollisionManager_->RegisterCollider(&collider2_);
+    collider2_.SetColliderID("RotateBoard");
+    collider2_.SetAttribute(pCollisionManager_->GetNewAttribute("RotateBoard"));
+    collider2_.SetOwner(this);
+    collider2_.SetOnCollision(std::bind(&RotateBoard::OnCollision, this, std::placeholders::_1));
+    collider2_.SetEnableLighter(false);
 }
 
 void RotateBoard::RunSetMask()
 {
     // マスクの設定
-    collider_.SetMask(pCollisionManager_->GetNewMask(collider_.GetColliderID(), "Player", "Core", "NestWall"));
+    collider1_.SetMask(pCollisionManager_->GetNewMask(collider1_.GetColliderID(), "Player", "Core", "NestWall"));
+    collider2_.SetMask(pCollisionManager_->GetNewMask(collider2_.GetColliderID(), "Player", "Core", "NestWall"));
 }
 
 void RotateBoard::Update()
@@ -83,9 +95,26 @@ void RotateBoard::Update()
 
 
     /// コライダーの更新
-    verticesCollider_[0] = points_[0].second;
-    verticesCollider_[1] = points_[1].second;
-    collider_.SetVertices(verticesCollider_, 2);
+    if (points_[0].first != points_[1].first)
+    {
+        verticesCollider1_[0] = points_[0].second;
+        verticesCollider1_[1] = course_[points_[1].first];
+        verticesCollider2_[0] = points_[1].second;
+        verticesCollider2_[1] = course_[points_[1].first];
+        collider1_.SetVertices(verticesCollider1_, 2);
+        collider2_.SetVertices(verticesCollider2_, 2);
+        isCorner_ = true;
+    }
+    else
+    {
+        verticesCollider1_[0] = points_[0].second;
+        verticesCollider1_[1] = points_[1].second;
+        verticesCollider2_[0] = {};
+        verticesCollider2_[1] = {};
+        collider1_.SetVertices(verticesCollider1_, 2);
+        collider2_.SetVertices(verticesCollider2_, 0);
+        isCorner_ = false;
+    }
 }
 
 void RotateBoard::Draw()
@@ -106,6 +135,11 @@ void RotateBoard::Draw()
 void RotateBoard::SetVertices(const std::vector<Vector2>* _vertices)
 {
     parentVertices_ = _vertices;
+}
+
+void RotateBoard::OnCollision(const Collider* _other)
+{
+    _other;
 }
 
 void RotateBoard::DebugWindow()
@@ -129,6 +163,8 @@ void RotateBoard::DebugWindow()
         ImGuiTemplate::VariableTableRow("points_[1].first", points_[1].first);
         ImGuiTemplate::VariableTableRow("t1", t1);
         ImGuiTemplate::VariableTableRow("t2", t2);
+        ImGuiTemplate::VariableTableRow("attr", collider1_.GetCollisionAttribute());
+        ImGuiTemplate::VariableTableRow("mask", collider1_.GetCollisionMask());
     };
 
     ImGuiTemplate::VariableTable("RotateBoard", pFunc);
@@ -173,6 +209,12 @@ void RotateBoard::DrawPoints()
             GREEN,
             kFillModeSolid
         );
+
+        Novice::ScreenPrintf(
+            static_cast<int>(points_[i].second.x),
+            static_cast<int>(points_[i].second.y),
+            "[%d]", i
+        );
     }
 
     Novice::DrawEllipse(
@@ -182,6 +224,11 @@ void RotateBoard::DrawPoints()
         0.0f,
         BLUE,
         kFillModeSolid
+    );
+    Novice::ScreenPrintf(
+        static_cast<int>(course_[points_[1].first].x),
+        static_cast<int>(course_[points_[1].first].y),
+        "[c]"
     );
 }
 

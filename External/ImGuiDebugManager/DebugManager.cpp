@@ -157,6 +157,11 @@ void DebugManager::DeleteComponent(const char* _parentID, const char* _childID)
     });
 }
 
+//void DebugManager::DeleteComponent(const void* _ptr)
+//{
+//
+//}
+
 void DebugManager::DrawUI()
 {
 #ifdef _DEBUG
