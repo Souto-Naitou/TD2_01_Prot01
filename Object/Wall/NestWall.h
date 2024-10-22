@@ -14,12 +14,14 @@ public: /// 公開メソッド
     NestWall(std::string _ID);
     ~NestWall();
 
-    void                Initialize();
-    void                RunSetMask();
-    void                Update();
-    void                Draw();
+    void                    Initialize();
+    void                    RunSetMask();
+    void                    Update();
+    void                    Draw();
 
 
+    void                    OnCollisionTrigger(const Collider* _collider);
+    Collider*               GetCollider() { return &collider_; }
 
     void                OnCollisionTrigger(const Collider* _collider);
     Collider*           GetCollider() { return &collider_; }
@@ -33,6 +35,7 @@ public: /// 公開メソッド
 	void                SetHPBarWidth(float _width) { pHpBar_->SetWidth(_width); }
 	void                SetHPBarHeight(float _height) { pHpBar_->SetHeight(_height); }
 	void                SetHPBarColor(unsigned int _color) { pHpBar_->SetColor(_color); }
+    void                SetRect(int _width, int _height, Vector2 _leftTop, size_t _offset);
 
 
 private: /// 非公開データ
@@ -43,7 +46,7 @@ private: /// 非公開データ
 
 
 private: /// 非公開メソッド
-    void                DebugWindow();
+    void                    DebugWindow();
 
 
 private: /// 他オブジェクトのデータ

@@ -63,10 +63,10 @@ void GameScene::Initialize()
 
     uint32_t nestWallWidth = 40u;
 
-    MakeWall(&pNestWallLeft_, "Left", nestWallWidth, DefaultSettings::kGameScreenHeight, { DefaultSettings::kGameScenePosX,DefaultSettings::kGameScenePosY });
-    MakeWall(&pNestWallTop_, "Top", DefaultSettings::kGameScreenWidth, nestWallWidth, { DefaultSettings::kGameScenePosX,DefaultSettings::kGameScenePosY });
-    MakeWall(&pNestWallRight_, "Right", nestWallWidth, DefaultSettings::kGameScreenHeight, { DefaultSettings::kScreenWidth - nestWallWidth, DefaultSettings::kGameScenePosY });
-    MakeWall(&pNestWallBottom_, "Bottom", DefaultSettings::kGameScreenWidth, nestWallWidth, { DefaultSettings::kGameScenePosX ,DefaultSettings::kGameScreenHeight - nestWallWidth });
+    MakeWall(&pNestWallLeft_, "Left", nestWallWidth, DefaultSettings::kGameScreenHeight, { DefaultSettings::kGameScenePosX,DefaultSettings::kGameScenePosY }, 0);
+    MakeWall(&pNestWallTop_, "Top", DefaultSettings::kGameScreenWidth, nestWallWidth, { DefaultSettings::kGameScenePosX,DefaultSettings::kGameScenePosY }, 1);
+    MakeWall(&pNestWallRight_, "Right", nestWallWidth, DefaultSettings::kGameScreenHeight, { DefaultSettings::kScreenWidth - nestWallWidth, DefaultSettings::kGameScenePosY }, 2);
+    MakeWall(&pNestWallBottom_, "Bottom", DefaultSettings::kGameScreenWidth, nestWallWidth, { DefaultSettings::kGameScenePosX ,DefaultSettings::kGameScreenHeight - nestWallWidth }, 3);
 
 	pNestWallLeft_->SetHPBarPos(Vector2(float(nestWallWidth + 40), DefaultSettings::kGameScreenHeight / 2.0f + pNestWallTop_->GetHPBarWidth() / 2.0f));
 	pNestWallLeft_->SetHPBarRotation(-std::numbers::pi_v<float> / 2.0f);
@@ -210,9 +210,9 @@ void GameScene::DebugWindow()
     }
 }
 
-void GameScene::MakeWall(NestWall** _nestWall, std::string _id, int _width, int _height, Vector2 _origin)
+void GameScene::MakeWall(NestWall** _nestWall, std::string _id, int _width, int _height, Vector2 _origin, size_t _offset)
 {
     *_nestWall = new NestWall(_id);
-    (*_nestWall)->SetRect(_width, _height, _origin);
+    (*_nestWall)->SetRect(_width, _height, _origin, _offset);
     (*_nestWall)->Initialize();
 }

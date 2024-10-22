@@ -49,5 +49,6 @@ private: /// 他オブジェクトのデータ
     EnemyManager*       pEnemyManager_      = nullptr;
 
 private: /// 非公開メソッド
-    void MakeWall(NestWall** _nestWall, std::string _id, int _width, int _height, Vector2 _origin);
+
+    void MakeWall(NestWall** _nestWall, std::string _id, int _width, int _height, Vector2 _origin, size_t _offset);
 };
