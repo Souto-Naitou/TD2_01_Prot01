@@ -29,8 +29,8 @@ void Player::Initialize()
     pEasingBoxResize_ = std::make_unique<Easing>("DecreaseSize");
     pEasingBoxTemp_ = std::make_unique<Easing>("IncreaseSize");
 
-    position_.x = static_cast<float>(DefaultSettings::kScreenWidth / 2ui32);
-    position_.y = static_cast<float>(DefaultSettings::kScreenHeight / 2ui32);
+    position_.x = static_cast<float>(DefaultSettings::kGameScreenWidth / 2ui32 + DefaultSettings::kGameScenePosX);
+    position_.y = static_cast<float>(DefaultSettings::kGameScreenHeight / 2ui32 + DefaultSettings::kGameScenePosY);
     radius_current_ = radius_default_;
 
     /// コライダー関連

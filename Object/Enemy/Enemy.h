@@ -120,6 +120,7 @@ private: /// 非公開データ
 
     std::string                     idx_                        = {};           // index (Enemy内の一意の数字)
 
+    uint32_t                        color_                      = 0xff0000ff;   // 色
     Vector2                         positionTarget_             = {};           // ターゲットのベクトル (原点中心)
     Vector2                         distanceToTarget            = {};           // ターゲットまでのベクトル
     Vector2                         ellipseAB_                  = {};           // 楕円を構成するAとB
@@ -144,6 +145,7 @@ private: /// 非公開データ
     /// すたてぃっくなめんば～
     static  float                   bouncePower_enemy_;                         // Enemy同士の反発力
     static  float                   bouncePower_rotateBoard_;                   // RotateBoardとの反発力
+
 
 private: /// シングルトン インスタンスのポインタ
     CollisionManager* pCollisionManager_;

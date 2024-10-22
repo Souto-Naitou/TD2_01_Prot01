@@ -83,7 +83,10 @@ void Enemy::Update()
         }
     }
 
+    // DEBUG
     InputCenter::GetInstance()->WASDMove(position_, 2.0f);
+
+    if (isBounce_) color_ = BLUE;
 
     /// 速度の更新
     distanceToTarget = positionTarget_ - position_;
@@ -144,7 +147,7 @@ void Enemy::Draw()
         static_cast<int>(vertices_[0].x), static_cast<int>(vertices_[0].y),
         static_cast<int>(vertices_[1].x), static_cast<int>(vertices_[1].y),
         static_cast<int>(vertices_[2].x), static_cast<int>(vertices_[2].y),
-        RED,
+        color_,
         kFillModeSolid
     );
 
@@ -215,6 +218,9 @@ void Enemy::OnCollision(const Collider* _other)
             // 反発を加える
             acceleration_ += direction.Normalize() * bouncePower_enemy_;
         }
+        // 連鎖処理
+        if (otherEnemy->GetIsBounce()) isBounce_ = true;
+
     }
     /// 巣壁との衝突後
     else if (otherID == "NestWall")

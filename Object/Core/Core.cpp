@@ -19,7 +19,11 @@ Core::~Core()
 
 void Core::Initialize()
 {
-    position_ = { DefaultSettings::kScreenWidth / 2u, DefaultSettings::kScreenHeight / 2u };
+    position_ =
+    {
+        DefaultSettings::kGameScreenWidth / 2ui32 + DefaultSettings::kGameScenePosX,
+        DefaultSettings::kGameScreenHeight / 2ui32 + DefaultSettings::kGameScenePosY
+    };
     boxCore_.MakeSquare(30);
 
     hp_ = 3;

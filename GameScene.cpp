@@ -58,10 +58,10 @@ void GameScene::Initialize()
 
     uint32_t nestWallWidth = 40u;
 
-    MakeWall(&pNestWallLeft_, "Left", nestWallWidth, DefaultSettings::kScreenHeight, { 0,0 });
-    MakeWall(&pNestWallTop_, "Top", DefaultSettings::kScreenWidth, nestWallWidth, { 0,0 });
-    MakeWall(&pNestWallRight_, "Right", nestWallWidth, DefaultSettings::kScreenHeight, { DefaultSettings::kScreenWidth - nestWallWidth, 0u });
-    MakeWall(&pNestWallBottom_, "Bottom", DefaultSettings::kScreenWidth, nestWallWidth, { 0u,DefaultSettings::kScreenHeight - nestWallWidth });
+    MakeWall(&pNestWallLeft_, "Left", nestWallWidth, DefaultSettings::kGameScreenHeight, { DefaultSettings::kGameScenePosX,DefaultSettings::kGameScenePosY });
+    MakeWall(&pNestWallTop_, "Top", DefaultSettings::kGameScreenWidth, nestWallWidth, { DefaultSettings::kGameScenePosX,DefaultSettings::kGameScenePosY });
+    MakeWall(&pNestWallRight_, "Right", nestWallWidth, DefaultSettings::kGameScreenHeight, { DefaultSettings::kScreenWidth - nestWallWidth, DefaultSettings::kGameScenePosY });
+    MakeWall(&pNestWallBottom_, "Bottom", DefaultSettings::kGameScreenWidth, nestWallWidth, { DefaultSettings::kGameScenePosX ,DefaultSettings::kGameScreenHeight - nestWallWidth });
 
     /// マスクの生成にアトリビュートを使用するためInitialize後に行う
     pPlayer_->RunSetMask();
@@ -139,7 +139,13 @@ void GameScene::Update()
 void GameScene::Draw()
 {
     // 背景
-    Novice::DrawBox(0, 0, DefaultSettings::kScreenWidth, DefaultSettings::kScreenHeight, 0.0f, 0x242424ff, kFillModeSolid);
+    Novice::DrawBox(
+        DefaultSettings::kGameScenePosX,
+        DefaultSettings::kGameScenePosY,
+        DefaultSettings::kGameScreenWidth,
+        DefaultSettings::kGameScreenHeight,
+        0.0f, 0x242424ff, kFillModeSolid
+    );
 
     pNestWallLeft_->Draw();
     pPlayer_->Draw();
