@@ -44,8 +44,8 @@ void Enemy::Initialize(std::string _idx)
 
     collider_.SetColliderID("Enemy");       // コライダーのID
     moveSpeed_ = 1.0f;                          // 移動スピード
-    moveSpeed_sucked_ = 10.0f;                   // 吸い込み時加算スピード
-
+    moveSpeed_sucked_ = 10.0f;                  // 吸い込み時加算スピード
+    hp_ = 3;                                    // HP
 
     /// コライダーの設定
     collider_.SetOwner(this);
