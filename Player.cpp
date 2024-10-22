@@ -86,6 +86,7 @@ void Player::Update()
     else if (!keys[DIK_SPACE] && preKeys[DIK_SPACE])
     {
         /// スペースを離したら
+        latestAttackMultiply_ = pEasingBoxResize_->GetCurrentT();
         radius_timeRelease_ = radius_current_;
         isAttack_ = true;
     }
@@ -96,6 +97,7 @@ void Player::Update()
         pEasingBoxTemp_->Start();
         radius_current_ = (1.0f - pEasingBoxTemp_->Update()) * radius_timeRelease_ + pEasingBoxTemp_->Update() * radius_default_;
     }
+    Novice::ScreenPrintf(static_cast<int>(position_.x), static_cast<int>(position_.y), "%.2f", pEasingBoxResize_->GetCurrentT());
 
     if (vertices_.size() != resolution_)
     {
