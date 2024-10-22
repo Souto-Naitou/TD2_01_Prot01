@@ -49,6 +49,7 @@ void GameScene::Initialize()
     pCollisionManager_->Initialize();
 
     pEnemyPopSystem_ = new EnemyPopSystem();
+    pEnemyPopSystem_->Load("EnemyPop.csv");
 
     pPlayer_ = new Player();
     pPlayer_->Initialize();
@@ -105,22 +106,25 @@ void GameScene::Update()
     /// PopSystem
     if (isPop_)
     {
-        Enemy* ptrEnemy = pEnemyPopSystem_->Update(0.01, { 0,0 }, { DefaultSettings::kScreenWidth, DefaultSettings::kScreenHeight });
+        //Enemy* ptrEnemy = pEnemyPopSystem_->Update(0.01, { 0,0 }, { DefaultSettings::kScreenWidth, DefaultSettings::kScreenHeight });
         //Enemy* ptrEnemy = nullptr;
         //if (keys_[DIK_AT] && !preKeys_[DIK_AT])
         //    ptrEnemy = pEnemyPopSystem_->Spawn({ 0,0 }, { DefaultSettings::kScreenWidth, DefaultSettings::kScreenHeight });
-        if (ptrEnemy)
-        {
-            /// Enemyの初期化処理
-            std::stringstream ss;
-            ss << "0x" << std::hex << reinterpret_cast<uintptr_t>(ptrEnemy);
-            ptrEnemy->Initialize(ss.str());
-            ptrEnemy->SetTargetPosition(pPlayer_->GetWorldPosition());
-            ptrEnemy->RunSetMask();
-            ptrEnemy->SetEnableLighter(isEnableLighter_);
-            ptrEnemy->SetBouncePower(Enemy::BounceTarget::Enemy, e2eBouncePower_);
-            enemyList_.push_back(ptrEnemy);
-        }
+        //if (ptrEnemy)
+        //{
+        //    /// Enemyの初期化処理
+        //    std::stringstream ss;
+        //    ss << "0x" << std::hex << reinterpret_cast<uintptr_t>(ptrEnemy);
+        //    ptrEnemy->Initialize(ss.str());
+        //    ptrEnemy->SetTargetPosition(pPlayer_->GetWorldPosition());
+        //    ptrEnemy->RunSetMask();
+        //    ptrEnemy->SetEnableLighter(isEnableLighter_);
+        //    ptrEnemy->SetBouncePower(Enemy::BounceTarget::Enemy, e2eBouncePower_);
+        //    enemyList_.push_back(ptrEnemy);
+        //}
+
+        pEnemyPopSystem_->SpawnFromCSV(enemyList_, pPlayer_, isEnableLighter_, e2eBouncePower_);
+
     }
 
     /// Delete処理ここから

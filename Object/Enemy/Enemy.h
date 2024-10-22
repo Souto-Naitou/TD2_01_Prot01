@@ -102,6 +102,12 @@ public: // Setter ===============
     void                            SetIsDead(bool _flag) { isDead_ = _flag; }
 
 
+    /// <summary>
+    /// すでに巣壁とぶつかったかどうか
+    /// </summary>
+    /// <returns>フラグ</returns>
+    inline      void                SetIsCollidedNest(bool _flag) { isCollidedNest = _flag; }
+
 public: // Others ===============
 
     /// <summary>

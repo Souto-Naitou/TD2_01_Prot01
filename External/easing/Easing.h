@@ -87,7 +87,7 @@ public:
     Easing(std::string _ID, EaseType _type, unsigned int _frameTarget);
 
     ~Easing();
-    
+
     /// <summary>
     /// 初期化処理
     /// </summary>
@@ -115,13 +115,13 @@ public:
     /// Start前の状態に戻す
     /// </summary>
     void            Reset();
-    
+
     /// 現在のcurrentLinearTを取得
-    float           GetCurrentT()       const   { return currentLinearT_; } 
+    float           GetCurrentT()       const   { return currentLinearT_; }
     /// 現在の経過時間を取得
-    double          GetElapsedTime()    const   { return elapsedTime_; } 
+    double          GetElapsedTime()    const   { return elapsedTime_; }
     /// 現在のフレーム回数を取得
-    unsigned int    GetCountFrame()     const   { return countFrame_; } 
+    unsigned int    GetCountFrame()     const   { return countFrame_; }
     /// IDの取得
     std::string     GetID()             const   { return identifier_; }
 

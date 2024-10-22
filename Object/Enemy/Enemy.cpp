@@ -232,7 +232,6 @@ void Enemy::OnCollision(const Collider* _other)
     /// 巣壁との衝突後
     else if (otherID == "NestWall")
     {
-        isCollidedNest = true;
     }
     /// 回転板との衝突後
     else if (otherID == "RotateBoard")
@@ -273,7 +272,7 @@ void Enemy::SetEnableLighter(bool _flag)
     collider_.SetEnableLighter(_flag);
     if (_flag)
     {
-        outScreenPadding_ = -50;
+        outScreenPadding_ = 200;
     }
 }
 

@@ -100,8 +100,12 @@ void CollisionManager::CheckCollisionPair(Collider* _colA, Collider* _colB)
     // 衝突しているかどうか
     bool isCollide = true;
 
-    if (!_colA->GetEnable() || !_colB->GetEnable()) return;
-
+    if (!_colA->GetEnable() || !_colB->GetEnable())
+    {
+        _colA->EraseCollidingPtr(_colB);
+        _colB->EraseCollidingPtr(_colA);
+        return;
+    }
     countWithoutFilter_++;
 
     // 衝突フィルタリング
@@ -116,7 +120,12 @@ void CollisionManager::CheckCollisionPair(Collider* _colA, Collider* _colB)
         std::vector<Vector2>* pVerticesA = _colA->GetVertices();
         std::vector<Vector2>* pVerticesB = _colB->GetVertices();
 
-        if (!pVerticesA->size() || !pVerticesB->size()) return;
+        if (!pVerticesA->size() || !pVerticesB->size())
+        {
+            _colA->EraseCollidingPtr(_colB);
+            _colB->EraseCollidingPtr(_colA);
+            return;
+        }
 
         countWithoutLighter++;
 
@@ -170,7 +179,22 @@ void CollisionManager::CheckCollisionPair(Collider* _colA, Collider* _colB)
     {
         _colA->OnCollision(_colB);
         _colB->OnCollision(_colA);
+
+        if (!_colA->IsRegisteredCollidingPtr(_colB) && !_colB->IsRegisteredCollidingPtr(_colA))
+        {
+            _colA->RegisterCollidingPtr(_colB);
+            _colB->RegisterCollidingPtr(_colA);
+            _colA->OnCollisionTrigger(_colB);
+            _colB->OnCollisionTrigger(_colA);
+        }
+
         collisionNames_.push_back({ _colA->GetColliderID(), _colB->GetColliderID() });
+    }
+    else
+    {
+        // あたっていない場合、CollidingPtrをチェックし該当する場合ポップ
+        _colA->EraseCollidingPtr(_colB);
+        _colB->EraseCollidingPtr(_colA);
     }
     return;
 }
