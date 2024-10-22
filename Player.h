@@ -26,6 +26,7 @@ public:
     bool            IsAttack() const { return isAttack_; }
     void            OnCollision(const Collider* _other);
     Collider*       GetCollider() { return &collider_; }
+    float           GetAttackMultiply() const { return latestAttackMultiply_; }
 
 private:
     char            keys[256]                   = {};
@@ -38,6 +39,7 @@ private:
     float           radius_min_                 = 20.0f;
     float           radius_current_             = 0.0f;
     float           radius_timeRelease_         = 0.0f;
+    float           latestAttackMultiply_          = 0.0f;
 
     size_t          resolution_                 = 4u;
     bool            isAttack_                   = false;

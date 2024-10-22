@@ -187,11 +187,18 @@ void Enemy::OnCollision(const Collider* _other)
     /// Playerとの衝突後
     if (otherID == "Player")
     {
-        if (static_cast<const Player*>(_other->GetOwner())->IsAttack())
+        const Player* pPlayer = static_cast<const Player*>(_other->GetOwner());
+        if (pPlayer->IsAttack())
         {
+            float attackMultiply = pPlayer->GetAttackMultiply();
+            float bouncePower = bouncePowerMax_ * attackMultiply;
+
             // 反発を加える
-            velocity_ = {};
-            acceleration_ = -distanceToTarget.Normalize() * bounceSpeed_;
+            if (attackMultiply > 0.1f)
+            {
+                velocity_ = {};
+                acceleration_ = -distanceToTarget.Normalize() * bouncePower;
+            }
 
             isBounce_ = true;     //ぶっ飛びフラグオン
         }
@@ -230,9 +237,6 @@ void Enemy::OnCollision(const Collider* _other)
     /// 回転板との衝突後
     else if (otherID == "RotateBoard")
     {
-        // プレイヤーとあたった後なら処理しない
-        if (isBounce_) return;
-
         const RotateBoard* pRotateBoard = static_cast<const RotateBoard*>(_other->GetOwner());
 
         const Vector2* rbVertices1 = pRotateBoard->GetVertices(1);

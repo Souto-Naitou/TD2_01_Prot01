@@ -134,7 +134,7 @@ private: /// 非公開データ
     char*                           keys_                       = nullptr;      // 今フレームのキー情報
     char*                           preKeys_                    = nullptr;      // 前フレームのキー情報
 
-    float                           bounceSpeed_                = 5.0f;         // 衝突時のぶっとび速度
+    float                           bouncePowerMax_             = 14.0f;        // 衝突時のぶっとび速度
     bool                            isBounce_                   = false;        // 跳ね返りフラグ
     bool                            isCollidedNest              = false;        // ネストに攻撃したかどうか
 
