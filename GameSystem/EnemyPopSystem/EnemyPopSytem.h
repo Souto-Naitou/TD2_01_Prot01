@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Object/Enemy/Enemy.h"
-#include "BasePopSytem.h"
+#include "GameSystem/BasePopSytem.h"
 #include <External/easing/CSVLoader.h>
 #include <Vector2.h>
 #include <list>
-#include "Player.h"
+#include "Object/Player/Player.h"
 #include <Timer/Timer.h>
 
 class EnemyPopSystem : public BasePopSystem

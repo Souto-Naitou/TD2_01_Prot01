@@ -1,5 +1,5 @@
 #include "CollisionManager.h"
-#include "Shape.h"
+#include "Helper/Shape.h"
 #include <Vector2.h>
 #include "ImGuiDebugManager/DebugManager.h"
 

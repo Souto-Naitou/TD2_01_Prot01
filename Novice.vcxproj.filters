@@ -68,12 +68,6 @@
     <ClCompile Include="C:\KamataEngine\Adapter\Novice.cpp">
       <Filter>KamataEngine\Adapter</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene.cpp">
-      <Filter>Gamescene</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Player</Filter>
-    </ClCompile>
     <ClCompile Include="External\math\impl\Vector2.cpp">
       <Filter>math</Filter>
     </ClCompile>
@@ -113,12 +107,6 @@
     <ClCompile Include="Object\Enemy\Enemy.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="ImGuiTemplates.cpp">
-      <Filter>KamataEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="InputCenter.cpp">
-      <Filter>KamataEngine</Filter>
-    </ClCompile>
     <ClCompile Include="Object\Core\Core.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -128,23 +116,41 @@
     <ClCompile Include="Collision\CollisionManager.cpp">
       <Filter>CollisionManager</Filter>
     </ClCompile>
-    <ClCompile Include="Collision\Collider.cpp">
-      <Filter>KamataEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\RotateBoard\RotateBoard.cpp">
-      <Filter>KamataEngine</Filter>
-    </ClCompile>
     <ClCompile Include="Object\Wall\NestWall.cpp">
       <Filter>NestWall</Filter>
     </ClCompile>
-    <ClCompile Include="BaseObject.cpp">
-      <Filter>KamataEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyPopSytem.cpp">
-      <Filter>KamataEngine</Filter>
-    </ClCompile>
     <ClCompile Include="External\Timer\Timer.cpp">
       <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\.Base\BaseObject.cpp">
+      <Filter>BaseObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision\Collider.cpp">
+      <Filter>Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSystem\EnemyManager\EnemyManager.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSystem\EnemyPopSystem\EnemyPopSytem.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\HPBar\HPBar.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RotateBoard\RotateBoard.cpp">
+      <Filter>RotateBoard</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper\InputCenter\InputCenter.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\GameScene\GameScene.cpp">
+      <Filter>Gamescene</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper\ImGuiTemplates\ImGuiTemplates.cpp">
+      <Filter>External\ImGuiDebugManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Player\Player.cpp">
+      <Filter>Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -229,12 +235,6 @@
     <ClInclude Include="C:\KamataEngine\DirectXGame\2d\ImGuiManager.h">
       <Filter>KamataEngine\Include</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene.h">
-      <Filter>Gamescene</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Player</Filter>
-    </ClInclude>
     <ClInclude Include="External\math\Vector2.h">
       <Filter>math</Filter>
     </ClInclude>
@@ -268,17 +268,8 @@
     <ClInclude Include="External\ImGuiDebugManager\DebugManager.h">
       <Filter>External\ImGuiDebugManager</Filter>
     </ClInclude>
-    <ClInclude Include="ImGuiTemplates.h">
-      <Filter>External\ImGuiDebugManager</Filter>
-    </ClInclude>
     <ClInclude Include="Object\Enemy\Enemy.h">
       <Filter>Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseObject.h">
-      <Filter>BaseObject</Filter>
-    </ClInclude>
-    <ClInclude Include="InputCenter.h">
-      <Filter>InputCenter</Filter>
     </ClInclude>
     <ClInclude Include="Object\Core\Core.h">
       <Filter>Core</Filter>
@@ -292,18 +283,35 @@
     <ClInclude Include="Collision\Collider.h">
       <Filter>Collider</Filter>
     </ClInclude>
-    <ClInclude Include="Shape.h">
-      <Filter>Shape</Filter>
-    </ClInclude>
     <ClInclude Include="Object\RotateBoard\RotateBoard.h">
       <Filter>RotateBoard</Filter>
     </ClInclude>
     <ClInclude Include="Object\Wall\NestWall.h">
       <Filter>NestWall</Filter>
     </ClInclude>
-    <ClInclude Include="BasePopSytem.h" />
-    <ClInclude Include="DefaultSettings.h" />
-    <ClInclude Include="EnemyPopSytem.h" />
     <ClInclude Include="External\Timer\Timer.h" />
+    <ClInclude Include="Object\.Base\BaseObject.h">
+      <Filter>BaseObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSystem\EnemyManager\EnemyManager.h" />
+    <ClInclude Include="GameSystem\EnemyPopSystem\EnemyPopSytem.h" />
+    <ClInclude Include="Object\HPBar\HPBar.h" />
+    <ClInclude Include="GameSystem\BasePopSytem.h" />
+    <ClInclude Include="Helper\DefaultSettings.h" />
+    <ClInclude Include="Helper\Shape.h">
+      <Filter>Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="Helper\InputCenter\InputCenter.h">
+      <Filter>InputCenter</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\GameScene\GameScene.h">
+      <Filter>Gamescene</Filter>
+    </ClInclude>
+    <ClInclude Include="Helper\ImGuiTemplates\ImGuiTemplates.h">
+      <Filter>External\ImGuiDebugManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Player\Player.h">
+      <Filter>Player</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

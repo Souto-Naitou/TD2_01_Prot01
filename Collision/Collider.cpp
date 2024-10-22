@@ -1,6 +1,6 @@
 #include "Collider.h"
 #include "CollisionManager.h"
-#include "ImGuiTemplates.h"
+#include "Helper/ImGuiTemplates/ImGuiTemplates.h"
 #include <sstream>
 
 Collider::Collider()

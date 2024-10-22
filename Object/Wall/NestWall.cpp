@@ -1,7 +1,7 @@
 #include "NestWall.h"
 #include <Novice.h>
 #include "ImGuiDebugManager/DebugManager.h"
-#include "ImGuiTemplates.h"
+#include "Helper/ImGuiTemplates/ImGuiTemplates.h"
 #include "Object/Enemy/Enemy.h"
 
 NestWall::NestWall(std::string _ID)

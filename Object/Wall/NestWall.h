@@ -1,11 +1,11 @@
 #pragma once
 
 #include <Rect2.h>
-#include "BaseObject.h"
+#include "Object/.Base/BaseObject.h"
 #include "Collision/Collider.h"
 #include <string>
 #include "Collision/CollisionManager.h"
-#include "HPBar.h"
+#include "Object/HPBar/HPBar.h"
 
 class NestWall : public BaseObject
 {

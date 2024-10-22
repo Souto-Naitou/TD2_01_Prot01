@@ -1,8 +1,8 @@
 #include "EnemyPopSytem.h"
-#include "DefaultSettings.h"
+#include "Helper/DefaultSettings.h"
 #include <random>
 #include <ImGuiDebugManager/DebugManager.h>
-#include <ImGuiTemplates.h>
+#include "Helper/ImGuiTemplates/ImGuiTemplates.h"
 
 EnemyPopSystem::EnemyPopSystem()
 {

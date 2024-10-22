@@ -1,14 +1,14 @@
 #include "GameScene.h"
 
-#include "DefaultSettings.h"
+#include "Helper/DefaultSettings.h"
 
 #include <Novice.h>
-#include "Player.h"
+#include "Object/Player/Player.h"
 #include "Object/Enemy/Enemy.h"
 #include "Object/Core/Core.h"
 #include "ImGuiDebugManager/DebugManager.h"
 #include "easing/EasingManager/EasingManager.h"
-#include "InputCenter.h"
+#include "Helper/InputCenter/InputCenter.h"
 
 #include <format>
 #include <cmath>

@@ -1,6 +1,6 @@
 #include "RotateBoard.h"
 #include "ImGuiDebugManager/DebugManager.h"
-#include "ImGuiTemplates.h"
+#include "Helper/ImGuiTemplates/ImGuiTemplates.h"
 #include "Object/Enemy/Enemy.h"
 #include <Novice.h>
 

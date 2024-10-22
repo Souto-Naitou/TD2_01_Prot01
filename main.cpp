@@ -1,12 +1,12 @@
 #include <Novice.h>
 
 #include <easing/EasingManager/EasingManager.h>
-#include "GameScene.h"
+#include "Scenes/GameScene/GameScene.h"
 #include "ImGuiDebugManager/DebugManager.h"
-#include "InputCenter.h"
+#include "Helper/InputCenter/InputCenter.h"
 #include <stdlib.h>
 #include <time.h>
-#include "DefaultSettings.h"
+#include "Helper/DefaultSettings.h"
 
 const char kWindowTitle[] = "学籍番号";
 

@@ -1,7 +1,7 @@
 #include "BaseObject.h"
 
 #include "ImGuiDebugManager/DebugManager.h"
-#include "ImGuiTemplates.h"
+#include "Helper/ImGuiTemplates/ImGuiTemplates.h"
 
 void BaseObject::DebugWindow()
 {

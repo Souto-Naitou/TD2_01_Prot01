@@ -7,7 +7,7 @@
 
 #include "Timer/Timer.h"
 
-#include "ImGuiTemplates.h"
+#include "Helper/ImGuiTemplates/ImGuiTemplates.h"
 
 class DebugManager
 {

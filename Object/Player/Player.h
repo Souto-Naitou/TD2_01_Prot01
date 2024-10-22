@@ -3,10 +3,10 @@
 
 #include <easing/Easing.h>
 #include <Vector2.h>
-#include "BaseObject.h"
+#include "Object/.Base/BaseObject.h"
 #include "Object/RotateBoard/RotateBoard.h"
 #include "Collision/Collider.h"
-#include "EnemyManager.h"
+#include "GameSystem/EnemyManager/EnemyManager.h"
 
 #include <vector>
 #include <chrono>

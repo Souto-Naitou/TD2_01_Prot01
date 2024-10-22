@@ -1,6 +1,6 @@
 #include "Player.h"
 
-#include "DefaultSettings.h"
+#include "Helper/DefaultSettings.h"
 #include "ImGuiDebugManager/DebugManager.h"
 #include "Object/Enemy/Enemy.h"
 #include <Novice.h>

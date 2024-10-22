@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BaseObject.h"
+#include "Object/.Base/BaseObject.h"
 #include "Collision/Collider.h"
 #include <Vector2.h>
 

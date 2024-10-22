@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Player.h"
+#include "Object/Player/Player.h"
 #include "Object/Enemy/Enemy.h"
 #include "Object/Core/Core.h"
 #include "Object/Wall/NestWall.h"
 #include "Object/RotateBoard/RotateBoard.h"
 #include "Collision/CollisionManager.h"
-#include "EnemyManager.h"
+#include "GameSystem/EnemyManager/EnemyManager.h"
 
-#include "EnemyPopSytem.h"
+#include "GameSystem/EnemyPopSystem/EnemyPopSytem.h"
 #include "Timer/Timer.h"
 
 #include <Vector2.h>

@@ -1,9 +1,9 @@
 #include "Core.h"
 
-#include "DefaultSettings.h"
+#include "Helper/DefaultSettings.h"
 #include <Novice.h>
 #include "Collision/CollisionManager.h"
-#include "ImGuiTemplates.h"
+#include "Helper/ImGuiTemplates/ImGuiTemplates.h"
 #include "ImGuiDebugManager/DebugManager.h"
 
 Core::Core()

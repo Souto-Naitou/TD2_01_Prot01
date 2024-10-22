@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Shape.h"
+#include "Helper/Shape.h"
 #include "Vector2.h"
 #include <vector>
 #include <string>
 #include <functional>
-#include "BaseObject.h"
+#include "Object/.Base/BaseObject.h"
 #include <list>
 #include "ImGuiDebugManager/DebugManager.h"
 

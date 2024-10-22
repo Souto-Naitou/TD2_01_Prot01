@@ -1,13 +1,13 @@
 #include "Enemy.h"
 #include "imgui.h"
-#include "ImGuiTemplates.h"
+#include "Helper/ImGuiTemplates/ImGuiTemplates.h"
 #include "imgui.h"
 #include "ImGuiDebugManager/DebugManager.h"
-#include "InputCenter.h"
-#include "Player.h"
+#include "Helper/InputCenter/InputCenter.h"
+#include "Object/Player/Player.h"
 #include <Novice.h>
 #include "Collision/CollisionManager.h"
-#include "DefaultSettings.h"
+#include "Helper/DefaultSettings.h"
 #include "Object/RotateBoard/RotateBoard.h"
 
 float Enemy::bouncePower_enemy_ = 0.25f;

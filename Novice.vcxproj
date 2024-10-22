@@ -111,12 +111,9 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BaseObject.cpp" />
     <ClCompile Include="C:\KamataEngine\Adapter\Novice.cpp" />
     <ClCompile Include="Collision\Collider.cpp" />
     <ClCompile Include="Collision\CollisionManager.cpp" />
-    <ClCompile Include="EnemyManager.cpp" />
-    <ClCompile Include="EnemyPopSytem.cpp" />
     <ClCompile Include="External\easing\CSVLoader.cpp" />
     <ClCompile Include="External\easing\EaseInterpolation.cpp" />
     <ClCompile Include="External\easing\Easing.cpp" />
@@ -131,21 +128,22 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="External\math\impl\Vector4.cpp" />
     <ClCompile Include="External\math\MathExtension\mathExtension.cpp" />
     <ClCompile Include="External\Timer\Timer.cpp" />
-    <ClCompile Include="GameScene.cpp" />
-    <ClCompile Include="HPBar.cpp" />
-    <ClCompile Include="ImGuiTemplates.cpp" />
-    <ClCompile Include="InputCenter.cpp" />
+    <ClCompile Include="GameSystem\EnemyManager\EnemyManager.cpp" />
+    <ClCompile Include="GameSystem\EnemyPopSystem\EnemyPopSytem.cpp" />
+    <ClCompile Include="Helper\ImGuiTemplates\ImGuiTemplates.cpp" />
+    <ClCompile Include="Helper\InputCenter\InputCenter.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Object\.Base\BaseObject.cpp" />
     <ClCompile Include="Object\Core\Core.cpp" />
     <ClCompile Include="Object\Enemy\Enemy.cpp" />
+    <ClCompile Include="Object\HPBar\HPBar.cpp" />
+    <ClCompile Include="Object\Player\Player.cpp" />
     <ClCompile Include="Object\Wall\NestWall.cpp" />
     <ClCompile Include="Object\RotateBoard\RotateBoard.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Scenes\GameScene\GameScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\DirectXGame\3d\Camera.h" />
-    <ClInclude Include="BaseObject.h" />
-    <ClInclude Include="BasePopSytem.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\base\StringUtility.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\math\Matrix4x4.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\math\Vector2.h" />
@@ -174,9 +172,6 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="C:\KamataEngine\Adapter\Novice.h" />
     <ClInclude Include="Collision\Collider.h" />
     <ClInclude Include="Collision\CollisionManager.h" />
-    <ClInclude Include="DefaultSettings.h" />
-    <ClInclude Include="EnemyManager.h" />
-    <ClInclude Include="EnemyPopSytem.h" />
     <ClInclude Include="External\easing\CSVLoader.h" />
     <ClInclude Include="External\easing\csvStructure\CSVData.h" />
     <ClInclude Include="External\easing\Easing.h" />
@@ -190,16 +185,21 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="External\math\Vector3.h" />
     <ClInclude Include="External\math\Vector4.h" />
     <ClInclude Include="External\Timer\Timer.h" />
-    <ClInclude Include="GameScene.h" />
-    <ClInclude Include="HPBar.h" />
-    <ClInclude Include="ImGuiTemplates.h" />
-    <ClInclude Include="InputCenter.h" />
+    <ClInclude Include="GameSystem\BasePopSytem.h" />
+    <ClInclude Include="GameSystem\EnemyManager\EnemyManager.h" />
+    <ClInclude Include="GameSystem\EnemyPopSystem\EnemyPopSytem.h" />
+    <ClInclude Include="Helper\DefaultSettings.h" />
+    <ClInclude Include="Helper\ImGuiTemplates\ImGuiTemplates.h" />
+    <ClInclude Include="Helper\InputCenter\InputCenter.h" />
+    <ClInclude Include="Helper\Shape.h" />
+    <ClInclude Include="Object\.Base\BaseObject.h" />
     <ClInclude Include="Object\Core\Core.h" />
     <ClInclude Include="Object\Enemy\Enemy.h" />
+    <ClInclude Include="Object\HPBar\HPBar.h" />
+    <ClInclude Include="Object\Player\Player.h" />
     <ClInclude Include="Object\RotateBoard\RotateBoard.h" />
     <ClInclude Include="Object\Wall\NestWall.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="Shape.h" />
+    <ClInclude Include="Scenes\GameScene\GameScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
