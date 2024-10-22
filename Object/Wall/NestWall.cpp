@@ -20,18 +20,18 @@ void NestWall::Initialize()
 {
     // 仮HP
     hp_ = 100u;
-    collider_.SetColliderID("NestWall");
+    collider_.SetColliderID("NestWall_" + objectID_);
     collider_.SetAttribute(pCollisionManager_->GetNewAttribute("NestWall"));
     pCollisionManager_->RegisterCollider(&collider_);
 
     // コライダーにOnCollisionの関数ポインタを渡す
-    collider_.SetOnCollision(std::bind(&NestWall::OnCollision, this, std::placeholders::_1));
+    collider_.SetOnCollisionTrigger(std::bind(&NestWall::OnCollisionTrigger, this, std::placeholders::_1));
     collider_.SetOwner(this);
 }
 
 void NestWall::RunSetMask()
 {
-    collider_.SetMask(pCollisionManager_->GetNewMask(collider_.GetColliderID(), "Player", "Core"));
+    collider_.SetMask(pCollisionManager_->GetNewMask("NestWall", "Player", "Core"));
 }
 
 void NestWall::Update()
@@ -46,7 +46,7 @@ void NestWall::Draw()
         static_cast<int>(position_.x), static_cast<int>(position_.y), rect_.x2, rect_.y2, 0.0f, RED, kFillModeSolid);
 }
 
-void NestWall::OnCollision(const Collider* _collider)
+void NestWall::OnCollisionTrigger(const Collider* _collider)
 {
     if (_collider->GetColliderID() == "Enemy")
     {

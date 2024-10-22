@@ -41,6 +41,9 @@ CSVData* CSVLoader::LoadFile(std::string _fileName)
 	{
 		std::stringstream lineStream(line);
 		std::string word;
+
+		if (line[0] == '#') if (line[1] == '#') continue;
+
 		// １行分確保
 		fileData_.back().second.push_back({});
 		while (std::getline(lineStream, word, ','))
@@ -52,7 +55,7 @@ CSVData* CSVLoader::LoadFile(std::string _fileName)
 	}
 
 	return &fileData_.back().second;
-	
+
 }
 
 CSVLine* CSVLoader::GetLine(std::string _fileName, std::string _ID)
@@ -89,7 +92,7 @@ CSVLine* CSVLoader::GetNewLine(std::string _fileName)
 void CSVLoader::SaveFile()
 {
 	std::filesystem::path dir(directory_);
-	if (!std::filesystem::exists(dir)) 
+	if (!std::filesystem::exists(dir))
 	{
 		std::filesystem::create_directory(dir);
 	}

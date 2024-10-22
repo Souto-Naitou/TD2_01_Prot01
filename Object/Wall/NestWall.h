@@ -20,7 +20,7 @@ public: /// 公開メソッド
 
 
 
-    void                OnCollision(const Collider* _collider);
+    void                OnCollisionTrigger(const Collider* _collider);
     Collider*           GetCollider() { return &collider_; }
 
 
