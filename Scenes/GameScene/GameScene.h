@@ -39,7 +39,7 @@ private: /// 非公開データ
     bool                isEnableLighter_    = false;
     bool                isPop_              = false;
     float               e2eBouncePower_     = 2.0f;
-    float               e2rbBouncePower_     = 2.0f;
+    float               e2rbBouncePower_    = 2.0f;
     char*               preKeys_            = nullptr;
     char*               keys_               = nullptr;
     bool                isDebugEnable_      = true;
@@ -49,6 +49,5 @@ private: /// 他オブジェクトのデータ
     EnemyManager*       pEnemyManager_      = nullptr;
 
 private: /// 非公開メソッド
-
     void MakeWall(NestWall** _nestWall, std::string _id, int _width, int _height, Vector2 _origin);
 };

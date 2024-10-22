@@ -1,8 +1,7 @@
 #include "GameScene.h"
 
-#include "Helper/DefaultSettings.h"
 
-#include <Novice.h>
+#include "Helper/DefaultSettings.h"
 #include "Object/Player/Player.h"
 #include "Object/Enemy/Enemy.h"
 #include "Object/Core/Core.h"
@@ -14,6 +13,7 @@
 #include <cmath>
 #include <numbers>
 
+#include <Novice.h>
 #ifdef _DEBUG
 #include "imgui.h"
 #endif // _DEBUG
