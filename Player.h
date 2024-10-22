@@ -40,19 +40,19 @@ private:
     float           radius_min_                 = 20.0f;
     float           radius_current_             = 0.0f;
     float           radius_timeRelease_         = 0.0f;
-    float           latestAttackMultiply_          = 0.0f;
+    float           latestAttackMultiply_       = 0.0f;
 
     size_t          resolution_                 = 4u;
     bool            isAttack_                   = false;
 
-    std::vector<Vector2> vertices_  = {};
-    std::chrono::system_clock::time_point startTime_;
-    std::unique_ptr<Easing> pEasingBoxResize_;
-    std::unique_ptr<Easing> pEasingBoxTemp_;
+    std::vector<Vector2>                    vertices_           = {};
+    std::chrono::system_clock::time_point   startTime_          = {};
+    std::unique_ptr<Easing>                 pEasingBoxResize_   = nullptr;
+    std::unique_ptr<Easing>                 pEasingBoxTemp_     = nullptr;
 
 private: /// 他オブジェクトから借りるデータ
-    CollisionManager* pCollisionManager_ = nullptr;
-    EnemyManager* pEnemyManager_ = nullptr;
+    CollisionManager*                       pCollisionManager_  = nullptr;
+    EnemyManager*                           pEnemyManager_      = nullptr;
 
 private: /// 非公開メソッド
     void DebugWindow();
