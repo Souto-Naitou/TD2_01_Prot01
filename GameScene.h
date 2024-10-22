@@ -6,6 +6,7 @@
 #include "Object/Wall/NestWall.h"
 #include "Object/RotateBoard/RotateBoard.h"
 #include "Collision/CollisionManager.h"
+#include "EnemyManager.h"
 
 #include "EnemyPopSytem.h"
 #include "Timer/Timer.h"
@@ -25,8 +26,7 @@ public:
 
     void DebugWindow();
 
-private:
-    CollisionManager*   pCollisionManager_  = nullptr;
+private: /// 非公開データ
     Player*             pPlayer_            = nullptr;
     Core*               pCore_              = nullptr;
     NestWall*           pNestWallLeft_      = nullptr;
@@ -43,6 +43,12 @@ private:
     char*               preKeys_            = nullptr;
     char*               keys_               = nullptr;
     bool                isDebugEnable_      = true;
+
+private: /// 他オブジェクトのデータ
+    CollisionManager*   pCollisionManager_  = nullptr;
+    EnemyManager*       pEnemyManager_      = nullptr;
+
+private: /// 非公開メソッド
 
     void MakeWall(NestWall** _nestWall, std::string _id, int _width, int _height, Vector2 _origin);
 };

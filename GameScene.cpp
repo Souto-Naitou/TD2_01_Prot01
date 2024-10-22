@@ -24,6 +24,7 @@ GameScene::GameScene()
     DebugManager::GetInstance()->SetComponent("GameScene", std::bind(&GameScene::DebugWindow, this));
     keys_= InputCenter::GetInstance()->GetKeyPtr();
     preKeys_ = InputCenter::GetInstance()->GetPreKeyPtr();
+    pEnemyManager_ = EnemyManager::GetInstance();
 }
 
 GameScene::~GameScene()
@@ -45,6 +46,9 @@ void GameScene::Initialize()
 #ifdef _DEBUG
     ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 #endif // _DEBUG
+
+    pEnemyManager_->SetEnemyList(&enemyList_);
+
 
     pCollisionManager_->Initialize();
 

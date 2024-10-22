@@ -16,6 +16,7 @@ Player::Player()
 {
     pCollisionManager_ = CollisionManager::GetInstance();
     DebugManager::GetInstance()->SetComponent("Player", std::bind(&Player::DebugWindow, this));
+    pEnemyManager_ = EnemyManager::GetInstance();
 }
 
 Player::~Player()
@@ -82,6 +83,8 @@ void Player::Update()
             pEasingBoxResize_->Start();
             radius_current_ = (1.0f - pEasingBoxResize_->Update()) * radius_default_ + pEasingBoxResize_->Update() * radius_min_;
         }
+        // 吸い込み力をEasingのCurrentTにする
+        pEnemyManager_->SetStateSuction(pEasingBoxResize_->GetCurrentT());
     }
     else if (!keys[DIK_SPACE] && preKeys[DIK_SPACE])
     {
@@ -89,6 +92,7 @@ void Player::Update()
         latestAttackMultiply_ = pEasingBoxResize_->GetCurrentT();
         radius_timeRelease_ = radius_current_;
         isAttack_ = true;
+        pEnemyManager_->ChangeState(Enemy::State::Normal);
     }
     else
     {

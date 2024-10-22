@@ -15,6 +15,13 @@ public:
         RotateBoard,
     };
 
+    enum class State
+    {
+        Normal,
+        Suck
+    };
+
+
     Enemy() = default;
     ~Enemy();
 
@@ -108,6 +115,23 @@ public: // Setter ===============
     /// <returns>フラグ</returns>
     inline      void                SetIsCollidedNest(bool _flag) { isCollidedNest = _flag; }
 
+
+    /// <summary>
+    /// ステートを変更
+    /// </summary>
+    /// <param name="_state">ステート</param>
+    inline      void                SetState(State _state) { state_ = _state; }
+
+
+    /// <summary>
+    /// ステートを変更
+    /// </summary>
+    /// <param name="_state">ステート</param>
+    /// <param name="_val">値</param>
+                void                SetState(State _state, float _val);
+
+
+
 public: // Others ===============
 
     /// <summary>
@@ -126,6 +150,8 @@ private: /// 非公開データ
 
     std::string                     idx_                        = {};           // index (Enemy内の一意の数字)
 
+    float                           suctionPower_               = 0.0f;
+    State                           state_                      = State::Normal;
     uint32_t                        color_                      = 0xff0000ff;   // 色
     Vector2                         positionTarget_             = {};           // ターゲットのベクトル (原点中心)
     Vector2                         distanceToTarget            = {};           // ターゲットまでのベクトル
@@ -134,6 +160,7 @@ private: /// 非公開データ
     float                           rotation_                   = 0.0f;         // 回転角
     float                           radius_                     = 0.0f;         // 半径
     float                           moveSpeed_                  = 0.0f;         // 移動スピード
+    float                           moveSpeed_sucked_           = 0.0f;         // 吸い込み時に加算するスピード(最大値)
     float                           collisionCooldown_          = 0.0f;         // 衝突判定クールダウン
     const float                     collisionCooldownDuration_  = 0.5f;         // 衝突判定クールダウン感覚
 

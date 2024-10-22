@@ -6,6 +6,7 @@
 #include "BaseObject.h"
 #include "Object/RotateBoard/RotateBoard.h"
 #include "Collision/Collider.h"
+#include "EnemyManager.h"
 
 #include <vector>
 #include <chrono>
@@ -50,7 +51,8 @@ private:
     std::unique_ptr<Easing> pEasingBoxTemp_;
 
 private: /// 他オブジェクトから借りるデータ
-    CollisionManager* pCollisionManager_;
+    CollisionManager* pCollisionManager_ = nullptr;
+    EnemyManager* pEnemyManager_ = nullptr;
 
 private: /// 非公開メソッド
     void DebugWindow();
