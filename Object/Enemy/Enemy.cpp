@@ -10,8 +10,8 @@
 #include "DefaultSettings.h"
 #include "Object/RotateBoard/RotateBoard.h"
 
-float Enemy::bouncePower_enemy_ = 2.0f;
-float Enemy::bouncePower_rotateBoard_ = 2.0f;
+float Enemy::bouncePower_enemy_ = 0.25f;
+float Enemy::bouncePower_rotateBoard_ = 3.0f;
 
 Enemy::~Enemy()
 {
@@ -27,8 +27,8 @@ void Enemy::Initialize(std::string _idx)
 
 
     /// デバッグ用ウィンドウの登録
-    idx_ = _idx;                            // 引数から受け取った数を文字に
-    objectID_ = "Enemy" + idx_;             //"Enemy1", "Enemy2" など
+    idx_ = _idx;                                // 引数から受け取った数を文字に
+    objectID_ = "Enemy" + idx_;                 //"Enemy1", "Enemy2" など
     DebugManager::GetInstance()->SetComponent("Enemy", idx_, std::bind(&Enemy::DebugWindow, this));
 
 
@@ -39,7 +39,7 @@ void Enemy::Initialize(std::string _idx)
 
     /// 頂点の計算に必要なデータを入力
     radius_ = 20.0f;
-    ellipseAB_ = { 20.0f ,10.0f };          // ax^2 + by^2 = 1
+    ellipseAB_ = { 20.0f ,10.0f };              // ax^2 + by^2 = 1
 
 
     collider_.SetColliderID("Enemy");       // コライダーのID
@@ -122,6 +122,7 @@ void Enemy::Update()
         result.y = ellipseAB_.y * std::sinf(theta);
         vertices_[i] = result.Rotated(rotation_) + position_;
     }
+
     collider_.SetVertices(vertices_, 3);
 
     velocity_ += acceleration_;
@@ -129,7 +130,6 @@ void Enemy::Update()
     velocity_.Lerp(velocity_, velocity_move, 0.01f);
 
     position_ += velocity_;
-    //position_ += velocity_move;
 
     // 計算終わったら初期化
     acceleration_ = {};
