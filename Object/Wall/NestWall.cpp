@@ -36,12 +36,14 @@ void NestWall::RunSetMask()
 
 void NestWall::Update()
 {
+    if (hp_ == 0) isDead_ = true;
 }
 
 void NestWall::Draw()
 {
-    Rect2 newRect = rect_ + position_;
-    Novice::DrawBox(newRect.x1, newRect.y1, newRect.x2, newRect.y2, 0.0f, BLUE, kFillModeWireFrame);
+    if (isDead_) return;
+    Novice::DrawBox(
+        static_cast<int>(position_.x), static_cast<int>(position_.y), rect_.x2, rect_.y2, 0.0f, RED, kFillModeSolid);
 }
 
 void NestWall::OnCollision(const Collider* _collider)

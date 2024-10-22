@@ -27,6 +27,7 @@ private:
     Rect2 rect_;
     Collider collider_;
     CollisionManager* pCollisionManager_;
+    bool isDead_ = false;
 
     void DebugWindow();
 };
