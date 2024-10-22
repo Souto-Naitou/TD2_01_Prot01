@@ -44,6 +44,7 @@ void Enemy::Initialize(std::string _idx)
 
     collider_.SetColliderID("Enemy");       // コライダーのID
     moveSpeed_ = 1.0f;                          // 移動スピード
+    moveSpeed_sucked_ = 10.0f;                   // 吸い込み時加算スピード
 
 
     /// コライダーの設定
@@ -86,13 +87,19 @@ void Enemy::Update()
     // DEBUG
     InputCenter::GetInstance()->WASDMove(position_, 2.0f);
 
+    // Playerに攻撃されたら色を変更
     if (isBounce_) color_ = BLUE;
+
+    if (state_ == State::Normal) suctionPower_ = 0.0f;
+
 
     /// 速度の更新
     distanceToTarget = positionTarget_ - position_;
     if (distanceToTarget.Length() > 0)
     {
-        velocity_move = distanceToTarget.Normalize() * moveSpeed_;
+        Vector2 normalDist2Target = distanceToTarget.Normalize();
+        velocity_move = normalDist2Target * moveSpeed_;
+        velocity_move += normalDist2Target * moveSpeed_sucked_ * suctionPower_;
     }
 
     /// 方向を変更
@@ -178,6 +185,21 @@ void Enemy::DebugWindow()
     ImGuiTemplate::VariableTable("Enemy", pFunc);
 
     return;
+}
+
+void Enemy::SetState(State _state, float _val)
+{
+    SetState(_state);
+    switch (_state)
+    {
+    case Enemy::State::Normal:
+        break;
+    case Enemy::State::Suck:
+        suctionPower_ = _val;
+        break;
+    default:
+        break;
+    }
 }
 
 void Enemy::OnCollision(const Collider* _other)
