@@ -117,8 +117,8 @@ void CollisionManager::CheckCollisionPair(Collider* _colA, Collider* _colB)
     // 形状条件
     if (_colA->GetShape() == Shape::Polygon && _colB->GetShape() == Shape::Polygon)
     {
-        std::vector<Vector2>* pVerticesA = _colA->GetVertices();
-        std::vector<Vector2>* pVerticesB = _colB->GetVertices();
+        const std::vector<Vector2>* pVerticesA = _colA->GetVertices();
+        const std::vector<Vector2>* pVerticesB = _colB->GetVertices();
 
         if (!pVerticesA->size() || !pVerticesB->size())
         {
@@ -199,7 +199,7 @@ void CollisionManager::CheckCollisionPair(Collider* _colA, Collider* _colB)
     return;
 }
 
-void CollisionManager::ProjectShapeOnAxis(std::vector<Vector2>* _v, const Vector2& _axis, float& _min, float& _max)
+void CollisionManager::ProjectShapeOnAxis(const std::vector<Vector2>* _v, const Vector2& _axis, float& _min, float& _max)
 {
     _min = (*_v)[0].Projection(_axis);
     _max = _min;

@@ -25,7 +25,7 @@ public:
     inline  uint32_t                    GetCollisionMask()          const       { return *pCollisionMask_;}
     inline  Shape                       GetShape()                  const       { return shape_; }
     inline  unsigned int                GetRadius()                 const       { return radiusCollider_; }
-    inline  std::vector<Vector2>*       GetVertices()                           { return &verticesCollider_; }
+    inline  const std::vector<Vector2>* GetVertices()               const       { return &verticesCollider_; }
     inline  const std::string&          GetColliderID()             const       { return colliderID_; }
     inline  bool                        GetIsEnableLighter()        const       { return enableLighter_; }
     inline  Vector2                     GetPosition()               const       { return position_; }

@@ -13,30 +13,29 @@ public: /// 公開メソッド
     NestWall(std::string _ID);
     ~NestWall();
 
-    void                Initialize();
-    void                RunSetMask();
-    void                Update();
-    void                Draw();
+    void                    Initialize();
+    void                    RunSetMask();
+    void                    Update();
+    void                    Draw();
 
 
+    void                    OnCollisionTrigger(const Collider* _collider);
+    Collider*               GetCollider() { return &collider_; }
 
-    void                OnCollisionTrigger(const Collider* _collider);
-    Collider*           GetCollider() { return &collider_; }
 
-
-    void                SetRect(int _width, int _height, Vector2 _leftTop);
+    void                    SetRect(int _width, int _height, Vector2 _leftTop, size_t _offset);
 
 
 private: /// 非公開データ
-    Rect2               rect_;
-    Collider            collider_;
-    bool                isDead_ = false;
+    Rect2                   rect_;
+    Collider                collider_;
+    bool                    isDead_ = false;
 
 
 private: /// 非公開メソッド
-    void                DebugWindow();
+    void                    DebugWindow();
 
 
 private: /// 他オブジェクトのデータ
-    CollisionManager* pCollisionManager_;
+    CollisionManager*       pCollisionManager_;
 };

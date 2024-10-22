@@ -141,6 +141,14 @@ public: // Others ===============
     void                            OnCollision(const Collider* _other);
 
 
+    /// <summary>
+	/// 衝突時コールバック関数
+    /// </summary>
+    /// <param name="_other">衝突</param>
+    void                            OnCollisionTrigger(const Collider* _other);
+
+
+
     void                            RunSetMask();
 
 
@@ -178,6 +186,7 @@ private: /// 非公開データ
     /// すたてぃっくなめんば～
     static  float                   bouncePower_enemy_;                         // Enemy同士の反発力
     static  float                   bouncePower_rotateBoard_;                   // RotateBoardとの反発力
+	static  float                   bouncePower_nestWall_;                      // NestWallとの反発力
 
 
 private: /// シングルトン インスタンスのポインタ

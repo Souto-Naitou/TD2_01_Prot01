@@ -9,9 +9,11 @@
 #include "Collision/CollisionManager.h"
 #include "DefaultSettings.h"
 #include "Object/RotateBoard/RotateBoard.h"
+#include "Object/Wall/NestWall.h"
 
 float Enemy::bouncePower_enemy_ = 0.25f;
 float Enemy::bouncePower_rotateBoard_ = 3.0f;
+float Enemy::bouncePower_nestWall_ = 3.0f;
 
 Enemy::~Enemy()
 {
@@ -42,7 +44,7 @@ void Enemy::Initialize(std::string _idx)
     ellipseAB_ = { 20.0f ,10.0f };              // ax^2 + by^2 = 1
 
 
-    collider_.SetColliderID("Enemy");       // コライダーのID
+    collider_.SetColliderID(idx_);       // コライダーのID
     moveSpeed_ = 1.0f;                          // 移動スピード
     moveSpeed_sucked_ = 10.0f;                  // 吸い込み時加算スピード
     hp_ = 3;                                    // HP
@@ -54,6 +56,7 @@ void Enemy::Initialize(std::string _idx)
     collider_.SetVertices(vertices_, 3);
     // Colliderにポインタを渡す
     collider_.SetOnCollision(std::bind(&Enemy::OnCollision, this, std::placeholders::_1));
+    collider_.SetOnCollisionTrigger(std::bind(&Enemy::OnCollisionTrigger, this, std::placeholders::_1));
 }
 
 void Enemy::Update()
@@ -107,7 +110,6 @@ void Enemy::Update()
     {
         rotation_ = (velocity_ + velocity_move).Normalize().Theta();
     }
-
 
 
     /// ** ここより上ではPositionを更新しない **
@@ -247,6 +249,7 @@ void Enemy::OnCollision(const Collider* _other)
             // 反発を加える
             acceleration_ += direction.Normalize() * bouncePower_enemy_;
         }
+
         // 連鎖処理
         if (otherEnemy->GetIsBounce()) isBounce_ = true;
 
@@ -286,6 +289,21 @@ void Enemy::OnCollision(const Collider* _other)
             velocity_ = {};
             acceleration_ = rbEdge.Perpendicular().Normalize() * bouncePower_rotateBoard_;
         }
+    }
+}
+
+void Enemy::OnCollisionTrigger(const Collider* _other)
+{
+    if (_other->GetColliderID() == "NestWall")
+    {
+        if (!isBounce_) return;
+        auto otherVertices = _other->GetVertices();
+        Vector2 edge = (*otherVertices)[2] - (*otherVertices)[1];
+
+        velocity_ = {};
+        acceleration_ = edge.Perpendicular().Normalize() * bouncePower_nestWall_;
+
+        hp_--;
     }
 }
 

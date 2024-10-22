@@ -78,7 +78,7 @@ private:
 
     void DebugWindow();
     void CheckCollisionPair(Collider* _colA, Collider* _colB);
-    void ProjectShapeOnAxis(std::vector<Vector2>* _v, const Vector2& _axis, float& _min, float& _max);
+    void ProjectShapeOnAxis(const std::vector<Vector2>* _v, const Vector2& _axis, float& _min, float& _max);
 
     uint32_t countCheckCollision_ = 0ui32;
     uint32_t countWithoutFilter_ = 0ui32;

@@ -3,6 +3,7 @@
 #include "ImGuiDebugManager/DebugManager.h"
 #include "ImGuiTemplates.h"
 #include "Object/Enemy/Enemy.h"
+#include <array>
 
 NestWall::NestWall(std::string _ID)
 {
@@ -20,7 +21,7 @@ void NestWall::Initialize()
 {
     // 仮HP
     hp_ = 100u;
-    collider_.SetColliderID("NestWall_" + objectID_);
+    collider_.SetColliderID("NestWall");
     collider_.SetAttribute(pCollisionManager_->GetNewAttribute("NestWall"));
     pCollisionManager_->RegisterCollider(&collider_);
 
@@ -60,10 +61,18 @@ void NestWall::OnCollisionTrigger(const Collider* _collider)
     if (hp_ < 0) hp_ = 0;
 }
 
-void NestWall::SetRect(int _width, int _height, Vector2 _leftTop)
+void NestWall::SetRect(int _width, int _height, Vector2 _leftTop, size_t _offset = 0)
 {
     rect_.MakeRectangle(_width, _height, false);
-    collider_.SetVertices((rect_ + _leftTop).GetVertices());
+	Rect2 colliderRect = rect_ + _leftTop;
+
+    std::array<Vector2, 4> vertices;
+    vertices[(_offset + 0) % 4] = colliderRect.LeftTop();
+    vertices[(_offset + 1) % 4] = colliderRect.RightTop();
+    vertices[(_offset + 2) % 4] = colliderRect.RightBottom();
+    vertices[(_offset + 3) % 4] = colliderRect.LeftBottom();
+
+    collider_.SetVertices(vertices.data(), 4);
     position_ = _leftTop;
     return;
 }
