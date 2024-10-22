@@ -23,6 +23,9 @@ void NestWall::Initialize()
     collider_.SetColliderID("NestWall_" + objectID_);
     collider_.SetAttribute(pCollisionManager_->GetNewAttribute("NestWall"));
     pCollisionManager_->RegisterCollider(&collider_);
+	// HPバーの初期化
+	pHpBar_ = new HPBar();
+	pHpBar_->Init(static_cast<float>(hp_), position_, 200.0f, 10.0f, 0.0f, BLUE);
 
     // コライダーにOnCollisionの関数ポインタを渡す
     collider_.SetOnCollisionTrigger(std::bind(&NestWall::OnCollisionTrigger, this, std::placeholders::_1));
@@ -37,6 +40,8 @@ void NestWall::RunSetMask()
 void NestWall::Update()
 {
     if (hp_ == 0) isDead_ = true;
+
+	pHpBar_->Update(static_cast<float>(hp_));
 }
 
 void NestWall::Draw()
@@ -44,6 +49,8 @@ void NestWall::Draw()
     if (isDead_) return;
     Novice::DrawBox(
         static_cast<int>(position_.x), static_cast<int>(position_.y), rect_.x2, rect_.y2, 0.0f, RED, kFillModeSolid);
+
+	pHpBar_->Draw();
 }
 
 void NestWall::OnCollisionTrigger(const Collider* _collider)

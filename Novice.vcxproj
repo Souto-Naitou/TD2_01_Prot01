@@ -132,6 +132,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="External\math\MathExtension\mathExtension.cpp" />
     <ClCompile Include="External\Timer\Timer.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="HPBar.cpp" />
     <ClCompile Include="ImGuiTemplates.cpp" />
     <ClCompile Include="InputCenter.cpp" />
     <ClCompile Include="main.cpp" />
@@ -190,6 +191,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="External\math\Vector4.h" />
     <ClInclude Include="External\Timer\Timer.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="HPBar.h" />
     <ClInclude Include="ImGuiTemplates.h" />
     <ClInclude Include="InputCenter.h" />
     <ClInclude Include="Object\Core\Core.h" />

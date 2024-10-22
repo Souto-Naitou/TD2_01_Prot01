@@ -68,6 +68,16 @@ void GameScene::Initialize()
     MakeWall(&pNestWallRight_, "Right", nestWallWidth, DefaultSettings::kGameScreenHeight, { DefaultSettings::kScreenWidth - nestWallWidth, DefaultSettings::kGameScenePosY });
     MakeWall(&pNestWallBottom_, "Bottom", DefaultSettings::kGameScreenWidth, nestWallWidth, { DefaultSettings::kGameScenePosX ,DefaultSettings::kGameScreenHeight - nestWallWidth });
 
+	pNestWallLeft_->SetHPBarPos(Vector2(float(nestWallWidth + 40), DefaultSettings::kGameScreenHeight / 2.0f + pNestWallTop_->GetHPBarWidth() / 2.0f));
+	pNestWallLeft_->SetHPBarRotation(-std::numbers::pi_v<float> / 2.0f);
+
+	pNestWallTop_->SetHPBarPos(Vector2(DefaultSettings::kGameScreenWidth / 2.0f - pNestWallTop_ ->GetHPBarWidth() / 2.0f, float(nestWallWidth + 40)));
+
+	pNestWallRight_->SetHPBarPos(Vector2(DefaultSettings::kScreenWidth - pNestWallTop_->GetHPBarWidth() / 2.0f, DefaultSettings::kGameScreenHeight / 2.0f + pNestWallTop_->GetHPBarWidth() / 2.0f));
+	pNestWallRight_->SetHPBarRotation(-std::numbers::pi_v<float> / 2.0f);
+
+	pNestWallBottom_->SetHPBarPos(Vector2(DefaultSettings::kGameScreenWidth / 2.0f - pNestWallTop_->GetHPBarWidth() / 2.0f, DefaultSettings::kGameScreenHeight - pNestWallTop_->GetHPBarWidth() / 2.0f));
+
     /// マスクの生成にアトリビュートを使用するためInitialize後に行う
     pPlayer_->RunSetMask();
 
